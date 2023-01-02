@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "e611266f-c236-42db-80f3-ec9e0472afb4",
+		"name": "Firefly-III-pp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Start job",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"start\": \"2017-01-01\",\r\n    \"end\": \"2022-01-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:49154/runner/start",
+					"host": [
+						"localhost"
+					],
+					"port": "49154",
+					"path": [
+						"runner",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start Single Job",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"1870\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:49154/runner/single",
+					"host": [
+						"localhost"
+					],
+					"port": "49154",
+					"path": [
+						"runner",
+						"single"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stop job",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"208\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:49154/runner/stop",
+					"host": [
+						"localhost"
+					],
+					"port": "49154",
+					"path": [
+						"runner",
+						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:49154/runner/status",
+					"host": [
+						"localhost"
+					],
+					"port": "49154",
+					"path": [
+						"runner",
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,2600 @@
+{
+	"info": {
+		"_postman_id": "b3c1757b-7179-4096-a2a5-7f54ff0ca4d2",
+		"name": "Firefly-III-pp-tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Destinations",
+			"item": [
+				{
+					"name": "Amazon",
+					"item": [
+						{
+							"name": "Amazon 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE Amazon.ca 123533812844\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Amazon 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AMZN Mktp CA 121644718164\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Amazon 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE Amazon.ca Prime 121631994881\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Amazon 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"Amazon.ca Prime Member   amazon.ca/priBC \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Amazon\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Canadian Tire",
+					"item": [
+						{
+							"name": "Canadian Tire 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Interac RETAIL PURCHASE 000001001778 CANADIAN TIRE #\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Canadian Tire\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Dairy Queen",
+					"item": [
+						{
+							"name": "Dairy Queen 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Interac RETAIL PURCHASE 000001206080 DAIRY QUEEN GRI\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dairy Queen 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Interac RETAIL PURCHASE 000001441033 DAIRY QUEEN #27\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Dairy Queen\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Ebay",
+					"item": [
+						{
+							"name": "Ebay 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit INTL VISA DEB RETAIL PURCHASE PAYPAL *EBAY CA 117520241573 10.25 CAD @ 1.000000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Ebay\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Epic Games",
+					"item": [
+						{
+							"name": "Epic Games 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit INTL VISA DEB RETAIL PURCHASE PAYPAL *EPICINT 116620571148 8.39 CAD @ 1.000000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Epic Games\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Etsy",
+					"item": [
+						{
+							"name": "Etsy 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE PAYPAL *ETSY.CO 121320381622\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Etsy\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Fatburger",
+					"item": [
+						{
+							"name": "Fatburger 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Interac RETAIL PURCHASE 000001911045 FATBURGER SEC\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Fatburger\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "General",
+					"item": [
+						{
+							"name": "Keep Source id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Source id', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.source_id).to.eql(\"7\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_id\": \"7\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AMZN Mktp CA 1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Keep existing destination",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Destination name', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.destination_name).to.eql(\"myDest\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"myDest\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AMZN Mktp CA 1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save existing data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Destination name', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.eql({\r",
+											"        \r",
+											"    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AHHHH BEEES 1234\",\r",
+											"    \"type\": \"withdrawal\",\r",
+											"    \"date\": \"2022-11-22T00:00:00+01:00\",\r",
+											"    \"amount\": \"2024.81\",\r",
+											"    \"source_id\": \"3\",\r",
+											"    \"bill_name\": \"Groceries\",\r",
+											"    \"destination_name\": \"(no name)\",\r",
+											"    \"tags\": [\r",
+											"        \"beans\"\r",
+											"    ],\r",
+											"    \"original_source\": \"ff3-v5.7.17|api-v1.5.6\",\r",
+											"    \"import_hash_v2\": \"071724920338c87e6f6c7942c8f072fd648038b6e677d23c21fa1b58b4ce7c5b\",\r",
+											"    \"notes\": \"foo\"\r",
+											"\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AHHHH BEEES 1234\",\r\n    \"type\": \"withdrawal\",\r\n    \"date\": \"2022-11-22T00:00:00+01:00\",\r\n    \"amount\": \"2024.81\",\r\n    \"source_id\": \"3\",\r\n    \"bill_name\": \"Groceries\",\r\n    \"destination_name\": \"(no name)\",\r\n    \"tags\": [\r\n        \"beans\"\r\n    ],\r\n    \"original_source\": \"ff3-v5.7.17|api-v1.5.6\",\r\n    \"import_hash_v2\": \"071724920338c87e6f6c7942c8f072fd648038b6e677d23c21fa1b58b4ce7c5b\",\r\n    \"notes\": \"foo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Homesense",
+					"item": [
+						{
+							"name": "Homesense 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Interac RETAIL PURCHASE 120610069378 HOMESENSE 031\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"HomeSense\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Microsoft",
+					"item": [
+						{
+							"name": "Microsoft 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE Microsoft*Store 120901305345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Microsoft 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"Microsoft*Subscription   Mississauga  ON \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Microsoft\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Nexus Mods",
+					"item": [
+						{
+							"name": "Nexus Mods 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit INTL VISA DEB RETAIL PURCHASE PAYPAL *NEXUSMO 116418501421 5.38 CAD @ 1.000000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Nexus Mods\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Safeway",
+					"item": [
+						{
+							"name": "Safeway 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"SAFEWAY #8904            EDMONTON     AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Safeway\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "SkipTheDishes",
+					"item": [
+						{
+							"name": "SkipTheDishes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE SKIPTHEDISHES 120015573312\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SkipTheDishes 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"SKIPTHEDISHES            WINNIPEG     MB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"SkipTheDishes\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Virgin",
+					"item": [
+						{
+							"name": "Virgin 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Electronic Funds Transfer PREAUTHORIZED DEBIT VIRGIN PLUS\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Virgin 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"description\": \"Electronic Funds Transfer PREAUTHORIZED DEBIT VIRGIN MOBILE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Virgin Mobile\");",
+									"});",
+									"",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Phone\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Superstore",
+					"item": [
+						{
+							"name": "Superstore 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"REAL CDN SUPERSTORE #1   EDMONTON     AB  (GOOGLE PAY) \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Real Canadian Superstore\");",
+									"});",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Groceries\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Steam",
+					"item": [
+						{
+							"name": "Steam 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"STEAM PURCHASE           SEATTLE \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Destination name', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Steam\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Hughes",
+					"item": [
+						{
+							"name": "Hughes 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"HUGHES PETROLEUM LTD #   LEDUC        AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Hughes\");",
+									"});",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Fuel\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Petro Canada",
+					"item": [
+						{
+							"name": "Petro Canada 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"PETROCAN-10560 51 AVE.   EDMONTON     AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Petro-Canada\");",
+									"});",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Fuel\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Memory Express",
+					"item": [
+						{
+							"name": "Memory Express 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"MemoryExpress EDM S      Edmonton     AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Memory Express 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"Memory Express, Inc.     Calgary      AB  (GOOGLE PAY) \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Memory Express\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Ubisoft",
+					"item": [
+						{
+							"name": "Ubisoft 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"UBISOFT                  SAN FRANCISCOCA \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ubisoft 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"UBISOFT EMEA SAS         -            CA \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Ubisoft\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Lego Store",
+					"item": [
+						{
+							"name": "Lego Store 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"LEGO, Southgate          Edmonton     AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"LEGO\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Coinamatic",
+					"item": [
+						{
+							"name": "Coinamatic 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"COINAMATIC               A            ON \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Coinamatic\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Walmart",
+					"item": [
+						{
+							"name": "Walmart 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"WAL-MART SUPERCENTER#1145EDMONTON     AB  (GOOGLE PAY) \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Walmart\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "IKEA",
+					"item": [
+						{
+							"name": "IKEA 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"IKEA EDMONTON            EDMONTON     AB  (GOOGLE PAY) \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"IKEA\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Lowe's",
+					"item": [
+						{
+							"name": "Lowe's 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"LOWE'S EDMONTON SOUTH    EDMONTON     AB  (GOOGLE PAY) \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Lowe's\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Namaste India",
+					"item": [
+						{
+							"name": "Namaste India 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"NAMASTE INDIA            EDMONTON     AB  (GOOGLE PAY) \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Namaste\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "EPark",
+					"item": [
+						{
+							"name": "EPark 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"EDM EPARK ONLINE PAY     EDMONTON     AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"EPark\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Telus",
+					"item": [
+						{
+							"name": "Telus 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"TELUS PRE-AUTH PAYMENT   780-4932237  AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Telus\");",
+									"});",
+									"",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Internet\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Epcor",
+					"item": [
+						{
+							"name": "Epcor 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"EPCORWEBRECURRING        800-667-2345 AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Epcor 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"KUBRA/EPCOR EZ-PAY FEE   800-766-6616 ON \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Epcor\");",
+									"});",
+									"",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Utilities\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Spotify",
+					"item": [
+						{
+							"name": "Spotify 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"SPOTIFY                  STOCKHOLM \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Spotify\");",
+									"});",
+									"",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Subscription Services\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "AMA",
+					"item": [
+						{
+							"name": "AMA 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"AMA CENTRE #52           EDMONTON     AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"AMA\");",
+									"});",
+									"",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Vehicle Insurance and Registration\");",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Empire Park",
+					"item": [
+						{
+							"name": "Empire Park 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"NBX*RENT                 780-4204040  AB \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/apply",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test('Destination name', function() {",
+									"    pm.expect(jsonData.destination_name).to.eql(\"Empire Park\");",
+									"});",
+									"",
+									"pm.test('Bill name', function() {",
+									"    pm.expect(jsonData.bill_name).to.eql(\"Rent\");",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:1880"
+		}
+	]
+}

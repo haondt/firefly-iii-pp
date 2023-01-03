@@ -44,6 +44,37 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Transaction",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/transactions/2243",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transactions",
+						"2243"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {

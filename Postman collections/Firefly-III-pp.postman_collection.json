@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"start\": \"2017-01-01\",\r\n    \"end\": \"2022-01-01\"\r\n}",
+					"raw": "{\r\n    \"start\": \"2017-01-01\",\r\n    \"end\": \"2023-01-01\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,11 +20,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:49154/runner/start",
+					"raw": "{{base_url}}/runner/start",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "49154",
 					"path": [
 						"runner",
 						"start"
@@ -40,7 +39,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"1870\"\r\n}",
+					"raw": "{\r\n    \"id\": \"2244\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -48,11 +47,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:49154/runner/single",
+					"raw": "{{base_url}}/runner/single",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "49154",
 					"path": [
 						"runner",
 						"single"
@@ -76,11 +74,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:49154/runner/stop",
+					"raw": "{{base_url}}/runner/stop",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "49154",
 					"path": [
 						"runner",
 						"stop"
@@ -95,11 +92,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:49154/runner/status",
+					"raw": "{{base_url}}/runner/status",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "49154",
 					"path": [
 						"runner",
 						"status"
@@ -107,6 +103,33 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "localhost:49153",
+			"type": "default"
 		}
 	]
 }

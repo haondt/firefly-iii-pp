@@ -3,6 +3,7 @@ using Firefly_iii_pp_Runner.API.Settings;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Web;
 
@@ -51,8 +52,15 @@ namespace Firefly_iii_pp_Runner.API.Services
 
         public async Task UpdateTransaction(string transactionId, TransactionUpdateDto transaction, CancellationToken cancellationToken)
         {
-            var response = await _httpClient.PutAsJsonAsync($"/api/v1/transactions/{transactionId}", transaction, cancellationToken);
-            response.EnsureSuccessStatusCode();
+                var response = await _httpClient.PutAsJsonAsync($"/api/v1/transactions/{transactionId}", transaction, cancellationToken);
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError("Got non-200 response when updating transaction" +
+                        $"\nstatus: {response.StatusCode}" +
+                        $"\nrequest: {await response.RequestMessage.Content.ReadFromJsonAsync<object>()}" +
+                        $"\nresponse: {await response.Content.ReadFromJsonAsync<object>()}");
+                }
+                response.EnsureSuccessStatusCode();
         }
     }
 }

@@ -1,116 +1,120 @@
 {
-	"info": {
-		"_postman_id": "3d95e405-ee99-4e0a-92a1-027d5f205b9a",
-		"name": "Firefly-III",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Update Transaction",
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"accept": true
-				}
-			},
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"transactions\": [\r\n        {\r\n            \"type\": \"withdrawal\",\r\n            \"date\": \"2021-08-03T00:00:00-06:00\",\r\n            \"amount\": \"72.450000000000000000000000\",\r\n            \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE PAYPAL *ETSY.CO 121320381622\",\r\n            \"source_id\": \"1\",\r\n            \r\n\r\n            \"destination_name\": \"(no name)\",\r\n            \"tags\": [\r\n                \"Data Import on 2022-12-23 @ 23:43\"\r\n            ],\r\n            \"original_source\": \"ff3-v5.7.15|api-v1.5.6\",\r\n            \"import_hash_v2\": \"84021c94be34807748d74fd7e854e57c93cac39b2011945f200901aac706a1a0\",\r\n            \"notes\": null,\r\n            \"category_name\": null\r\n        }\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/api/v1/transactions/430",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"transactions",
-						"430"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Transaction",
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"accept": true
-				}
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base_url}}/api/v1/transactions/2243",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"transactions",
-						"2243"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"auth": {
-		"type": "bearer",
-		"bearer": [
-			{
-				"key": "token",
-				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiOTA0ZGMwZTI5MjM2OTUwNTIwNjBiMjQxZWY5YjM2OTU1NmE3YjMzNDAwNTMyOWRiMDEyYjcxMDJjYmZjZGY1Y2FhMWI0ODFjZmEzNTdiYzciLCJpYXQiOjE2NzI1OTM3MzIuNTA2MjgzLCJuYmYiOjE2NzI1OTM3MzIuNTA2Mjg2LCJleHAiOjE3MDQxMjk3MzIuMzYyNTU0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.z0nDGtZhhlYdOpyUtklj7nX1xXm1uMybJlp3GSJIu37zhowXmRN2_PlBsPdjfLA2HVDnSHC6vsU4-rmGef6r3WuzrZIM9xGg6C7OfaphrSiuSR7rAW7dlEblzhMnSaYAV-Aczb-pE1LMSrg1EsCz6GxWLwP8akMIcnPSS0jVUzwkx_i6RJ4sUL8GE_wx_xaIuknQ3uIk7WNOto2TL4lkOeDyx9J4eR4nCiJJnYKrBiToC15N_Qhamdzaa9Ox_gGUFNODLmfNJrtTqVCKxRkpzFimvIgTEeUp6NOPUPwnVsQ17A3a3hXMLCGeTnEi3tJbtCeur1_Dobu9oFGXqFYCB0u6yUk1KXvetFwfPStuqUcUPRxoAxN86n3usECObGYNlLFxEbD0YIlnosf9Pi0aAEjQ1D_p9Mmf4IcETUj_jkIC44hBuw2ptkdyTvpTa4JsFFu8X1vKZ-BkFaQmqv8sBH3F0SLw2GsDT1u0MStEB1RMqyWyCxy2IqYxYxFI_VgFLMcaXP1lKGI3xCBk_KIctYurs2TlSerndbFChpidbkQLLMzJgrr_euGD27OgTPWG6RZXglMoz_DnO9oOgRFlE0ITwkolHyAu7fWa1Iw-WsrYA0iLDvog7Jk3muXknPucv2hYVce7n_kKwX98rGiJT65gy_5ZOjkkLILa4_noVWc",
-				"type": "string"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "base_url",
-			"value": "http://docker-selfhosted:8080"
-		}
-	]
+    "info": {
+        "_postman_id": "b06990ca-f4ff-4ac9-b65d-cb973d1156ab",
+        "name": "Firefly-III",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "updatedAt": "2023-01-04T02:49:21.000Z"
+    },
+    "item": [
+        {
+            "name": "Update Transaction",
+            "id": "c647bcb7-85a6-478d-bca5-abd575f7247f",
+            "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                    "accept": true
+                }
+            },
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/vnd.api+json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"transactions\": [\r\n        {\r\n            \"type\": \"withdrawal\",\r\n            \"date\": \"2021-08-03T00:00:00-06:00\",\r\n            \"amount\": \"72.450000000000000000000000\",\r\n            \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE PAYPAL *ETSY.CO 121320381622\",\r\n            \"source_id\": \"1\",\r\n            \r\n\r\n            \"destination_name\": \"(no name)\",\r\n            \"tags\": [\r\n                \"Data Import on 2022-12-23 @ 23:43\"\r\n            ],\r\n            \"original_source\": \"ff3-v5.7.15|api-v1.5.6\",\r\n            \"import_hash_v2\": \"84021c94be34807748d74fd7e854e57c93cac39b2011945f200901aac706a1a0\",\r\n            \"notes\": null,\r\n            \"category_name\": null\r\n        }\r\n    ]\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/v1/transactions/430",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "transactions",
+                        "430"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Transaction",
+            "id": "ec7b5f1d-2b4b-4e01-986e-6c873c130680",
+            "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                    "accept": true
+                }
+            },
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/vnd.api+json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/v1/transactions/2243",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "transactions",
+                        "2243"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiOTA0ZGMwZTI5MjM2OTUwNTIwNjBiMjQxZWY5YjM2OTU1NmE3YjMzNDAwNTMyOWRiMDEyYjcxMDJjYmZjZGY1Y2FhMWI0ODFjZmEzNTdiYzciLCJpYXQiOjE2NzI1OTM3MzIuNTA2MjgzLCJuYmYiOjE2NzI1OTM3MzIuNTA2Mjg2LCJleHAiOjE3MDQxMjk3MzIuMzYyNTU0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.z0nDGtZhhlYdOpyUtklj7nX1xXm1uMybJlp3GSJIu37zhowXmRN2_PlBsPdjfLA2HVDnSHC6vsU4-rmGef6r3WuzrZIM9xGg6C7OfaphrSiuSR7rAW7dlEblzhMnSaYAV-Aczb-pE1LMSrg1EsCz6GxWLwP8akMIcnPSS0jVUzwkx_i6RJ4sUL8GE_wx_xaIuknQ3uIk7WNOto2TL4lkOeDyx9J4eR4nCiJJnYKrBiToC15N_Qhamdzaa9Ox_gGUFNODLmfNJrtTqVCKxRkpzFimvIgTEeUp6NOPUPwnVsQ17A3a3hXMLCGeTnEi3tJbtCeur1_Dobu9oFGXqFYCB0u6yUk1KXvetFwfPStuqUcUPRxoAxN86n3usECObGYNlLFxEbD0YIlnosf9Pi0aAEjQ1D_p9Mmf4IcETUj_jkIC44hBuw2ptkdyTvpTa4JsFFu8X1vKZ-BkFaQmqv8sBH3F0SLw2GsDT1u0MStEB1RMqyWyCxy2IqYxYxFI_VgFLMcaXP1lKGI3xCBk_KIctYurs2TlSerndbFChpidbkQLLMzJgrr_euGD27OgTPWG6RZXglMoz_DnO9oOgRFlE0ITwkolHyAu7fWa1Iw-WsrYA0iLDvog7Jk3muXknPucv2hYVce7n_kKwX98rGiJT65gy_5ZOjkkLILa4_noVWc",
+                "type": "string"
+            }
+        ]
+    },
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "id": "9703d0fc-97b5-4621-b7d2-035dd2aa25d4",
+            "key": "base_url",
+            "value": "http://docker-selfhosted:8080"
+        }
+    ]
 }

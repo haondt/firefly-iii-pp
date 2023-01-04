@@ -67,6 +67,7 @@ def pipe(*funcs):
     return _inner
 
 # trampoline pipe (constant stack frames)
+# see: http://neopythonic.blogspot.com/2009/04/final-words-on-tail-calls.html
 def nest(f, next_f):
     def _inner(*args):
         return next_f, (f(*args),)

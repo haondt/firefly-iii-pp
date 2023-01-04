@@ -1,34 +1,16 @@
 import json
 import requests
-import pickle
-import functools
 from urllib.parse import urljoin
 from requests.models import PreparedRequest
 import utils
+from utils import memoize
+from utils import trampoline_pipe as pipe
 
 # Generate api key at https://web.postman.co/settings/me/api-keys
 # create a workspace for firefly-iii-pp
 # get workspace id with Postman API > Workspaces > Get all workspaces
 
 # utils
-def memoize(f):
-    cache = f.cache = {}
-    @functools.wraps(f)
-    def wrapper(*args, **kwargs):
-        k = pickle.dumps(args, 1) + pickle.dumps(kwargs, 1)
-        if k not in cache:
-            cache[k] = f(*args, **kwargs)
-        return cache[k]
-    return wrapper
-
-def pipe(*funcs):
-    def _inner(*args, **kwargs):
-        def __inner(fs, *args, **kwargs):
-            if len(fs) == 0:
-                return args
-            return __inner(fs[1:], fs[0](*args, **kwargs))
-        return __inner(funcs, *args, **kwargs)[0]
-    return _inner
 
 
 # config

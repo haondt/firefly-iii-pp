@@ -27,15 +27,24 @@ def get_api_key():
 def get_postman_base_url():
     return "https://api.getpostman.com"
 
+def get_collection_file_directory():
+    return '../Postman collections'
+
 def list_collection_file_names():
+    return pipe(list_collection_names, utils.p_map(get_collection_file_path), list)()
+
+def list_collection_names():
     return [
-        '../Postman collections/Firefly-III-pp-tests.postman_collection.json',
-        '../Postman collections/Firefly-III-pp.postman_collection.json',
-        '../Postman collections/Firefly-III.postman_collection.json'
+        'Firefly-III',
+        'Firefly-III-pp',
+        'Firefly-III-pp-tests'
     ]
 
 
 # pure
+def get_collection_file_path(collection_name):
+    return f"{get_collection_file_directory()}/{collection_name}.postman_collection.json"
+
 def prepare_url(url, params):
     r = PreparedRequest()
     r.prepare_url(url, params)
@@ -98,6 +107,15 @@ def sync_collection_from_cloud_to_file(file_name, collection_id, collection_name
             lambda x: None)
     )(f"/collections/{collection_id}")
 
+def sync_collections_from_cloud_to_file(collection_names=None):
+    if collection_names is None:
+        pipe(list_collections_from_cloud.cache.clear, utils.p_discard(list_collection_names), sync_collections_from_cloud_to_file)()
+    elif len(collection_names) > 0:
+        pipe(list_collections_from_cloud,
+            utils.p_first(lambda x: x['name'] == collection_names[0]),
+            lambda x: sync_collection_from_cloud_to_file(get_collection_file_path(x['name']), x['id'], x['name']))()
+        sync_collections_from_cloud_to_file(collection_names[1:])
+
 def create_or_update_collection_in_cloud(identifier, collection):
     if identifier in pipe(list_collections_from_cloud,
         utils.p_map(lambda x: x['id']),
@@ -128,4 +146,5 @@ def log(msg, level="info"):
     print(msg)
 
 # work
-sync_collections_from_file_to_cloud()
+#sync_collections_from_file_to_cloud()
+sync_collections_from_cloud_to_file()

@@ -13,12 +13,21 @@ def p_map(f):
 def p_echo(*x):
     return lambda: (*x,)
 
+# first item matching the condition
+def p_first(f):
+    return lambda x: next(filter(f, x))
+
+
 # run function and return result from previous function
 def p_tee(f):
     def _inner(*args, **kwargs):
         f(*args, **kwargs)
         return args[0]
     return _inner
+
+# discard output of previous function
+def p_discard(f):
+    return lambda _: f()
 
 # unpack the arguments before sending them to the function
 def p_unpack(f):

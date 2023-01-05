@@ -9,14 +9,44 @@ def p_reduce(f, seed):
 def p_map(f):
     return lambda x: map(f, x)
 
-# echo args
+def p_filter(f):
+    return lambda x: filter(f, x)
+
+def p_id(x):
+    return x
+
+def p_sort(f):
+    return lambda x: sorted(x, key=f)
+
+def p_noop():
+    return lambda *_: None
+
+# inject args objects into pipeline
 def p_echo(*x):
-    return lambda: (*x,)
+    return lambda *_: (x[0] if len(x) == 1 else (*x,))
 
 # first item matching the condition
 def p_first(f):
     return lambda x: next(filter(f, x))
 
+def p_debug(x):
+    if len(x) == 1:
+        print(x[0])
+    else:
+        print(x)
+    return x
+
+def p_iter(f):
+    def _inner(it):
+        for i in it:
+            f(i)
+        return None
+    return _inner
+
+
+# unpack the arguments before sending them to the next function
+def p_unpack(f):
+    return lambda x: f(*x)
 
 # run function and return result from previous function
 def p_tee(f):
@@ -29,9 +59,10 @@ def p_tee(f):
 def p_discard(f):
     return lambda _: f()
 
-# unpack the arguments before sending them to the function
-def p_unpack(f):
-    return lambda x: f(*x)
+# returns input as well as output of supplied function
+def p_trace(f):
+    return lambda *x: (x[0], f(*x))
+
 
 # return the results of two functions
 def p_fork(f1, f2):
@@ -45,7 +76,7 @@ def p_fork(f1, f2):
 def p_append(y):
     return lambda x: x + (y,)
 
-def p_if(f_condition, f_true, f_false):
+def p_if(f_condition, f_true, f_false=p_noop()):
     def _inner(*args, **kwargs):
         if f_condition(*args, **kwargs):
             return f_true(*args, **kwargs)
@@ -101,5 +132,13 @@ def cont_pipe(*funcs):
         return funcs[0]
     return lambda *x: cont_pipe(*funcs[1:])(funcs[0](*x))
 
-
-
+# function pipe / backwards pipe
+# e.g. foo(bar(baz)) = f_pipe(foo, bar, baz)
+# as opposed to regular pipe
+# foo(bar(baz)) = pipe(bar, foo)(baz)
+# or
+# foo(bar(baz)) = pipe(p_echo(baz), bar, foo)
+def f_pipe(*funcs):
+    if len(funcs) == 1:
+        return funcs[0]
+    return funcs[0](f_pipe(*funcs[1:]))

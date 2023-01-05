@@ -69,6 +69,31 @@ def format_reponse_success(response: requests.Response, task_title):
         return f"Success: {task_title}"
     return f"Failed: {task_title}\nStatus: {response.status_code}\nResponse: {json.loads(response.content)}"
 
+def sort_collection(collection):
+    return pipe(
+        utils.p_echo(collection),
+        utils.p_tee(
+            utils.p_if(lambda x: 'info' in x,
+                pipe(lambda x: f"Sorting collection {x['info']['name']}", log))),
+        utils.p_if(
+            lambda x: 'item' in x,
+            pipe(utils.p_fork(
+                pipe(
+                    utils.f_pipe(
+                        utils.p_trace,
+                            utils.p_filter,
+                                lambda y: y != 'item'),
+                    lambda x:
+                        map(lambda k:
+                            (k, x[0][k]), x[1]),
+                    dict),
+                lambda x: {
+                    'item' : pipe(
+                        utils.p_echo(x['item']),
+                        utils.p_map(sort_collection),
+                        utils.p_sort(lambda z: z['name']))()
+            }), lambda t: t[0] | t[1]),
+            utils.p_id))()
 
 # queries
 @memoize
@@ -90,6 +115,31 @@ def sync_collections_from_file_to_cloud(file_names=None):
         sync_collection_from_file_to_cloud(file_names[0])
         sync_collections_from_file_to_cloud(file_names[1:])
 
+def sync_collections_from_cloud_to_file(collection_names=None):
+    if collection_names is None:
+        pipe(list_collections_from_cloud.cache.clear, utils.p_discard(list_collection_names), sync_collections_from_cloud_to_file)()
+    elif len(collection_names) > 0:
+        pipe(list_collections_from_cloud,
+            utils.p_first(lambda x: x['name'] == collection_names[0]),
+            lambda x: sync_collection_from_cloud_to_file(get_collection_file_path(x['name']), x['id'], x['name']))()
+        sync_collections_from_cloud_to_file(collection_names[1:])
+
+def sort_collections_in_cloud():
+    return pipe(
+        utils.p_echo('beans'),#sync_collections_from_cloud_to_file,
+        utils.p_discard(list_collection_file_names),
+        utils.p_iter(pipe(
+            utils.p_tee(sort_collection_in_file),
+            sync_collection_from_file_to_cloud)))()
+
+def sort_collection_in_file(collection_file_name):
+    return pipe(
+        utils.p_echo(collection_file_name),
+        utils.p_trace(pipe(
+            load_collection_from_file,
+            sort_collection)),
+        utils.p_unpack(save_collection_to_file))()
+
 def sync_collection_from_file_to_cloud(file_name):
         return pipe(load_collection_from_file,
             remove_collection_id,
@@ -107,14 +157,6 @@ def sync_collection_from_cloud_to_file(file_name, collection_id, collection_name
             lambda x: None)
     )(f"/collections/{collection_id}")
 
-def sync_collections_from_cloud_to_file(collection_names=None):
-    if collection_names is None:
-        pipe(list_collections_from_cloud.cache.clear, utils.p_discard(list_collection_names), sync_collections_from_cloud_to_file)()
-    elif len(collection_names) > 0:
-        pipe(list_collections_from_cloud,
-            utils.p_first(lambda x: x['name'] == collection_names[0]),
-            lambda x: sync_collection_from_cloud_to_file(get_collection_file_path(x['name']), x['id'], x['name']))()
-        sync_collections_from_cloud_to_file(collection_names[1:])
 
 def create_or_update_collection_in_cloud(identifier, collection):
     if identifier in pipe(list_collections_from_cloud,
@@ -122,6 +164,7 @@ def create_or_update_collection_in_cloud(identifier, collection):
         set)():
         return put_request(f"/collections/{identifier}", json=prepare_collection_for_upload(collection), params={ "workspace" : get_workspace_id() })
     return post_request(f"/collections", json=prepare_collection_for_upload(collection), params={ "workspace" : get_workspace_id() })
+
 
 def post_request(path, data=None, json=None, params=None):
     return send_request("post", path, json=json, data=data, params=params)
@@ -147,4 +190,5 @@ def log(msg, level="info"):
 
 # work
 #sync_collections_from_file_to_cloud()
-sync_collections_from_cloud_to_file()
+#sync_collections_from_cloud_to_file()
+sort_collections_in_cloud()

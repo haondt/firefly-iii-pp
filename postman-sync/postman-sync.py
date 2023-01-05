@@ -126,7 +126,7 @@ def sync_collections_from_cloud_to_file(collection_names=None):
 
 def sort_collections_in_cloud():
     return pipe(
-        utils.p_echo('beans'),#sync_collections_from_cloud_to_file,
+        sync_collections_from_cloud_to_file,
         utils.p_discard(list_collection_file_names),
         utils.p_iter(pipe(
             utils.p_tee(sort_collection_in_file),

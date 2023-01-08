@@ -22,6 +22,7 @@
 
 ### Postman-sync
 - Postman sync uses the postman API to help manage the postman collections
+
 | function | does |
 |---|---|
 | `sync_collections_from_file_to_cloud` | self explanatory |

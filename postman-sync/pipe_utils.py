@@ -17,8 +17,8 @@ def p_id(x):
 def p_sort(f):
     return lambda x: sorted(x, key=f)
 
-def p_noop():
-    return lambda *_: None
+def p_noop(*_):
+    return None
 
 # inject args objects into pipeline
 def p_echo(*x):
@@ -70,7 +70,7 @@ def p_fork(f1, f2):
 def p_append(y):
     return lambda x: x + (y,)
 
-def p_if(f_condition, f_true, f_false=p_noop()):
+def p_if(f_condition, f_true, f_false=p_noop):
     def _inner(*args, **kwargs):
         if f_condition(*args, **kwargs):
             return f_true(*args, **kwargs)

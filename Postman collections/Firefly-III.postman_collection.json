@@ -3,9 +3,41 @@
         "_postman_id": "b06990ca-f4ff-4ac9-b65d-cb973d1156ab",
         "name": "Firefly-III",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-04T02:49:21.000Z"
+        "updatedAt": "2023-01-06T03:52:06.000Z"
     },
     "item": [
+        {
+            "name": "Get Transaction",
+            "id": "ec7b5f1d-2b4b-4e01-986e-6c873c130680",
+            "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                    "accept": true
+                }
+            },
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/vnd.api+json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/v1/transactions/2243",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "transactions",
+                        "2243"
+                    ]
+                }
+            },
+            "response": []
+        },
         {
             "name": "Update Transaction",
             "id": "c647bcb7-85a6-478d-bca5-abd575f7247f",
@@ -46,38 +78,6 @@
                 }
             },
             "response": []
-        },
-        {
-            "name": "Get Transaction",
-            "id": "ec7b5f1d-2b4b-4e01-986e-6c873c130680",
-            "protocolProfileBehavior": {
-                "disabledSystemHeaders": {
-                    "accept": true
-                }
-            },
-            "request": {
-                "method": "GET",
-                "header": [
-                    {
-                        "key": "Accept",
-                        "value": "application/vnd.api+json",
-                        "type": "text"
-                    }
-                ],
-                "url": {
-                    "raw": "{{base_url}}/api/v1/transactions/2243",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "api",
-                        "v1",
-                        "transactions",
-                        "2243"
-                    ]
-                }
-            },
-            "response": []
         }
     ],
     "auth": {
@@ -112,7 +112,7 @@
     ],
     "variable": [
         {
-            "id": "9703d0fc-97b5-4621-b7d2-035dd2aa25d4",
+            "id": "e600a232-80da-449b-8b94-6aa82da15fd2",
             "key": "base_url",
             "value": "http://docker-selfhosted:8080"
         }

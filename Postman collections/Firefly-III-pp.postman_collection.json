@@ -3,32 +3,23 @@
         "_postman_id": "6c4cc9aa-3c68-4a80-95c1-360e46721dc7",
         "name": "Firefly-III-pp",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-04T02:49:20.000Z"
+        "updatedAt": "2023-01-06T03:52:07.000Z"
     },
     "item": [
         {
-            "name": "Start job",
-            "id": "f101f2e3-7e62-4bf8-93b4-c423d799a46a",
+            "name": "Get Status",
+            "id": "d3ed1863-6acc-406c-b17a-ebad418158a9",
             "request": {
-                "method": "POST",
+                "method": "GET",
                 "header": [],
-                "body": {
-                    "mode": "raw",
-                    "raw": "{\r\n    \"start\": \"2017-01-01\",\r\n    \"end\": \"2023-01-01\"\r\n}",
-                    "options": {
-                        "raw": {
-                            "language": "json"
-                        }
-                    }
-                },
                 "url": {
-                    "raw": "{{base_url}}/runner/start",
+                    "raw": "{{base_url}}/runner/status",
                     "host": [
                         "{{base_url}}"
                     ],
                     "path": [
                         "runner",
-                        "start"
+                        "status"
                     ]
                 }
             },
@@ -63,6 +54,34 @@
             "response": []
         },
         {
+            "name": "Start job",
+            "id": "f101f2e3-7e62-4bf8-93b4-c423d799a46a",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"start\": \"2017-01-01\",\r\n    \"end\": \"2023-01-01\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{base_url}}/runner/start",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "runner",
+                        "start"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
             "name": "Stop job",
             "id": "9cc00797-87c5-41ad-8a2c-866ee3c76146",
             "request": {
@@ -85,25 +104,6 @@
                     "path": [
                         "runner",
                         "stop"
-                    ]
-                }
-            },
-            "response": []
-        },
-        {
-            "name": "Get Status",
-            "id": "d3ed1863-6acc-406c-b17a-ebad418158a9",
-            "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                    "raw": "{{base_url}}/runner/status",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "runner",
-                        "status"
                     ]
                 }
             },
@@ -132,7 +132,7 @@
     ],
     "variable": [
         {
-            "id": "01aa9cc0-d9b8-4556-aac6-7ab7b7d62421",
+            "id": "0c3a77ae-2ea2-433e-a0a2-1c3b5ea452c3",
             "key": "base_url",
             "value": "localhost:49153"
         }

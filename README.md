@@ -2,7 +2,7 @@
 - Generate postman api key at https://web.postman.co/settings/me/api-keys
 - create a workspace for firefly-iii-pp
 - get workspace id with Postman API > Workspaces > Get all workspaces
-- `cp ../postman-sync/settings.template.json ./postman-sync/settings.json`
+- `cp ./postman-sync/settings.template.json ./postman-sync/settings.json`
 - populate `./postman-sync.settings.json` with the values from previous steps
 - run `sync_collections_from_file_to_cloud` in `postman-sync/postman-sync.py` to upload the collections to postman
 - configure firefly-iii connection settings in vs project `Firefly-iii-pp-Runner.API/appsettings.json`

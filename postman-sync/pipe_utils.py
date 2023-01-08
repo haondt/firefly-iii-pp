@@ -68,7 +68,7 @@ def p_fork(f1, f2):
     return _inner
 
 def p_append(y):
-    return lambda x: x + (y,)
+    return lambda x: x + [y]
 
 def p_if(f_condition, f_true, f_false=p_noop):
     def _inner(*args, **kwargs):

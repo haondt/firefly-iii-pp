@@ -15,8 +15,11 @@ def list_collection_names():
     return [
         'Firefly-III',
         'Firefly-III-pp',
-        'Firefly-III-pp-tests'
+        get_test_collection_name()
     ]
+
+def get_test_collection_name():
+    return 'Firefly-III-pp-tests'
 
 # helpers
 

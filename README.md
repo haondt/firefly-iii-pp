@@ -28,6 +28,7 @@
 | `sync_collections_from_file_to_cloud` | self explanatory |
 | `sync_collections_from_cloud_to_file` | self explanatory |
 | `sort_collections_in_cloud` | sorts the postman collection alphabetically. DOES NOT COPY CHANGES TO FILE. Changes will need to be copied with the above function before syncing to github |
+| `add_test_to_collection_in_cloud` and `easy_generate_...` methods | Quickly and easily add a new test to the postman collection |
 
 
 Below are some observations I've made while attempting a functional programming style in python.

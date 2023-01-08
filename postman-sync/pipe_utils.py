@@ -28,6 +28,8 @@ def p_echo(*x):
 def p_first(f):
     return lambda x: next(filter(f, x))
 
+def p_raise(ex):
+    raise ex
 
 # recursive iteration
 def p_iter(f):
@@ -135,4 +137,12 @@ def p_iter_loop(f):
         for i in it:
             f(i)
         return None
+    return _inner
+
+def e_pipe(pipe, first_arg, *funcs):
+    return pipe(*funcs)(first_arg)
+
+def create_e_pipe_generator(pipe):
+    def _inner(first_arg, *funcs):
+        return e_pipe(pipe, first_arg, *funcs)
     return _inner

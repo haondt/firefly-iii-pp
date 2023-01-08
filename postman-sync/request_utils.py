@@ -13,20 +13,20 @@ from pipe_utils import (
 import typing
 T = typing.TypeVar('T')
 
-def get_request(path, params=None):
-    return send_request("get", path, params=params)
+def get_request(base_url, path, params=None, headers={}):
+    return send_request(base_url, "get", path, params=params, headers=headers)
 
-def post_request(path, data=None, json=None, params=None):
-    return send_request("post", path, json=json, data=data, params=params)
+def post_request(base_url, path, data=None, json=None, params=None, headers={}):
+    return send_request(base_url, "post", path, json=json, data=data, params=params, headers=headers)
 
-def put_request(path, data=None, json=None, params=None):
-    return send_request("put", path, json=json, data=data, params=params)
+def put_request(base_url, path, data=None, json=None, params=None, headers={}):
+    return send_request(base_url, "put", path, json=json, data=data, params=params, headers=headers)
 
-def send_request(request_type, path, data=None, json=None, params=None):
+def send_request(base_url, request_type, path, data=None, json=None, params=None, headers={}):
     return requests.request(
         request_type,
-        prepare_url(urljoin(config.get_postman_base_url(), path), params or {}),
-        headers={ "X-API-KEY": config.get_api_key() },
+        prepare_url(urljoin(base_url, path), params or {}),
+        headers=headers,
         data=data,
         json=json
     )

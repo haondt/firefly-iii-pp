@@ -4,11 +4,24 @@ from pipe_utils import (
     f_pipe, p_echo, p_tee, p_trace, p_filter, p_if, p_fork, p_map, p_sort, p_id,
     p_append, p_discard, p_first, p_noop, p_reduce, p_unpack,
 )
-from request_utils import get_request, put_request, post_request
+import request_utils
 import config
 from func_utils import memoize
 import json
 from log_utils import p_debug, t_debug
+
+# request stuff
+def generate_request_header():
+    return { "X-API-KEY": config.get_api_key() }
+
+def get_request(path, params=None):
+    return request_utils.get_request(config.get_postman_base_url(), path, params=params, headers=generate_request_header())
+
+def post_request(path, data=None, json=None, params=None):
+    return request_utils.post_request(config.get_postman_base_url(), path, json=json, data=data, params=params, headers=generate_request_header())
+
+def put_request(path, data=None, json=None, params=None):
+    return request_utils.put_request(config.get_postman_base_url(), path, json=json, data=data, params=params, headers=generate_request_header())
 
 # utils
 
@@ -59,3 +72,4 @@ def create_or_update_collection_in_cloud(continue_with):
             pipe(p_trace(lambda r: json.loads(r.content)['collection']), p_unpack(continue_with)),
             pipe(p_trace(lambda r: json.loads(r.content)), p_unpack(continue_with)),
         ))
+

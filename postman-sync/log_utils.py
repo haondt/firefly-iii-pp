@@ -4,7 +4,6 @@ from pipe_utils import (
     f_pipe, p_echo, p_tee, p_trace, p_filter, p_if, p_fork, p_map, p_sort, p_id,
     p_append, p_discard, p_first, p_noop, p_reduce, p_unpack,
 )
-import request_utils
 
 def log(msg, level="info"):
     print(msg)

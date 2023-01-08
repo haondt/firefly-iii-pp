@@ -1,13 +1,18 @@
-import json, config, log_utils, request_utils, file_utils, operator
+import json, config, log_utils, file_utils, operator
 from pipe_utils import trampoline_pipe as pipe
 from pipe_utils import p_iter_loop as p_iter
 from pipe_utils import (
     f_pipe, p_echo, p_tee, p_trace, p_filter, p_if, p_fork, p_map, p_sort, p_id,
-    p_append, p_discard, p_first, p_noop, p_reduce, p_unpack,
+    p_append, p_discard, p_first, p_noop, p_reduce, p_unpack, p_raise
 )
 import postman_api as pm
+import firefly_iii_api as ff
 from log_utils import p_debug, f_debug, t_debug
 from models import *
+from request_utils import format_response_success
+
+from pipe_utils import create_e_pipe_generator, trampoline_pipe
+e_pipe = create_e_pipe_generator(trampoline_pipe)
 
 
 # json utils
@@ -94,9 +99,30 @@ def log_response_and_continue_if_success(success_log, fail_log, continue_with):
     return pipe(p_trace(lambda x: json.loads(x.content)), p_if(
         lambda x: x[0].status_code == 200,
         pipe(
-            p_tee(pipe(lambda x: request_utils.format_response_success(x[0], success_log(x[1])), log_utils.log)),
+            p_tee(pipe(lambda x: format_response_success(x[0], success_log(x[1])), log_utils.log)),
             lambda x: continue_with(x[1])),
-        pipe(lambda x: request_utils.format_response_success(x[0], fail_log(x[1])), log_utils.log)
+        pipe(lambda x: format_response_success(x[0], fail_log(x[1])), log_utils.log)
+    ))
+
+def log_response_and_assert_success(success_log, fail_log):
+    '''
+    Args:
+        sucess_log: f(json) => string
+        fail_log: f(json) => string
+        continue_with: f(json)
+    Returns:
+        Response
+    '''
+    return pipe(p_trace(lambda x: json.loads(x.content)), p_if(
+        lambda x: x[0].status_code == 200,
+        pipe(
+            p_tee(pipe(lambda x: format_response_success(x[0], success_log(x[1])), log_utils.log)),
+            lambda x: x[1]),
+        p_unpack(lambda r, j: pipe(
+            format_response_success(r, fail_log(j)),
+            log_utils.log,
+            p_discard(lambda: p_raise(Exception(fail_log(j))))
+        ))
     ))
 
 
@@ -267,6 +293,27 @@ def easy_generate_default_request_body():
         "source_name": "Scotia Momentum VISA Infinite",
         "description": ""
     }
+
+def easy_generate_request_body_from_transaction(transaction_id, *kvp_generators):
+    return ff.download_transaction(
+        lambda r, t: pipe(
+            log_response_and_assert_success(
+                lambda _: f"Downloaded transaction {t['attributes']['transactions'][0]['description']}",
+                lambda _: f"Failed to download transaction {transaction_id}",
+            ),
+            p_discard(lambda: e_pipe(
+                kvp_generators,
+                p_map(lambda g: g(t)),
+                dict
+            ))
+        )(r)
+    )(transaction_id)
+
+
+def generate_kvp_from_transaction(key):
+    return pipe(lambda d: d['attributes']['transactions'][0],
+        lambda t: (key, t[key]))
+
 def easy_generate_test(name, request_body, *requirement_generators):
     '''
     Args:
@@ -277,22 +324,27 @@ def easy_generate_test(name, request_body, *requirement_generators):
     '''
     return pipe(
         p_echo(name),
-        lambda d: generate_test(d, pipe(
+        lambda d: generate_test(d, e_pipe(
+            requirement_generators,
             p_map(lambda g: g(d)),
             list
-        )(requirement_generators), request_body),
+        ), request_body),
         generate_test_json
     )()
 
 
 # work
 #sync_collections_from_file_to_cloud()
-#sync_collections_from_cloud_to_file()
+sync_collections_from_cloud_to_file()
 #sort_collections_in_cloud()
-add_test_to_collection_in_cloud(config.get_test_collection_name())(
-    easy_generate_test("WaterCorp",
-        easy_generate_default_request_body(),
-        easy_generate_destination_requirement(),
-        easy_generate_bill_requirement("water")
-    )
-)
+#add_test_to_collection_in_cloud(config.get_test_collection_name())(
+#    easy_generate_test("Trapped",
+#        #easy_generate_default_request_body(),
+#        easy_generate_request_body_from_transaction(2131,
+#            generate_kvp_from_transaction("destination_name"),
+#            generate_kvp_from_transaction("source_name"),
+#            generate_kvp_from_transaction("description")
+#        ),
+#        easy_generate_destination_requirement(),
+#    )
+#)

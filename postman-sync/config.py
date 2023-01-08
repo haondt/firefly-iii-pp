@@ -38,3 +38,9 @@ def get_collection_file_path(collection_name):
 
 def list_collection_file_names():
     return pipe(list_collection_names, p_map(get_collection_file_path), list)()
+
+def get_firefly_iii_base_url():
+    return get_config()['firefly_iii_base_url']
+
+def get_firefly_iii_api_key():
+    return get_config()['firefly_iii_api_key']

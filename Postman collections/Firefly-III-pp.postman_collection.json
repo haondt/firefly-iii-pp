@@ -1,14 +1,14 @@
 {
     "info": {
-        "_postman_id": "6c4cc9aa-3c68-4a80-95c1-360e46721dc7",
+        "_postman_id": "2b68e26a-f1ac-445a-ae95-dc9490dc2be1",
         "name": "Firefly-III-pp",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-06T03:52:07.000Z"
+        "updatedAt": "2023-01-08T01:24:06.000Z"
     },
     "item": [
         {
             "name": "Get Status",
-            "id": "d3ed1863-6acc-406c-b17a-ebad418158a9",
+            "id": "d2bc8d46-60ac-4eab-8d31-985fbbbcf8e7",
             "request": {
                 "method": "GET",
                 "header": [],
@@ -27,7 +27,7 @@
         },
         {
             "name": "Start Single Job",
-            "id": "8a9729fd-8403-476f-9d90-e47707bad72b",
+            "id": "69510ba4-a405-40d0-ab18-e5032fbefee9",
             "request": {
                 "method": "POST",
                 "header": [],
@@ -55,7 +55,7 @@
         },
         {
             "name": "Start job",
-            "id": "f101f2e3-7e62-4bf8-93b4-c423d799a46a",
+            "id": "a359e325-b292-4282-918d-b48f8d69cb68",
             "request": {
                 "method": "POST",
                 "header": [],
@@ -83,7 +83,7 @@
         },
         {
             "name": "Stop job",
-            "id": "9cc00797-87c5-41ad-8a2c-866ee3c76146",
+            "id": "dad5d0b6-2c22-43c0-909f-c05b1c395528",
             "request": {
                 "method": "POST",
                 "header": [],

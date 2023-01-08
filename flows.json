@@ -4500,7 +4500,7 @@
                 "cf310ddc47f7722d"
             ],
             [
-                "b7443391a55e06ec"
+                "997bc17c34605553"
             ]
         ]
     },
@@ -4537,7 +4537,71 @@
         "wires": []
     },
     {
-        "id": "b7443391a55e06ec",
+        "id": "997bc17c34605553",
+        "type": "switch",
+        "z": "e64d941838d90ecd",
+        "name": "Is Trapped",
+        "property": "input.description",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^SQ \\*TRAPPED EDMONTON",
+                "vt": "str",
+                "case": false
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 150,
+        "y": 4420,
+        "wires": [
+            [
+                "f0a5618557d68dd6"
+            ],
+            [
+                "e72e5308e39b5265"
+            ]
+        ]
+    },
+    {
+        "id": "f0a5618557d68dd6",
+        "type": "function",
+        "z": "e64d941838d90ecd",
+        "name": "set dest toTrapped",
+        "func": "msg.output.destination_name = \"Trapped\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 4420,
+        "wires": [
+            [
+                "9baf9560d6b34dcc"
+            ]
+        ]
+    },
+    {
+        "id": "9baf9560d6b34dcc",
+        "type": "link out",
+        "z": "e64d941838d90ecd",
+        "name": "Http Out",
+        "mode": "link",
+        "links": [
+            "2065bac4841cfe98"
+        ],
+        "x": 555,
+        "y": 4420,
+        "wires": []
+    },
+    {
+        "id": "e72e5308e39b5265",
         "type": "link out",
         "z": "e64d941838d90ecd",
         "name": "Http Out",
@@ -4546,7 +4610,7 @@
             "2065bac4841cfe98"
         ],
         "x": 315,
-        "y": 4380,
+        "y": 4480,
         "wires": []
     },
     {
@@ -4626,7 +4690,9 @@
             "dfaa9a964a421543",
             "16fee368d9866574",
             "279cf8a56030efb1",
-            "b7443391a55e06ec"
+            "b7443391a55e06ec",
+            "9baf9560d6b34dcc",
+            "e72e5308e39b5265"
         ],
         "x": 205,
         "y": 120,

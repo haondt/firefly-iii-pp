@@ -3,67 +3,12 @@
         "_postman_id": "b774dd15-e103-47cf-92fe-063cdb571ced",
         "name": "Firefly-III-pp-tests",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-08T13:18:16.000Z"
+        "updatedAt": "2023-01-08T13:28:32.000Z"
     },
     "item": [
         {
             "name": "Destinations",
             "item": [
-                {
-                    "name": "Trapped",
-                    "item": [
-                        {
-                            "name": "Trapped 1",
-                            "event": [
-                                {
-                                    "listen": "test"
-                                }
-                            ],
-                            "id": "f9e4de3e-bd70-4d55-bb66-a475d1c9b4cb",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"SQ *TRAPPED EDMONTON     Edmonton     AB  (GOOGLE PAY)\"\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "{{base_url}}/apply",
-                                    "host": [
-                                        "{{base_url}}"
-                                    ],
-                                    "path": [
-                                        "apply"
-                                    ]
-                                }
-                            },
-                            "response": []
-                        }
-                    ],
-                    "id": "040b42d9-2a3f-4c5c-bfa5-660eaea31748",
-                    "event": [
-                        {
-                            "listen": "prerequest"
-                        },
-                        {
-                            "listen": "test",
-                            "script": {
-                                "type": "text/javascript",
-                                "exec": [
-                                    "var jsonData = pm.response.json();",
-                                    "pm.test('Destination name', function() {",
-                                    "    pm.expect(jsonData.destination_name).to.eql(\"Trapped\");",
-                                    "});"
-                                ]
-                            }
-                        }
-                    ]
-                },
                 {
                     "name": "AMA",
                     "item": [
@@ -4165,6 +4110,61 @@
                     ]
                 },
                 {
+                    "name": "Trapped",
+                    "item": [
+                        {
+                            "name": "Trapped 1",
+                            "event": [
+                                {
+                                    "listen": "test"
+                                }
+                            ],
+                            "id": "f9e4de3e-bd70-4d55-bb66-a475d1c9b4cb",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"SQ *TRAPPED EDMONTON     Edmonton     AB  (GOOGLE PAY)\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/apply",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "apply"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ],
+                    "id": "040b42d9-2a3f-4c5c-bfa5-660eaea31748",
+                    "event": [
+                        {
+                            "listen": "prerequest"
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.test('Destination name', function() {",
+                                    "    pm.expect(jsonData.destination_name).to.eql(\"Trapped\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "Tres Carnales",
                     "item": [
                         {
@@ -4778,7 +4778,7 @@
     ],
     "variable": [
         {
-            "id": "83a8aab3-796a-4e74-b853-802fc01861d7",
+            "id": "cc76c9f2-c19c-4b7d-a8dd-8cc9fbb4e1aa",
             "key": "base_url",
             "value": "http://localhost:1880"
         }

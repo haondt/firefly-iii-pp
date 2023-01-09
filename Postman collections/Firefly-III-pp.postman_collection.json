@@ -3,7 +3,7 @@
         "_postman_id": "2b68e26a-f1ac-445a-ae95-dc9490dc2be1",
         "name": "Firefly-III-pp",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-08T01:24:06.000Z"
+        "updatedAt": "2023-01-08T13:28:26.000Z"
     },
     "item": [
         {
@@ -132,7 +132,7 @@
     ],
     "variable": [
         {
-            "id": "0c3a77ae-2ea2-433e-a0a2-1c3b5ea452c3",
+            "id": "1a6d6fa3-b215-4be1-9a8c-9e79a1e9025c",
             "key": "base_url",
             "value": "localhost:49153"
         }

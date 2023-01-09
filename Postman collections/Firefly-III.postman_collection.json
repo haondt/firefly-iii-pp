@@ -3,7 +3,7 @@
         "_postman_id": "ec48ef8c-b77d-4844-b642-f4c718f9244e",
         "name": "Firefly-III",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-08T01:24:05.000Z"
+        "updatedAt": "2023-01-08T13:28:25.000Z"
     },
     "item": [
         {
@@ -112,7 +112,7 @@
     ],
     "variable": [
         {
-            "id": "e600a232-80da-449b-8b94-6aa82da15fd2",
+            "id": "0fd347ad-4658-4772-88c6-f2fde3aea4bc",
             "key": "base_url",
             "value": "http://docker-selfhosted:8080"
         }

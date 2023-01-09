@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <div>
+            <a mat-button [routerLink]="'/firefly-iii'">Firefly-iii</a>
+            <a mat-button [routerLink]="'/tests'" routerLinkActive="router-link-active">Tests</a>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav-content>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>

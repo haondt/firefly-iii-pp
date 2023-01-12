@@ -1,7 +1,4 @@
-using Firefly_iii_pp_Runner.API;
 using Firefly_iii_pp_Runner.API.Extensions;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-;
 
 var builder = WebApplication.CreateBuilder(args);
 

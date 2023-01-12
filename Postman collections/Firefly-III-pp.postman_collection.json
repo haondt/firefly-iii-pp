@@ -3,111 +3,178 @@
         "_postman_id": "2b68e26a-f1ac-445a-ae95-dc9490dc2be1",
         "name": "Firefly-III-pp",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-08T13:28:26.000Z"
+        "updatedAt": "2023-01-12T02:01:06.000Z"
     },
     "item": [
         {
-            "name": "Get Status",
-            "id": "d2bc8d46-60ac-4eab-8d31-985fbbbcf8e7",
-            "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                    "raw": "{{base_url}}/runner/status",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "runner",
-                        "status"
-                    ]
+            "name": "Mongo",
+            "item": [
+                {
+                    "name": "Get tests",
+                    "id": "c5f16fcb-ebe7-4309-bd0f-26b4cf77f859",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/mongo/tests/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "mongo",
+                                "tests",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Set tests",
+                    "id": "7a7baf1b-bb4b-43ca-a946-e1c298d631da",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "[\r\n    {\r\n        \"type\": \"folder\",\r\n        \"name\": \"Destinations\",\r\n        \"items\": [\r\n            {\r\n                \"type\": \"test\",\r\n                \"name\": \"Dollarama\",\r\n                \"checks\": [\r\n                    {\r\n                        \"name\": \"Destination name\",\r\n                        \"key\": \"destination_name\",\r\n                        \"value\": \"AMA\"\r\n                    },\r\n                    {\r\n                        \"name\": \"Bill name\",\r\n                        \"key\": \"bill_name\",\r\n                        \"value\": \"Vehicle Insurance and Registration\"\r\n                    }\r\n                ],\r\n                \"cases\": [\r\n                    {\r\n                        \"body\": {\r\n                            \"destination_name\": \"(no name)\",\r\n                            \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n                            \"description\": \"AMA CENTRE #52           EDMONTON     AB \"\r\n                        }\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }\r\n]",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/mongo/tests/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "mongo",
+                                "tests",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
                 }
-            },
-            "response": []
+            ],
+            "id": "a788572b-1717-4531-a18e-e4c3c8507c72"
         },
         {
-            "name": "Start Single Job",
-            "id": "69510ba4-a405-40d0-ab18-e5032fbefee9",
-            "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                    "mode": "raw",
-                    "raw": "{\r\n    \"id\": \"2244\"\r\n}",
-                    "options": {
-                        "raw": {
-                            "language": "json"
+            "name": "Runner",
+            "item": [
+                {
+                    "name": "Get Status",
+                    "id": "d2bc8d46-60ac-4eab-8d31-985fbbbcf8e7",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/runner/status",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "runner",
+                                "status"
+                            ]
                         }
-                    }
+                    },
+                    "response": []
                 },
-                "url": {
-                    "raw": "{{base_url}}/runner/single",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "runner",
-                        "single"
-                    ]
-                }
-            },
-            "response": []
-        },
-        {
-            "name": "Start job",
-            "id": "a359e325-b292-4282-918d-b48f8d69cb68",
-            "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                    "mode": "raw",
-                    "raw": "{\r\n    \"start\": \"2017-01-01\",\r\n    \"end\": \"2023-01-01\"\r\n}",
-                    "options": {
-                        "raw": {
-                            "language": "json"
+                {
+                    "name": "Start Single Job",
+                    "id": "69510ba4-a405-40d0-ab18-e5032fbefee9",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"id\": \"2244\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/runner/single",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "runner",
+                                "single"
+                            ]
                         }
-                    }
+                    },
+                    "response": []
                 },
-                "url": {
-                    "raw": "{{base_url}}/runner/start",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "runner",
-                        "start"
-                    ]
-                }
-            },
-            "response": []
-        },
-        {
-            "name": "Stop job",
-            "id": "dad5d0b6-2c22-43c0-909f-c05b1c395528",
-            "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                    "mode": "raw",
-                    "raw": "{\r\n    \"id\": \"208\"\r\n}",
-                    "options": {
-                        "raw": {
-                            "language": "json"
+                {
+                    "name": "Start job",
+                    "id": "a359e325-b292-4282-918d-b48f8d69cb68",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"start\": \"2017-01-01\",\r\n    \"end\": \"2023-01-01\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/runner/start",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "runner",
+                                "start"
+                            ]
                         }
-                    }
+                    },
+                    "response": []
                 },
-                "url": {
-                    "raw": "{{base_url}}/runner/stop",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "runner",
-                        "stop"
-                    ]
+                {
+                    "name": "Stop job",
+                    "id": "dad5d0b6-2c22-43c0-909f-c05b1c395528",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"id\": \"208\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/runner/stop",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "runner",
+                                "stop"
+                            ]
+                        }
+                    },
+                    "response": []
                 }
-            },
-            "response": []
+            ],
+            "id": "3c38d83c-db76-4b18-b341-b42132bf0113"
         }
     ],
     "event": [
@@ -132,7 +199,7 @@
     ],
     "variable": [
         {
-            "id": "1a6d6fa3-b215-4be1-9a8c-9e79a1e9025c",
+            "id": "72404cb6-3be9-4dc8-9af3-d0bb7c5f2369",
             "key": "base_url",
             "value": "localhost:49153"
         }

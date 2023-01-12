@@ -3,12 +3,287 @@
         "_postman_id": "b774dd15-e103-47cf-92fe-063cdb571ced",
         "name": "Firefly-III-pp-tests",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-08T13:28:32.000Z"
+        "updatedAt": "2023-01-09T02:09:37.000Z"
     },
     "item": [
         {
             "name": "Destinations",
             "item": [
+                {
+                    "name": "Dollarama",
+                    "item": [
+                        {
+                            "name": "Dollarama 1",
+                            "event": [
+                                {
+                                    "listen": "test"
+                                }
+                            ],
+                            "id": "e2ef1c37-776e-4039-b55c-46bf99fc18a8",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"DOLLARAMA # 466          EDMONTON     AB  (GOOGLE PAY)\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/apply",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "apply"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ],
+                    "id": "6589ddaa-80b9-4b16-8e8a-64f885bfc648",
+                    "event": [
+                        {
+                            "listen": "prerequest"
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.test('Destination name', function() {",
+                                    "    pm.expect(jsonData.destination_name).to.eql(\"Dollarama\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "A&W",
+                    "item": [
+                        {
+                            "name": "A&W 1",
+                            "event": [
+                                {
+                                    "listen": "test"
+                                }
+                            ],
+                            "id": "023d2a7b-2057-4dbd-9349-ce1a369efb0d",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"A&W-CAP CORNER #1730     EDMONTON     AB  (GOOGLE PAY)\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/apply",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "apply"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ],
+                    "id": "9c3a5419-de1b-42b3-b9dd-aae66398ac92",
+                    "event": [
+                        {
+                            "listen": "prerequest"
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.test('Destination name', function() {",
+                                    "    pm.expect(jsonData.destination_name).to.eql(\"A&W\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "United Sport & Cycle",
+                    "item": [
+                        {
+                            "name": "United Sport & Cycle 1",
+                            "event": [
+                                {
+                                    "listen": "test"
+                                }
+                            ],
+                            "id": "032ceced-0c32-45b1-9aec-f09cdb6d97e5",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"UNITED SPORT & CYCLE     EDMONTON     AB  (GOOGLE PAY)\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/apply",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "apply"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ],
+                    "id": "32022d21-9403-45c9-81cc-a8bdf9aca182",
+                    "event": [
+                        {
+                            "listen": "prerequest"
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.test('Destination name', function() {",
+                                    "    pm.expect(jsonData.destination_name).to.eql(\"United Sport & Cycle\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Blowers & Grafton",
+                    "item": [
+                        {
+                            "name": "Blowers & Grafton 1",
+                            "event": [
+                                {
+                                    "listen": "test"
+                                }
+                            ],
+                            "id": "7d3a11c4-3597-4b23-b109-e4305e084b6b",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"BLOWERS & GRAFTON (EDMONTEDMONTON     AB  (GOOGLE PAY)\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/apply",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "apply"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ],
+                    "id": "623b488e-9163-49cd-a15f-3b7474952bb2",
+                    "event": [
+                        {
+                            "listen": "prerequest"
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.test('Destination name', function() {",
+                                    "    pm.expect(jsonData.destination_name).to.eql(\"Blowers & Grafton\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Freshii",
+                    "item": [
+                        {
+                            "name": "Freshii 1",
+                            "event": [
+                                {
+                                    "listen": "test"
+                                }
+                            ],
+                            "id": "66206e67-eb3b-4736-9de4-9103b102bc82",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"FRESHII CALGARY TRAIL EDMEDMONTON     AB  (GOOGLE PAY)\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/apply",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "apply"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ],
+                    "id": "938d1569-7569-47f4-836b-c0de798f8e29",
+                    "event": [
+                        {
+                            "listen": "prerequest"
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.test('Destination name', function() {",
+                                    "    pm.expect(jsonData.destination_name).to.eql(\"Freshii\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "AMA",
                     "item": [
@@ -4778,7 +5053,7 @@
     ],
     "variable": [
         {
-            "id": "cc76c9f2-c19c-4b7d-a8dd-8cc9fbb4e1aa",
+            "id": "5d434c5a-b146-4289-890d-23deb8d0bb15",
             "key": "base_url",
             "value": "http://localhost:1880"
         }

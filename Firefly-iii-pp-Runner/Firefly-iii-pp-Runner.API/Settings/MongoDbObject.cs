@@ -3,6 +3,6 @@
     public class MongoDbObject
     {
         public string Id { get; set; }
-        public string SerializedBody { get; set; } = "{}";
+        public string SerializedBody { get; set; }
     }
 }

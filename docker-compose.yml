@@ -3,11 +3,25 @@ version: "3.7"
 services:
   node-red:
     image: nodered/node-red:latest
+    container_name: nodered
     environment:
       - TZ=America/Edmonton
     ports:
       - 1880:1880
     volumes:
       - node-red-data:/data
+  pp-db:
+    image: mongo
+    container_name: mongodb
+    environment:
+      - TZ=America/Edmonton
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-db-data:/data
+        
 volumes:
   node-red-data:
+  mongo-db-data:

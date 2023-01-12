@@ -31,5 +31,12 @@ namespace Firefly_iii_pp_Runner.API.Extensions
                 .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
                 .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
+
+        public static IServiceCollection AddMongoServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
+            services.AddSingleton<MongoService>();
+            return services;
+        }
     }
 }

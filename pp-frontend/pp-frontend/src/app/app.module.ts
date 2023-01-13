@@ -8,6 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 // other
 import { HttpClientModule } from "@angular/common/http";
@@ -35,6 +39,10 @@ import { TestsComponent } from './tests/tests.component';
     MatSidenavModule,
     MatTreeModule,
     MatIconModule,
+    MatCardModule,
+    MatMenuModule,
+    MatInputModule,
+    FormsModule,
     HttpClientModule,
   ],
   providers: [],

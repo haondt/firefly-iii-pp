@@ -2,24 +2,19 @@ import { Component } from '@angular/core';
 import { iif, map, mergeMap, of } from 'rxjs';
 import { FolderContentModel } from '../models/FolderContent';
 import { TestModel } from '../models/Test';
+import { FolderModel } from '../models/Folder';
 import { MongoDbService } from '../services/MongoDb';
 import { TestBuilderService } from '../services/TestBuilder';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { TreeNode } from '../models/TreeNode';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CheckModel } from '../models/Check';
 
 @Component({
   selector: 'app-tests',
   templateUrl: './tests.component.html',
   styleUrls: ['./tests.component.scss'],
-  animations: [
-    trigger('slideVertical', [
-      state('*', style({height:0})),
-      state('show', style({height:'*'})),
-      transition('* => *', [animate('400ms cubic-bezier(0.25,0.8,0.25,1)')])
-    ])
-  ]
 })
 export class TestsComponent {
   test_id = '0';
@@ -45,6 +40,38 @@ export class TestsComponent {
   saveTestsToMongo() {
     console.log(this.dataSource.data);
     //this.mongo.setTestData(this.test_id, this.tests);
+  }
+
+  addTestNode(parent: any) {
+    if (parent instanceof FolderModel){
+      parent.items.push(new TestModel());
+      const d = this.dataSource.data;
+      this.dataSource.data = [];
+      this.dataSource.data = d;
+      if (!this.treeControl.isExpanded(parent)){
+        this.treeControl.expand(parent);
+      }
+    } else {
+      throw new TypeError(`Expected object of type FolderModel but received ${parent.constructor.name}`);
+    }
+  }
+
+  addFolderNode(parent: any) {
+    if (parent instanceof FolderModel){
+      parent.items.push(new FolderModel());
+      const d = this.dataSource.data;
+      this.dataSource.data = [];
+      this.dataSource.data = d;
+      if (!this.treeControl.isExpanded(parent)){
+        this.treeControl.expand(parent);
+      }
+    } else {
+      throw new TypeError(`Expected object of type FolderModel but received ${parent.constructor.name}`);
+    }
+  }
+
+  isFolderNode(node: any){
+    return node instanceof FolderModel;
   }
 
 

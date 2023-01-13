@@ -14,12 +14,44 @@
         </div>
     </div>
     <div class="content-section">
+        <mat-card>
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tests-tree">
+            <!-- leaf node-->
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-                {{ node.name }} (leaf)
+                <div *ngIf="isFolderNode(node)" class="tests-leaf-node-container" [class.force-show]="leafFolderMenuOpen.menuOpen">
+                    <div class="tests-leaf-node">
+                        <button mat-icon-button matTreeNodeToggle>
+                            <mat-icon class="mat-icon-rtl-mirror">expand_more</mat-icon>
+                        </button>
+                        <input class="node-name-input" type="text" [(ngModel)]="node.name">
+                        <span class="spacer"></span>
+                        <button mat-icon-button class="leaf-node-more" [class.force-show]="leafFolderMenuOpen.menuOpen" [matMenuTriggerFor]="leafFolderMenu" #leafFolderMenuOpen="matMenuTrigger">
+                            <mat-icon>more_verti</mat-icon>
+                        </button>
+                        <mat-menu #leafFolderMenu>
+                            <ng-template matMenuContent>
+                                <div class="menu-content">
+                                    <button mat-button (click)="addTestNode(node)">Add Test</button>
+                                    <button mat-button (click)="addFolderNode(node)">Add Folder</button>
+                                    <button mat-button color="warn">Delete</button>
+                                    <button mat-button color="accent">Sort contents</button>
+                                    <button mat-button><mat-icon>arrow_drop_up</mat-icon></button>
+                                    <button mat-button><mat-icon>arrow_drop_down</mat-icon></button>
+                                </div>
+                            </ng-template>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div *ngIf="!isFolderNode(node)" class="tests-leaf-node-container">
+                    <div class="tests-leaf-node">
+                        {{ node.name }} (leaf)
+                        <span class="spacer"></span>
+                    </div>
+                </div>
             </mat-tree-node>
+            <!-- parent node -->
             <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-                <div class="mat-tree-node">
+                <div class="tests-parent-node">
                     <button mat-icon-button matTreeNodeToggle>
                         <!--TODO: make this a nice css rotation instead of changing the icon -->
                         <mat-icon class="mat-icon-rtl-mirror">
@@ -27,15 +59,18 @@
                         </mat-icon>
                     </button>
                     {{ node.name }} (not leaf)
-                    <button mat-raised-button>Add Test</button>
-                    <button mat-raised-button>Add Folder</button>
+                    <span class="spacer"></span>
+                    <button mat-stroked-button (click)="addTestNode(node)">Add Test</button>
+                    <button mat-stroked-button (click)="addFolderNode(node)">Add Folder</button>
+                    <button mat-stroked-button color="warn">Delete</button>
 
                 </div>
                 <!--<div [class.tests-tree-invisible]="!treeControl.isExpanded(node)" role="group">-->
-                <div [@slideVertical]="treeControl.isExpanded(node)? 'show' : null" class="tree-node-container">
+                <div [class.hidden-node]="!treeControl.isExpanded(node)" class="tree-node-container">
                     <ng-container matTreeNodeOutlet></ng-container>
                 </div>
             </mat-nested-tree-node>
         </mat-tree>
+</mat-card>
     </div>
 </div>

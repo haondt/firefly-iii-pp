@@ -1,7 +1,8 @@
 import { FolderContentModel } from './FolderContent';
 
 export class FolderModel implements FolderContentModel {
-    name: string = "";
+    name = "New Folder";
+    name_mutable = true;
     items: FolderContentModel[] = [];
     type: string = "folder";
 

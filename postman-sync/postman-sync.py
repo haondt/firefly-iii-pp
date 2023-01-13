@@ -335,16 +335,16 @@ def easy_generate_test(name, request_body, *requirement_generators):
 
 # work
 #sync_collections_from_file_to_cloud()
-#sync_collections_from_cloud_to_file()
+sync_collections_from_cloud_to_file()
 #sort_collections_in_cloud()
-add_test_to_collection_in_cloud(config.get_test_collection_name())(
-    easy_generate_test("Dollarama",
-        #easy_generate_default_request_body(),
-        easy_generate_request_body_from_transaction(2126,
-            generate_kvp_from_transaction("destination_name"),
-            generate_kvp_from_transaction("source_name"),
-            generate_kvp_from_transaction("description")
-        ),
-        easy_generate_destination_requirement(),
-    )
-)
+#add_test_to_collection_in_cloud(config.get_test_collection_name())(
+#    easy_generate_test("Dollarama",
+#        #easy_generate_default_request_body(),
+#        easy_generate_request_body_from_transaction(2126,
+#            generate_kvp_from_transaction("destination_name"),
+#            generate_kvp_from_transaction("source_name"),
+#            generate_kvp_from_transaction("description")
+#        ),
+#        easy_generate_destination_requirement(),
+#    )
+#)

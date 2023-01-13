@@ -1,4 +1,6 @@
-export interface FolderContentModel {
-    name: string;
+import { TreeNode } from "./TreeNode";
+
+export interface FolderContentModel extends TreeNode {
     type: string;
+    items?: FolderContentModel[];
 }

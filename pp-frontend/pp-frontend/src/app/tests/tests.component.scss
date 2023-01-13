@@ -9,3 +9,13 @@
     margin: 25px;
     gap: 25px;
 }
+
+.tests-tree div[role=group] > .mat-tree-node {
+    padding-left: 40px;
+
+}
+
+.tree-node-container {
+    overflow: hidden;
+    padding-left: 40px;
+}

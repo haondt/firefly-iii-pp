@@ -14,7 +14,6 @@ namespace Firefly_iii_pp_Runner.API.Controllers
     [ApiController]
     [Route("[controller]")]
     [ExceptionFilter(typeof(ArgumentException), 400)]
-    [ExceptionFilter(typeof(KeyNotFoundException), 404)]
     [InheritableExceptionFilter(typeof(Exception), 500)]
     [Produces("application/json")]
     public class MongoController : ControllerBase
@@ -28,12 +27,12 @@ namespace Firefly_iii_pp_Runner.API.Controllers
 
         [HttpGet]
         [Route("tests/{id}")]
-        public async Task<JToken> GetTests(string id)
+        public async Task<IActionResult> GetTests(string id)
         {
             var tests = await _mongoService.GetTest(id);
             if (tests == null)
-                throw new KeyNotFoundException(id);
-            return tests;
+                return new NotFoundObjectResult(id);
+            return new OkObjectResult(tests);
         }
 
         [HttpPost]

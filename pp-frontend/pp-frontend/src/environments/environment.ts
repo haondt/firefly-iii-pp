@@ -1,3 +1,3 @@
 export const environment = {
-    tests_path: '../../../../tests.json'
+    api_host: 'localhost:49153'
 }

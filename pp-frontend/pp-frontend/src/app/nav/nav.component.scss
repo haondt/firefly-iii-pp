@@ -21,3 +21,9 @@ mat-toolbar.mat-toolbar {
     display: flex;
     flex-direction: column;
 }
+
+div.links {
+    display:flex;
+    flex-direction: row;
+    gap: 10px;
+}

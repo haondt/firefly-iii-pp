@@ -74,6 +74,72 @@ export class TestsComponent {
     return node instanceof FolderModel;
   }
 
+  isTestNode(node: any){
+    return node instanceof TestModel;
+  }
 
+  isExpanded(node: TreeNode) {
+    if ('expanded' in node.meta) {
+      if (node.meta['expanded'] === true) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  expandNode(node: TreeNode) {
+    if(this.isTestNode(node)) {
+      node.meta['expanded'] = true;
+    }
+  }
+
+  collapseNode(node: TreeNode) {
+    if(this.isTestNode(node)) {
+      node.meta['expanded'] = false;
+    }
+  }
+
+  toggleExpanded(node: TreeNode) {
+    if (this.isExpanded(node)) {
+      this.collapseNode(node);
+    } else {
+      this.expandNode(node);
+    }
+  }
+
+  isChecksExpanded(node: TestModel) {
+    if ('checks_expanded' in node.meta) {
+      if (node.meta['checks_expanded'] === true) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  toggleChecksExpanded(node: TestModel) {
+    if (this.isCasesExpanded(node)) {
+      node.meta['checks_expanded'] = false;
+    } else {
+      node.meta['checks_expanded'] = true;
+    }
+  }
+
+
+  isCasesExpanded(node: TestModel) {
+    if ('cases_expanded' in node.meta) {
+      if (node.meta['cases_expanded'] === true) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  toggleCasesExpanded(node: TestModel) {
+    if (this.isCasesExpanded(node)) {
+      node.meta['cases_expanded'] = false;
+    } else {
+      node.meta['cases_expanded'] = true;
+    }
+  }
 
 }

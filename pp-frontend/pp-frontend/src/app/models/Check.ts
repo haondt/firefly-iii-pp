@@ -6,6 +6,7 @@ export class CheckModel implements TreeNode {
     name_mutable = true;
     key: string|undefined;
     value: string|undefined;
+    meta: { [key: string]: any; } = {};
 
     public constructor(init?:Partial<CheckModel>) {
         Object.assign(this, init);

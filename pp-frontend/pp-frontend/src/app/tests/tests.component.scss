@@ -1,3 +1,5 @@
+/* #region page */
+
 .button-row {
     display: flex;
     flex-direction: row;
@@ -12,6 +14,13 @@
     gap: 15px;
 }
 
+.mat-mdc-card {
+    padding: 10px;
+}
+
+/* #endregion */
+
+/* #region tree control */
 
 .tree-node-container {
     padding-left: 57px;
@@ -21,6 +30,14 @@
     display: none;
 }
 
+.mat-tree-node {
+    flex-direction: column;
+}
+
+/* #endregion */
+
+/* #region parent nodes */
+
 .tests-parent-node {
     display:flex;
     flex-direction: row;
@@ -28,6 +45,16 @@
     gap: 10px;
     margin-right: 10px;
 }
+
+.tests-parent-node-container {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+/* #endregion */
+
+/* #region leaf nodes */
 
 .tests-leaf-node {
     display:flex;
@@ -54,27 +81,9 @@
     flex: 1 1 auto;
 }
 
-.mat-mdc-card {
-    padding: 10px;
-}
+/* #endregion */
 
-.leaf-node-more {
-    display: none;
-}
-
-.tests-leaf-node-container:hover .leaf-node-more {
-    display: inline-block;
-}
-
-.leaf-node-more.force-show {
-    display: inline-block;
-}
-
-
-.menu-content {
-    display: flex;
-    flex-direction: column;
-}
+/* #region input field */
 
 mat-form-field {
     margin-bottom: -1.25em;
@@ -92,3 +101,67 @@ mat-form-field {
 .node-name-input:focus {
     backdrop-filter: brightness(120%);
 }
+
+/* #endregion */
+
+/* #region menu */
+
+.leaf-node-more {
+    display: none;
+}
+
+.leaf-node-more.force-show {
+    display: inline-block;
+}
+
+.tests-leaf-node-container:hover .leaf-node-more {
+    display: inline-block;
+}
+
+.menu-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* #endregion */
+
+/* #region test node */
+
+.tests-test-node-container-background {
+    background-color: #366258;
+}
+
+.tests-test-node-row {
+    display: flex;
+    width: 100%;
+}
+
+.tests-test-node-content-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.tests-test-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tests-test-node-content.hidden-node {
+    display: none;
+}
+
+.tests-test-node-content-wrapper {
+    margin-left: 80px;
+    width: 100%;
+}
+.tests-test-node-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* #endregion */
+

@@ -8,6 +8,7 @@ export class TestModel implements FolderContentModel {
     name_mutable = true;
     checks: CheckModel[] = [];
     cases: CaseModel[] = [];
+    meta: { [key: string]: any; } = {};
 
     public constructor(init?:Partial<TestModel>) {
         Object.assign(this, init);

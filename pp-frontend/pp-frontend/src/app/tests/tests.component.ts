@@ -142,4 +142,7 @@ export class TestsComponent {
     }
   }
 
+
+  // TODO: make sure you cant put a folder in its own subfolder (use the material thing that pops up at the bottom of the screen)
+
 }

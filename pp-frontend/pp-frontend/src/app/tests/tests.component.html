@@ -17,8 +17,8 @@
         <mat-card>
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tests-tree">
             <!-- leaf node-->
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-                <div *ngIf="isFolderNode(node)" class="tests-leaf-node-container" [class.force-show]="leafFolderMenuOpen.menuOpen">
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle cdkDropList>
+                <div *ngIf="isFolderNode(node)" class="tests-leaf-node-container" [class.force-show]="leafFolderMenuOpen.menuOpen" cdkDrag>
                     <div class="tests-leaf-node">
                         <button mat-icon-button matTreeNodeToggle>
                             <mat-icon class="mat-icon-rtl-mirror">expand_more</mat-icon>
@@ -42,8 +42,8 @@
                         </mat-menu>
                     </div>
                 </div>
-                <div class="tests-test-node-container-background tests-leaf-node-container">
-                    <div *ngIf="isTestNode(node)" class="tests-leaf-node-container tests-test-node-container">
+                <div class="tests-test-node-container-background tests-leaf-node-container" cdkDrag>
+                    <div *ngIf="isTestNode(node)" class="tests-test-node-container">
                         <div class="tests-test-node">
                             <div class="tests-test-node-row">
                                 <button mat-icon-button (click)="toggleExpanded(node)"><mat-icon>{{ isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon></button>
@@ -66,8 +66,8 @@
                 </div>
             </mat-tree-node>
             <!-- parent node -->
-            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-                <div class="tests-parent-node">
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" cdkDropList>
+                <div class="tests-parent-node" cdkDrag>
                     <div *ngIf="isFolderNode(node)" class="tests-parent-node-container" [class.force-show]="parentFolderMenuOpen.menuOpen">
                         <button mat-icon-button matTreeNodeToggle>
                             <mat-icon class="mat-icon-rtl-mirror">

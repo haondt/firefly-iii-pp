@@ -24,6 +24,9 @@
 
 .tree-node-container {
     padding-left: 57px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .hidden-node {
@@ -32,6 +35,12 @@
 
 .mat-tree-node {
     flex-direction: column;
+}
+
+.mat-nested-tree-node {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* #endregion */
@@ -43,13 +52,21 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    margin-right: 10px;
 }
 
 .tests-parent-node-container {
     display: flex;
     width: 100%;
     gap: 10px;
+    border-radius: 25px;
+}
+
+.tests-parent-node-container:hover {
+    backdrop-filter: brightness(120%);
+}
+
+.tests-parent-node-container.force-show {
+    backdrop-filter: brightness(120%);
 }
 
 /* #endregion */
@@ -65,8 +82,7 @@
 
 .tests-leaf-node-container {
     width: 100%;
-    border-radius: 30px;
-    margin-right: 10px;
+    border-radius: 25px;
 }
 
 .tests-leaf-node-container:hover {
@@ -118,6 +134,19 @@ mat-form-field {
     display: inline-block;
 }
 
+.parent-node-more {
+    display: none;
+}
+
+.parent-node-more.force-show {
+    display: inline-block;
+}
+
+.tests-parent-node-container:hover .parent-node-more {
+    display: inline-block;
+}
+
+
 .menu-content {
     display: flex;
     flex-direction: column;
@@ -133,7 +162,6 @@ mat-form-field {
 
 .tests-test-node-row {
     display: flex;
-    width: 100%;
 }
 
 .tests-test-node-content-row {
@@ -147,7 +175,6 @@ mat-form-field {
 .tests-test-node {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .tests-test-node-content.hidden-node {
@@ -155,8 +182,7 @@ mat-form-field {
 }
 
 .tests-test-node-content-wrapper {
-    margin-left: 80px;
-    width: 100%;
+    margin-left: 57px;
 }
 .tests-test-node-content {
     display: flex;

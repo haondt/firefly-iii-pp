@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
@@ -44,6 +45,7 @@ import { TestsComponent } from './tests/tests.component';
     MatCardModule,
     MatMenuModule,
     MatInputModule,
+    MatSnackBarModule,
     FormsModule,
     DragDropModule,
     HttpClientModule,

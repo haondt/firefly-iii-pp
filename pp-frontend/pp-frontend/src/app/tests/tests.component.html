@@ -9,16 +9,17 @@
     </div>
     <div class="content-section">
         <div class="button-row">
-            <button mat-raised-button>Add Test</button>
-            <button mat-raised-button>Add Folder</button>
+            <button mat-raised-button (click)="addTestNodeToRoot()">Add Test</button>
+            <button mat-raised-button (click)="addFolderNodeToRoot()">Add Folder</button>
         </div>
     </div>
     <div class="content-section">
         <mat-card>
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tests-tree">
             <!-- leaf node-->
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle cdkDropList>
-                <div *ngIf="isFolderNode(node)" class="tests-leaf-node-container" [class.force-show]="leafFolderMenuOpen.menuOpen" cdkDrag>
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle cdkDropList (cdkDropListDropped)="drop(node)">
+                <div *ngIf="isFolderNode(node)" class="tests-leaf-node-container" [class.force-show]="leafFolderMenuOpen.menuOpen" cdkDrag
+                    (mouseenter)="mouseEnter(node)" (mouseleave)="mouseLeave(node)">
                     <div class="tests-leaf-node">
                         <button mat-icon-button matTreeNodeToggle>
                             <mat-icon class="mat-icon-rtl-mirror">expand_more</mat-icon>
@@ -42,7 +43,8 @@
                         </mat-menu>
                     </div>
                 </div>
-                <div class="tests-test-node-container-background tests-leaf-node-container" cdkDrag>
+                <div class="tests-test-node-container-background tests-leaf-node-container" cdkDrag
+                    (mouseenter)="mouseEnter(node)" (mouseleave)="mouseLeave(node)">
                     <div *ngIf="isTestNode(node)" class="tests-test-node-container">
                         <div class="tests-test-node">
                             <div class="tests-test-node-row">
@@ -66,8 +68,9 @@
                 </div>
             </mat-tree-node>
             <!-- parent node -->
-            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" cdkDropList>
-                <div class="tests-parent-node" cdkDrag>
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" cdkDropList (cdkDropListDropped)="drop(node)">
+                <div class="tests-parent-node" cdkDrag
+                    (mouseenter)="mouseEnter(node)" (mouseleave)="mouseLeave(node)">
                     <div *ngIf="isFolderNode(node)" class="tests-parent-node-container" [class.force-show]="parentFolderMenuOpen.menuOpen">
                         <button mat-icon-button matTreeNodeToggle>
                             <mat-icon class="mat-icon-rtl-mirror">

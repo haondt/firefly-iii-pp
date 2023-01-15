@@ -158,6 +158,9 @@ mat-form-field {
     background-color: #366258;
 }
 
+.tests-test-node-container:hover {
+    backdrop-filter: brightness(120%);
+}
 
 .tests-test-node-row {
     display: flex;

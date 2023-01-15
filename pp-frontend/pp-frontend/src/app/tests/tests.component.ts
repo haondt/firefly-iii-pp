@@ -139,4 +139,12 @@ export class TestsComponent {
     this.hovered.items.unshift(node);
     this.reloadData();
   }
+
+  deleteNode(node: TreeNode) {
+    if (!removeFromParent(this.dataSource.data, node)){
+      throw new Error(`Unable to remove node ${node.name} from its parent!`);
+    }
+    this.reloadData();
+  }
 }
+

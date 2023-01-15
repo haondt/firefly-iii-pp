@@ -34,7 +34,7 @@
                                 <div class="menu-content">
                                     <button mat-button (click)="addTestNode(node)">Add Test</button>
                                     <button mat-button (click)="addFolderNode(node)">Add Folder</button>
-                                    <button mat-button color="warn">Delete</button>
+                                    <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                     <button mat-button color="accent">Sort contents</button>
                                 </div>
                             </ng-template>
@@ -55,7 +55,7 @@
                                 <mat-menu #testMenu>
                                     <ng-template matMenuContent>
                                         <div class="menu-content">
-                                            <button mat-button color="warn">Delete</button>
+                                            <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                             <button mat-button>Add Check</button>
                                             <button mat-button>Add Check From Transaction</button>
                                             <button mat-button>Add Case</button>
@@ -99,7 +99,7 @@
                                 <div class="menu-content">
                                     <button mat-button (click)="addTestNode(node)">Add Test</button>
                                     <button mat-button (click)="addFolderNode(node)">Add Folder</button>
-                                    <button mat-button color="warn">Delete</button>
+                                    <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                     <button mat-button color="accent">Sort contents</button>
                                 </div>
                             </ng-template>

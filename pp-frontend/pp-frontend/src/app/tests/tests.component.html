@@ -36,8 +36,6 @@
                                     <button mat-button (click)="addFolderNode(node)">Add Folder</button>
                                     <button mat-button color="warn">Delete</button>
                                     <button mat-button color="accent">Sort contents</button>
-                                    <button mat-button><mat-icon>arrow_drop_up</mat-icon></button>
-                                    <button mat-button><mat-icon>arrow_drop_down</mat-icon></button>
                                 </div>
                             </ng-template>
                         </mat-menu>
@@ -50,6 +48,20 @@
                             <div class="tests-test-node-row">
                                 <button mat-icon-button (click)="toggleExpanded(node)"><mat-icon>{{ isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon></button>
                                 <input class="node-name-input" type="text" [(ngModel)]="node.name">
+                                <span class="spacer"></span>
+                                <button mat-icon-button class="test-node-more" [class.force-show]="testMenuOpen.menuOpen" [matMenuTriggerFor]="testMenu" #testMenuOpen="matMenuTrigger">
+                                    <mat-icon>more_verti</mat-icon>
+                                </button>
+                                <mat-menu #testMenu>
+                                    <ng-template matMenuContent>
+                                        <div class="menu-content">
+                                            <button mat-button color="warn">Delete</button>
+                                            <button mat-button>Add Check</button>
+                                            <button mat-button>Add Check From Transaction</button>
+                                            <button mat-button>Add Case</button>
+                                        </div>
+                                    </ng-template>
+                                </mat-menu>
                             </div>
                             <div class="tests-test-node-content-wrapper">
                                 <div class="tests-test-node-row tests-test-node-content" [class.hidden-node]="!isExpanded(node)">
@@ -89,8 +101,6 @@
                                     <button mat-button (click)="addFolderNode(node)">Add Folder</button>
                                     <button mat-button color="warn">Delete</button>
                                     <button mat-button color="accent">Sort contents</button>
-                                    <button mat-button><mat-icon>arrow_drop_up</mat-icon></button>
-                                    <button mat-button><mat-icon>arrow_drop_down</mat-icon></button>
                                 </div>
                             </ng-template>
                         </mat-menu>

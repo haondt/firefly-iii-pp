@@ -119,6 +119,17 @@ mat-form-field {
 /* #endregion */
 
 /* #region menu */
+.parent-node-more {
+    display: none;
+}
+
+.parent-node-more.force-show {
+    display: inline-block;
+}
+
+.tests-parent-node-container:hover .parent-node-more {
+    display: inline-block;
+}
 
 .leaf-node-more {
     display: none;
@@ -132,22 +143,27 @@ mat-form-field {
     display: inline-block;
 }
 
-.parent-node-more {
+.test-node-more {
     display: none;
 }
 
-.parent-node-more.force-show {
+.test-node-more.force-show {
     display: inline-block;
 }
 
-.tests-parent-node-container:hover .parent-node-more {
+.tests-test-node-container:hover .test-node-more {
     display: inline-block;
 }
+
 
 
 .menu-content {
     display: flex;
     flex-direction: column;
+}
+
+.menu-content > button {
+    justify-content: left;
 }
 
 /* #endregion */

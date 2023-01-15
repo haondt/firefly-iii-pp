@@ -11,6 +11,7 @@ import { TreeNode } from '../models/TreeNode';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CheckModel } from '../models/Check';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { isDescendantOf, removeFromParent } from './Utils/TreeNode';
 
 @Component({
   selector: 'app-tests',
@@ -20,8 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TestsComponent {
   test_id = '0';
 
-  treeControl = new NestedTreeControl<FolderContentModel>(m => m.items);
-  dataSource = new MatTreeNestedDataSource<FolderContentModel>();
+  treeControl = new NestedTreeControl<TreeNode>(m => m.items);
+  dataSource = new MatTreeNestedDataSource<TreeNode>();
   hovered: TreeNode | null = null;
 
   constructor(private testBuilder: TestBuilderService, private mongo: MongoDbService, private snackBar: MatSnackBar) {
@@ -50,25 +51,29 @@ export class TestsComponent {
     this.dataSource.data = d;
   }
 
+  isFolderNode = (node: any) => node instanceof FolderModel;
+  isTestNode = (node: any) => node instanceof TestModel;
+
+  addChild(parent: TreeNode, child: TreeNode) {
+    parent.items?.unshift(child);
+    if(!this.treeControl.isExpanded(parent)){
+      this.treeControl.expand(parent);
+    }
+  }
+
   addTestNode(parent: any) {
-    if (parent instanceof FolderModel){
-      parent.items.unshift(new TestModel());
+    if (this.isFolderNode(parent)) {
+      this.addChild(parent, new TestModel());
       this.reloadData();
-      if (!this.treeControl.isExpanded(parent)){
-        this.treeControl.expand(parent);
-      }
     } else {
       throw new TypeError(`Expected object of type FolderModel but received ${parent.constructor.name}`);
     }
   }
 
   addFolderNode(parent: any) {
-    if (parent instanceof FolderModel){
-      parent.items.unshift(new FolderModel());
+    if (this.isFolderNode(parent)) {
+      this.addChild(parent, new FolderModel());
       this.reloadData();
-      if (!this.treeControl.isExpanded(parent)){
-        this.treeControl.expand(parent);
-      }
     } else {
       throw new TypeError(`Expected object of type FolderModel but received ${parent.constructor.name}`);
     }
@@ -84,78 +89,22 @@ export class TestsComponent {
     this.reloadData();
   }
 
-  isFolderNode(node: any){
-    return node instanceof FolderModel;
-  }
-
-  isTestNode(node: any){
-    return node instanceof TestModel;
-  }
-
-  isExpanded(node: TreeNode) {
-    if ('expanded' in node.meta) {
-      if (node.meta['expanded'] === true) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  expandNode(node: TreeNode) {
-    if(this.isTestNode(node)) {
-      node.meta['expanded'] = true;
-    }
-  }
-
-  collapseNode(node: TreeNode) {
-    if(this.isTestNode(node)) {
-      node.meta['expanded'] = false;
-    }
-  }
-
-  toggleExpanded(node: TreeNode) {
-    if (this.isExpanded(node)) {
-      this.collapseNode(node);
-    } else {
-      this.expandNode(node);
-    }
-  }
-
-  isChecksExpanded(node: TestModel) {
-    if ('checks_expanded' in node.meta) {
-      if (node.meta['checks_expanded'] === true) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  toggleChecksExpanded(node: TestModel) {
-    if (this.isCasesExpanded(node)) {
-      node.meta['checks_expanded'] = false;
-    } else {
-      node.meta['checks_expanded'] = true;
-    }
-  }
-
-
-  isCasesExpanded(node: TestModel) {
-    if ('cases_expanded' in node.meta) {
-      if (node.meta['cases_expanded'] === true) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  toggleCasesExpanded(node: TestModel) {
-    if (this.isCasesExpanded(node)) {
-      node.meta['cases_expanded'] = false;
-    } else {
-      node.meta['cases_expanded'] = true;
-    }
-  }
-
+  checkNodeFieldAsBool = (node: TreeNode, fieldName: string) =>
+    fieldName in node.meta && node.meta[fieldName] === true;
+  toggleNodeFieldAsBool = (node: TreeNode, fieldName: string) =>
+    node.meta[fieldName] = !this.checkNodeFieldAsBool(node, fieldName);
+  isExpanded = (node: TreeNode) =>
+    this.checkNodeFieldAsBool(node, 'expanded');
+  toggleExpanded = (node: TreeNode) =>
+    this.toggleNodeFieldAsBool(node, 'expanded');
+  isChecksExpanded = (node: TestModel) =>
+    this.checkNodeFieldAsBool(node, 'checks_expanded');
+  toggleChecksExpanded = (node: TestModel) =>
+    this.toggleNodeFieldAsBool(node, 'checks_expanded');
+  isCasesExpanded = (node: TestModel) =>
+    this.checkNodeFieldAsBool(node, 'cases_expanded');
+  toggleCasesExpanded = (node: TestModel) =>
+    this.toggleNodeFieldAsBool(node, 'cases_expanded');
 
   mouseEnter(node: TreeNode) {
     this.hovered = node;
@@ -172,14 +121,14 @@ export class TestsComponent {
       return;
     }
 
-    if (this.isDescendantOf(node, this.hovered)) {
+    if (isDescendantOf(node, this.hovered)) {
       this.snackBar.open('The folder cannot be moved into its own subfolder.', 'Dismiss', {
         duration: 3000
       });
       return;
     }
 
-    if (!this.removeFromParent(node)){
+    if (!removeFromParent(this.dataSource.data, node)){
       throw new Error(`Unable to remove node ${node.name} from its parent!`);
     }
 
@@ -190,61 +139,4 @@ export class TestsComponent {
     this.hovered.items.unshift(node);
     this.reloadData();
   }
-
-  isDescendantOf(parent: TreeNode, node: TreeNode) {
-    if (parent.items === null || parent.items === undefined || parent.items.length === 0) {
-      return false;
-    }
-
-    for(let child of parent.items) {
-      if (node == child || this.isDescendantOf(child, node)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  removeFromParent(node: FolderContentModel) {
-    if (this.dataSource.data.length == 0) {
-      return false;
-    }
-
-    for (let i=0; i < this.dataSource.data.length; i++) {
-      let ancestor = this.dataSource.data[i];
-      if (ancestor == node) {
-        this.dataSource.data.splice(i, 1);
-        return true;
-      }
-      if (this._removeFromParent(ancestor, node)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  _removeFromParent(ancestor: FolderContentModel, node: TreeNode) {
-    if (ancestor.items === null
-      || ancestor.items === undefined
-      || ancestor.items.length === 0) {
-        return false;
-    }
-
-    for(let i=0; i < ancestor.items.length; i++) {
-      let child = ancestor.items[i];
-      if (child == node) {
-        ancestor.items.splice(i, 1);
-        return true;
-      }
-
-      if (this._removeFromParent(child, node)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-
 }

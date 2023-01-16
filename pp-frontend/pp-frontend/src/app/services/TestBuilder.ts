@@ -44,6 +44,7 @@ export class TestBuilderService {
             ]
         }
     ]
+
     public build(tests: any): FolderContentModel[] {
         return tests.map((t: any) => this.buildFolderContent(t));
     }
@@ -55,32 +56,62 @@ export class TestBuilderService {
     private buildFolderContent(folderContent: any) : FolderContentModel {
         if (folderContent.type === "folder") {
             return new FolderModel({
-                "name": folderContent.name,
-                "items": folderContent.items.map(this.buildFolderContent)
+                name: folderContent.name,
+                items: folderContent.items.map(this.buildFolderContent),
+                meta: folderContent.meta ?? {}
             })
         } else if (folderContent.type === "test") {
             return new TestModel({
-                "name": folderContent.name,
-                "checks": folderContent.checks.map((c: any) => new CheckModel({
-                    "name": c.name,
-                    "key": c.key,
-                    "value": c.value,
+                name: folderContent.name,
+                checks: folderContent.checks.map((c: any) => new CheckModel({
+                    name: c.name,
+                    key: c.key,
+                    value: c.value,
+                    meta: c.meta ?? {}
                 })),
-                "cases": folderContent.cases.map((c: any) => new CaseModel({
+                cases: folderContent.cases.map((c: any) => new CaseModel({
                     body: Object.entries<string>(c.body).reduce((o: {key: string, value: string}[], [key, value]) => (o.push({
                         key: key,
                         value: value
-                    }), o), [])
-                }))
+                    }), o), []),
+                    meta: c.meta ?? {}
+                })),
+                meta: folderContent.meta ?? {}
             })
         } else {
             throw new Error(`Unrecognized folder content type: ${ folderContent.type }`);
         }
     }
 
-
-    private aSurpriseToolThatWillHelpUsLater(result: any) {
-        result.reduce((d: {[k: string]: string}, kvp: {key: string, value: string}) => (d[kvp.key]=kvp.value, d), {});
+    public unBuild(tests: FolderContentModel[]): Object {
+        return tests.map(x => this.unBuildFolderContent(x));
     }
 
+    public foo(i: any): any {
+        return i;
+    }
+
+    private unBuildFolderContent(model: FolderContentModel): Object {
+        if (model instanceof FolderModel) {
+            return {
+                name: model.name,
+                items: model.items.map((i: FolderContentModel) => this.unBuildFolderContent(i)) ?? [],
+                type: model.type,
+                meta: model.meta
+            };
+        } else if (model instanceof TestModel) {
+            return {
+                name: model.name,
+                checks: model.checks,
+                cases: model.cases.map(c => { return {
+                    body: c.body.reduce((d: {[k: string]: string}, kvp: {key: string, value: string}) => (d[kvp.key]=kvp.value, d), {}),
+                    meta: c.meta
+                }}),
+                type: model.type,
+                meta: model.meta ?? {}
+            }
+        } else {
+            throw new Error(`Unrecognized folder content type: ${ model.type }`);
+        }
+    }
 }

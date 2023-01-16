@@ -22,7 +22,7 @@ import { CaseModel } from '../models/Case';
   styleUrls: ['./tests.component.scss'],
 })
 export class TestsComponent {
-  test_id = '1';
+  test_id = '0';
 
   treeControl = new NestedTreeControl<TreeNode>(m => m.items);
   dataSource = new MatTreeNestedDataSource<TreeNode>();
@@ -48,8 +48,9 @@ export class TestsComponent {
   }
 
   saveTestsToMongo() {
-    console.log(this.dataSource.data);
-    //this.mongo.setTestData(this.test_id, this.tests);
+    this.mongo.setTestData(
+      this.test_id, this.testBuilder.unBuild(
+        this.dataSource.data as FolderContentModel[])).subscribe();
   }
 
   reloadData() {

@@ -12,7 +12,8 @@ builder.Services.AddCors(o =>
     o.AddPolicy(name: CORS_POLICY,
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200");
+            policy.AllowAnyOrigin();
+            policy.AllowAnyHeader();
         });
 });
 builder.Services.AddFireflyIIIPPRunnerServices(builder.Configuration);

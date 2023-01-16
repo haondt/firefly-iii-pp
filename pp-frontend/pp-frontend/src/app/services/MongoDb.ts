@@ -1,7 +1,7 @@
 
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { catchError, iif, map, mergeMap, Observable, of, throwError } from "rxjs";
 
 @Injectable({
@@ -27,7 +27,7 @@ export class MongoDbService {
         );
     }
 
-    setTestData(id: string, testData: object) {
+    setTestData(id: string, testData: object): Observable<Object> {
+        return this.client.post(`${environment.API_HOST}/mongo/tests/${id}`, testData);
     }
-
 }

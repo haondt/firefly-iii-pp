@@ -50,6 +50,12 @@
     gap: 10px;
 }
 
+.tests-tree {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 /* #endregion */
 
 /* #region parent nodes */
@@ -128,6 +134,9 @@ mat-form-field {
 /* #endregion */
 
 /* #region menu */
+.menu-spacer {
+    height: 20px;
+}
 .parent-node-more {
     display: none;
 }

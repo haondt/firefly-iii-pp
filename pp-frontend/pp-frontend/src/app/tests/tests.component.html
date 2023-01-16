@@ -43,8 +43,9 @@
                                 <div class="menu-content">
                                     <button mat-button (click)="addTestNode(node)">Add Test</button>
                                     <button mat-button (click)="addFolderNode(node)">Add Folder</button>
-                                    <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                     <button mat-button color="accent">Sort contents</button>
+                                    <div class="menu-spacer"></div>
+                                    <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                 </div>
                             </ng-template>
                         </mat-menu>
@@ -64,10 +65,11 @@
                                 <mat-menu #testMenu>
                                     <ng-template matMenuContent>
                                         <div class="menu-content">
-                                            <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                             <button mat-button (click)="addCheck(node)">Add Check</button>
                                             <button mat-button (click)="addCheckFromTransaction(node)">Add Checks From Transaction</button>
                                             <button mat-button>Add Case</button>
+                                            <div class="menu-spacer"></div>
+                                            <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                         </div>
                                     </ng-template>
                                 </mat-menu>
@@ -121,8 +123,9 @@
                                 <div class="menu-content">
                                     <button mat-button (click)="addTestNode(node)">Add Test</button>
                                     <button mat-button (click)="addFolderNode(node)">Add Folder</button>
-                                    <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                     <button mat-button color="accent">Sort contents</button>
+                                    <div class="menu-spacer"></div>
+                                    <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                 </div>
                             </ng-template>
                         </mat-menu>

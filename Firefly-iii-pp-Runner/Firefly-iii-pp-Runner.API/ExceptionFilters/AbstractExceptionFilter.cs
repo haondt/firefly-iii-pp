@@ -6,8 +6,8 @@ namespace Firefly_iii_pp_Runner.API.ExceptionFilters
     public abstract class AbstractExceptionFilter : ExceptionFilterAttribute
     {
         protected readonly Type _exceptionType;
-        private readonly int _code;
-        private readonly string _message;
+        protected readonly int _code;
+        protected readonly string _message;
 
         public AbstractExceptionFilter(Type exceptionType, int code, string message = null)
         {

@@ -1,9 +1,11 @@
-﻿using Firefly_iii_pp_Runner.API.Models.FireflyIII;
+﻿using Firefly_iii_pp_Runner.API.Exceptions;
+using Firefly_iii_pp_Runner.API.Models.FireflyIII;
 using Firefly_iii_pp_Runner.API.Settings;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Web;
 
@@ -44,7 +46,11 @@ namespace Firefly_iii_pp_Runner.API.Services
         public async Task<TransactionDto> GetTransaction(string id)
         {
             var result = await _httpClient.GetAsync($"/api/v1/transactions/{id}");
-            result.EnsureSuccessStatusCode();
+            if (result.StatusCode == HttpStatusCode.NotFound)
+                throw new NotFoundException(id);
+            
+            else if (result.StatusCode != HttpStatusCode.OK)
+                throw new BadHttpRequestException(result.ReasonPhrase);
 
             var container = await result.Content.ReadFromJsonAsync<SingleTransactionContainerDto>();
             return container.Data;

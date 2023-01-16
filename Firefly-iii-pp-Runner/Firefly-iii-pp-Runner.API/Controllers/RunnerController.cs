@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Firefly_iii_pp_Runner.API.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    [ExceptionFilter(typeof(RunnerBusyException), 503, "A job is currently running")]
-    [InheritableExceptionFilter(typeof(Exception), 500)]
-    [Produces("application/json")]
-    public class RunnerController : ControllerBase
+    public class RunnerController : BaseController
     {
         private readonly ILogger<RunnerController> _logger;
         private readonly JobManager _jobManager;

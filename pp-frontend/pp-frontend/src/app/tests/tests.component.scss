@@ -14,9 +14,16 @@
     gap: 15px;
 }
 
+.content-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 .mat-mdc-card {
     padding: 10px;
 }
+
 
 /* #endregion */
 
@@ -110,6 +117,8 @@ mat-form-field {
     outline: none;
     color: white;
     padding: 15px;
+    border-radius: 25px;
+    backdrop-filter: brightness(110%);
 }
 
 .node-name-input:focus {
@@ -174,7 +183,7 @@ mat-form-field {
     background-color: #366258;
 }
 
-.tests-test-node-container:hover {
+.tests-test-node-row:not(.tests-test-node-content):hover {
     backdrop-filter: brightness(120%);
 }
 
@@ -205,6 +214,28 @@ mat-form-field {
 .tests-test-node-content {
     display: flex;
     flex-direction: column;
+}
+
+.checks-container {
+    margin-left: 57px;
+}
+
+.checks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.check {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.check > h1 {
+    margin-bottom: 0;
+    margin-left: 15px;
+    margin-right:  15px;
 }
 
 /* #endregion */

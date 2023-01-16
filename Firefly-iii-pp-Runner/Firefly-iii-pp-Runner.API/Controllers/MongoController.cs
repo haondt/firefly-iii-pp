@@ -11,12 +11,8 @@ using System.Text.Json;
 
 namespace Firefly_iii_pp_Runner.API.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    [ExceptionFilter(typeof(ArgumentException), 400)]
-    [InheritableExceptionFilter(typeof(Exception), 500)]
-    [Produces("application/json")]
-    public class MongoController : ControllerBase
+    public class MongoController : BaseController
     {
         private readonly MongoService _mongoService;
 
@@ -31,7 +27,8 @@ namespace Firefly_iii_pp_Runner.API.Controllers
         {
             var tests = await _mongoService.GetTest(id);
             if (tests == null)
-                return new NotFoundObjectResult(id);
+                throw new NotFoundException(id);
+                //return new NotFoundObjectResult(id);
             return new OkObjectResult(tests);
         }
 

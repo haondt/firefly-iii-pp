@@ -3,14 +3,23 @@
         <div class="button-row">
             <button mat-raised-button>Load test file</button>
             <button mat-raised-button>Export test file</button>
+            <button mat-raised-button>Load postman file</button>
+            <button mat-raised-button>Export postman file</button>
+        </div>
+        <div class="button-row">
             <button mat-raised-button color="primary">Run tests</button>
             <button mat-raised-button color="green" (click)="saveTestsToMongo()">Save Tests</button>
+            <span class="spacer"></span>
+            <button mat-raised-button color="warn" (click)="loadTestsFromMongo()">Discard changes</button>
         </div>
     </div>
+    <div></div>
     <div class="content-section">
         <div class="button-row">
             <button mat-raised-button (click)="addTestNodeToRoot()">Add Test</button>
             <button mat-raised-button (click)="addFolderNodeToRoot()">Add Folder</button>
+            <button mat-raised-button>Expand All</button>
+            <button mat-raised-button>Collapse All</button>
         </div>
     </div>
     <div class="content-section">
@@ -56,8 +65,8 @@
                                     <ng-template matMenuContent>
                                         <div class="menu-content">
                                             <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
-                                            <button mat-button>Add Check</button>
-                                            <button mat-button>Add Check From Transaction</button>
+                                            <button mat-button (click)="addCheck(node)">Add Check</button>
+                                            <button mat-button (click)="addCheckFromTransaction(node)">Add Checks From Transaction</button>
                                             <button mat-button>Add Case</button>
                                         </div>
                                     </ng-template>
@@ -68,6 +77,19 @@
                                     <div class="tests-test-node-content-row">
                                         <button mat-icon-button (click)="toggleChecksExpanded(node)"><mat-icon>{{ isChecksExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon></button>
                                         Checks
+                                    </div>
+                                    <div class="checks-container test-test-node-content-row" *ngIf="isChecksExpanded(node)">
+                                        <div class="checks">
+                                            <div class="check" *ngFor="let check of node.checks">
+                                                <input class="node-name-input" type="text" [(ngModel)]="check.name">
+                                                <mat-icon>chevron_right</mat-icon>
+                                                <input class="node-name-input" type="text" [(ngModel)]="check.key">
+                                                <h1>=</h1>
+                                                <input class="node-name-input" type="text" [(ngModel)]="check.value">
+                                                <span class="spacer"></span>
+                                                <button mat-icon-button (click)="removeCheck(node, check)" color="warn"><mat-icon>delete</mat-icon></button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="tests-test-node-content-row">
                                         <button mat-icon-button (click)="toggleCasesExpanded(node)"><mat-icon>{{ isCasesExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon></button>

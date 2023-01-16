@@ -12,9 +12,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // other
 import { HttpClientModule } from "@angular/common/http";
@@ -25,12 +30,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { TestsComponent } from './tests/tests.component';
+import { TransactionChecksDialog } from './tests/transaction-checks-dialog/transaction-checks-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     TestsComponent,
+    TransactionChecksDialog,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,13 @@ import { TestsComponent } from './tests/tests.component';
     MatMenuModule,
     MatInputModule,
     MatSnackBarModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatSelectModule,
     FormsModule,
+    ReactiveFormsModule,
     DragDropModule,
     HttpClientModule,
   ],

@@ -12,6 +12,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { CheckModel } from '../models/Check';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { isDescendantOf, removeFromParent } from './Utils/TreeNode';
+import { TransactionChecksDialog } from './transaction-checks-dialog/transaction-checks-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tests',
@@ -19,13 +21,17 @@ import { isDescendantOf, removeFromParent } from './Utils/TreeNode';
   styleUrls: ['./tests.component.scss'],
 })
 export class TestsComponent {
-  test_id = '0';
+  test_id = '1';
 
   treeControl = new NestedTreeControl<TreeNode>(m => m.items);
   dataSource = new MatTreeNestedDataSource<TreeNode>();
   hovered: TreeNode | null = null;
 
-  constructor(private testBuilder: TestBuilderService, private mongo: MongoDbService, private snackBar: MatSnackBar) {
+  constructor(
+    private testBuilder: TestBuilderService,
+    private mongo: MongoDbService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) {
     this.loadTestsFromMongo();
   }
 
@@ -105,6 +111,40 @@ export class TestsComponent {
     this.checkNodeFieldAsBool(node, 'cases_expanded');
   toggleCasesExpanded = (node: TestModel) =>
     this.toggleNodeFieldAsBool(node, 'cases_expanded');
+
+  addCheck(node: TestModel) {
+    node.checks.unshift(new CheckModel());
+    this.reloadData();
+  }
+  removeCheck(node: TestModel, check: CheckModel) {
+    let i = node.checks.indexOf(check);
+    if (i >= 0) {
+      node.checks.splice(i, 1);
+      this.reloadData();
+    }
+  }
+
+  addCheckFromTransaction(node: TestModel): void {
+    const dialogRef = this.dialog.open(TransactionChecksDialog, {
+      data: { }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      for (let kvp of result) {
+        node.checks.unshift(new CheckModel({
+          name: kvp.key
+            .replace(/[^_]+/gm, (w: string) => w[0].toUpperCase() + w.slice(1).toLowerCase())
+            .replace('_', ' '),
+          key: kvp.key,
+          value: kvp.value,
+          meta: {}
+        }));
+      }
+      this.reloadData();
+    });
+  }
+
+  // drag & drop
 
   mouseEnter(node: TreeNode) {
     this.hovered = node;

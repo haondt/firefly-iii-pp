@@ -18,7 +18,6 @@ namespace Firefly_iii_pp_Runner.API.Extensions
             services.AddSingleton<JobManager>();
 
             services.AddHttpClient<FireflyIIIService>()
-                .SetHandlerLifetime(TimeSpan.FromSeconds(5))
                 .AddPolicyHandler(GetRetryPolicy());
 
             return services;
@@ -27,9 +26,8 @@ namespace Firefly_iii_pp_Runner.API.Extensions
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
             return HttpPolicyExtensions
-                .HandleTransientHttpError()
-                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+                .HandleTransientHttpError() // firefly-iii sometimes gives socket errors
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(1));
         }
 
         public static IServiceCollection AddMongoServices(this IServiceCollection services, IConfiguration configuration)

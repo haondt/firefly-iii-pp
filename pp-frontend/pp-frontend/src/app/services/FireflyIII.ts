@@ -1,4 +1,3 @@
-
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
@@ -7,14 +6,15 @@ import { catchError, iif, map, mergeMap, Observable, of, throwError } from "rxjs
 @Injectable({
     providedIn: 'root'
 })
-export class MongoDbService {
+export class FireflyIIIService {
     constructor(private client: HttpClient) {
     }
 
-    getTestData(id: string): Observable<Object | null> {
-        return this.client.get(`${environment.API_HOST}/mongo/tests/${id}`, {
+    getTransactionData(id: string): Observable<Object | null> {
+
+        return this.client.get(`${environment.API_HOST}/firefly_iii/transactions/${id}`, {
             responseType: 'json',
-            observe: 'response'
+            observe: 'response',
         }).pipe(
             catchError(e => {
                 if (e.status === 404){

@@ -45,7 +45,7 @@ export class TestBuilderService {
         }
     ]
     public build(tests: any): FolderContentModel[] {
-        return tests.map(this.buildFolderContent);
+        return tests.map((t: any) => this.buildFolderContent(t));
     }
 
     public buildSample(): FolderContentModel[] {

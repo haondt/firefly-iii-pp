@@ -30,14 +30,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { TestsComponent } from './tests/tests.component';
-import { TransactionChecksDialog } from './tests/transaction-checks-dialog/transaction-checks-dialog.component';
+import { TransactionFieldsDialog } from './tests/transaction-fields-dialog/transaction-fields-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     TestsComponent,
-    TransactionChecksDialog,
+    TransactionFieldsDialog,
   ],
   imports: [
     BrowserModule,

@@ -12,8 +12,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { CheckModel } from '../models/Check';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { isDescendantOf, removeFromParent } from './Utils/TreeNode';
-import { TransactionChecksDialog } from './transaction-checks-dialog/transaction-checks-dialog.component';
+import { TransactionFieldsDialog } from './transaction-fields-dialog/transaction-fields-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CaseModel } from '../models/Case';
 
 @Component({
   selector: 'app-tests',
@@ -95,9 +96,9 @@ export class TestsComponent {
     this.reloadData();
   }
 
-  checkNodeFieldAsBool = (node: TreeNode, fieldName: string) =>
+  checkNodeFieldAsBool = (node: {meta: {[k: string]: Object}}, fieldName: string) =>
     fieldName in node.meta && node.meta[fieldName] === true;
-  toggleNodeFieldAsBool = (node: TreeNode, fieldName: string) =>
+  toggleNodeFieldAsBool = (node: {meta: {[k: string]: Object}}, fieldName: string) =>
     node.meta[fieldName] = !this.checkNodeFieldAsBool(node, fieldName);
   isExpanded = (node: TreeNode) =>
     this.checkNodeFieldAsBool(node, 'expanded');
@@ -111,6 +112,10 @@ export class TestsComponent {
     this.checkNodeFieldAsBool(node, 'cases_expanded');
   toggleCasesExpanded = (node: TestModel) =>
     this.toggleNodeFieldAsBool(node, 'cases_expanded');
+  isCaseExpanded = (node: CaseModel) =>
+    this.checkNodeFieldAsBool(node, 'expanded');
+  toggleCaseExpanded = (node: CaseModel) =>
+    this.toggleNodeFieldAsBool(node, 'expanded');
 
   addCheck(node: TestModel) {
     node.checks.unshift(new CheckModel());
@@ -123,24 +128,52 @@ export class TestsComponent {
       this.reloadData();
     }
   }
-
   addCheckFromTransaction(node: TestModel): void {
-    const dialogRef = this.dialog.open(TransactionChecksDialog, {
-      data: { }
+    const dialogRef = this.dialog.open(TransactionFieldsDialog, {
+      data: { title: 'Add checks from transaction' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      for (let kvp of result) {
-        node.checks.unshift(new CheckModel({
-          name: kvp.key
-            .replace(/[^_]+/gm, (w: string) => w[0].toUpperCase() + w.slice(1).toLowerCase())
-            .replace('_', ' '),
-          key: kvp.key,
-          value: kvp.value,
+      if (result) {
+        for (let kvp of result) {
+          node.checks.unshift(new CheckModel({
+            name: kvp.key
+              .replace(/[^_]+/gm, (w: string) => w[0].toUpperCase() + w.slice(1).toLowerCase())
+              .replace('_', ' '),
+            key: kvp.key,
+            value: kvp.value,
+            meta: {}
+          }));
+        }
+        this.reloadData();
+      }
+    });
+  }
+
+  addCase(node: TestModel) {
+    node.cases.unshift(new CaseModel());
+    this.reloadData();
+  }
+  removeCase(node: TestModel, _case: CaseModel) {
+    let i = node.cases.indexOf(_case);
+    if (i >= 0) {
+      node.cases.splice(i, 1);
+      this.reloadData();
+    }
+  }
+  addCaseFromTransaction(node: TestModel): void {
+    const dialogRef = this.dialog.open(TransactionFieldsDialog, {
+      data: { title: 'Add case from transaction' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        node.cases.unshift(new CaseModel({
+          body: result,
           meta: {}
         }));
+        this.reloadData();
       }
-      this.reloadData();
     });
   }
 

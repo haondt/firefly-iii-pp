@@ -67,7 +67,8 @@
                                         <div class="menu-content">
                                             <button mat-button (click)="addCheck(node)">Add Check</button>
                                             <button mat-button (click)="addCheckFromTransaction(node)">Add Checks From Transaction</button>
-                                            <button mat-button>Add Case</button>
+                                            <button mat-button (click)="addCase(node)">Add Case</button>
+                                            <button mat-button (click)="addCaseFromTransaction(node)">Add Case From Transaction</button>
                                             <div class="menu-spacer"></div>
                                             <button mat-button (click)="deleteNode(node)" color="warn">Delete</button>
                                         </div>
@@ -96,6 +97,33 @@
                                     <div class="tests-test-node-content-row">
                                         <button mat-icon-button (click)="toggleCasesExpanded(node)"><mat-icon>{{ isCasesExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon></button>
                                         Cases
+                                    </div>
+                                    <div class="cases-container test-test-node-content-row" *ngIf="isCasesExpanded(node)">
+                                        <div class="cases">
+                                            <div class="case" *ngFor="let case of node.cases; let i = index">
+                                                <div class="case-node-content-row">
+                                                    <button mat-icon-button (click)="toggleCaseExpanded(case)"><mat-icon>{{ isCaseExpanded(case) ? 'expand_more' : 'chevron_right' }}</mat-icon></button>
+                                                    <span class="case-title">Case {{ i+1 }}</span>
+                                                    <span class="spacer"></span>
+                                                    <div>
+
+                                                    <button mat-icon-button (click)="case.body.unshift({key: '', value: ''})"><mat-icon>add</mat-icon></button>
+                                                    <button mat-icon-button (click)="node.cases.splice(node.cases.indexOf(case), 1)" color="warn"><mat-icon>delete</mat-icon></button>
+                                                    </div>
+                                                </div>
+                                                <div class="case-node-content-row" *ngIf="isCaseExpanded(case)">
+                                                    <div class="case-row-container">
+                                                        <div class="case-row" *ngFor="let row of case.body">
+                                                            <input class="node-name-input" type="text" [(ngModel)]="row.key">
+                                                            <h1>=</h1>
+                                                            <input class="node-name-input" type="text" [(ngModel)]="row.value">
+                                                            <span class="spacer"></span>
+                                                            <button mat-icon-button (click)="case.body.splice(case.body.indexOf(row), 1)" color="warn"><mat-icon>delete</mat-icon></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -249,6 +249,40 @@ mat-form-field {
 
 /* #endregion */
 
+/* #region cases */
+
+.case-node-content-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.cases-container {
+    margin-left: 57px;
+}
+
+.case-row-container {
+    margin-left: 57px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.case-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.case-row > h1 {
+    margin: 0;
+}
+
+/* #endregion */
+
 .cdk-drag-preview {
     opacity: 0.5;
     background: #4f4f4f;

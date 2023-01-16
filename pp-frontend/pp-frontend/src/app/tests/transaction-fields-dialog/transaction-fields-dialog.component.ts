@@ -9,18 +9,18 @@ import { FireflyIIIService } from "src/app/services/FireflyIII";
 import { MatSelectChange } from "@angular/material/select";
 
 export interface DialogData {
-
+    title: string
 }
 
 @Component({
-    selector: 'transaction-checks-dialog',
-    templateUrl: './transaction-checks-dialog.component.html',
+    selector: 'transaction-fields-dialog',
+    templateUrl: './transaction-fields-dialog.component.html',
     styleUrls: [
         '../tests.component.scss',
-        './transaction-checks-dialog.component.scss'
+        './transaction-fields-dialog.component.scss'
     ]
 })
-export class TransactionChecksDialog {
+export class TransactionFieldsDialog {
     fields: { viewValue: string, selected: boolean }[] = [];
     transactionId: string | null = null;
     transactionData: { [key: string]: any } | null = null;
@@ -28,7 +28,7 @@ export class TransactionChecksDialog {
 
 
     constructor(
-        public dialogRef: MatDialogRef<TransactionChecksDialog>,
+        public dialogRef: MatDialogRef<TransactionFieldsDialog>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private fireflyIII: FireflyIIIService
     ) {

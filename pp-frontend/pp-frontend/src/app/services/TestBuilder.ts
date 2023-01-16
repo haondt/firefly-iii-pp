@@ -67,12 +67,20 @@ export class TestBuilderService {
                     "value": c.value,
                 })),
                 "cases": folderContent.cases.map((c: any) => new CaseModel({
-                    body: c.body
+                    body: Object.entries<string>(c.body).reduce((o: {key: string, value: string}[], [key, value]) => (o.push({
+                        key: key,
+                        value: value
+                    }), o), [])
                 }))
             })
         } else {
             throw new Error(`Unrecognized folder content type: ${ folderContent.type }`);
         }
+    }
+
+
+    private aSurpriseToolThatWillHelpUsLater(result: any) {
+        result.reduce((d: {[k: string]: string}, kvp: {key: string, value: string}) => (d[kvp.key]=kvp.value, d), {});
     }
 
 }

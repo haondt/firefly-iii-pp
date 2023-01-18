@@ -71,6 +71,8 @@
     display: flex;
     width: 100%;
     border-radius: 25px;
+    align-items: center;
+    gap: 10px;
 }
 
 .tests-parent-node-container:hover {
@@ -189,15 +191,35 @@ mat-form-field {
 /* #region test node */
 
 .tests-test-node-container-background {
+    background-color: #2f587e;
+}
+
+.tests-test-node-container-background.test-passed {
     background-color: #366258;
+}
+
+.tests-test-node-container-background.test-failed {
+    background-color: #623636;
+}
+
+.tests-test-node-container-background.test-waiting {
+    background-color: #2f587e;
 }
 
 .tests-test-node-row:not(.tests-test-node-content):hover {
     backdrop-filter: brightness(120%);
 }
 
+.test-spinner {
+    margin: 7.5px;
+    --mdc-circular-progress-active-indicator-color: white;
+}
+
 .tests-test-node-row {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 
 .tests-test-node-content-row {

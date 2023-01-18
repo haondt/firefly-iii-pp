@@ -15,6 +15,7 @@ import { isDescendantOf, removeFromParent } from './Utils/TreeNode';
 import { TransactionFieldsDialog } from './transaction-fields-dialog/transaction-fields-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CaseModel } from '../models/Case';
+import { TestRunnerService } from '../services/TestRunner';
 
 @Component({
   selector: 'app-tests',
@@ -30,6 +31,7 @@ export class TestsComponent {
 
   constructor(
     private testBuilder: TestBuilderService,
+    private testRunner: TestRunnerService,
     private mongo: MongoDbService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog) {
@@ -219,6 +221,13 @@ export class TestsComponent {
       throw new Error(`Unable to remove node ${node.name} from its parent!`);
     }
     this.reloadData();
+  }
+
+  runTests() {
+    var tests = this.testRunner.prepareTests(this.dataSource.data as FolderContentModel[]);
+    this.testRunner.runTests(tests).subscribe(r => {
+      console.log(r);
+    });
   }
 }
 

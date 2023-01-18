@@ -17,6 +17,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -58,6 +59,7 @@ import { TransactionFieldsDialog } from './tests/transaction-fields-dialog/trans
     MatDialogModule,
     MatAutocompleteModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,

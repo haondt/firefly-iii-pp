@@ -7,7 +7,7 @@
             <button mat-raised-button>Export postman file</button>
         </div>
         <div class="button-row">
-            <button mat-raised-button color="primary">Run tests</button>
+            <button mat-raised-button (click)="runTests()" color="primary">Run tests</button>
             <button mat-raised-button color="green" (click)="saveTestsToMongo()">Save Tests</button>
             <span class="spacer"></span>
             <button mat-raised-button color="warn" (click)="loadTestsFromMongo()">Discard changes</button>
@@ -52,11 +52,16 @@
                     </div>
                 </div>
                 <div class="tests-test-node-container-background tests-leaf-node-container" cdkDrag
-                    (mouseenter)="mouseEnter(node)" (mouseleave)="mouseLeave(node)">
+                    (mouseenter)="mouseEnter(node)" (mouseleave)="mouseLeave(node)"
+                    [class.test-passed]="node.meta.passed"
+                    [class.test-failed]="node.meta.failed"
+                    [class.test-waiting]="node.meta.running">
                     <div *ngIf="isTestNode(node)" class="tests-test-node-container">
                         <div class="tests-test-node">
                             <div class="tests-test-node-row">
                                 <button mat-icon-button (click)="toggleExpanded(node)"><mat-icon>{{ isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon></button>
+                                <mat-icon *ngIf="node.meta.waiting">schedule</mat-icon>
+                                <mat-spinner *ngIf="node.meta.running" diameter="25" color="accent" class="test-spinner"></mat-spinner>
                                 <input class="node-name-input" type="text" [(ngModel)]="node.name">
                                 <span class="spacer"></span>
                                 <button mat-icon-button class="test-node-more" [class.force-show]="testMenuOpen.menuOpen" [matMenuTriggerFor]="testMenu" #testMenuOpen="matMenuTrigger">
@@ -141,6 +146,8 @@
                                 {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
                             </mat-icon>
                         </button>
+                        <mat-icon *ngIf="node.meta.waiting">schedule</mat-icon>
+                        <mat-spinner *ngIf="node.meta.running" diameter="25" color="accent" class="test-spinner"></mat-spinner>
                         <input class="node-name-input" type="text" [(ngModel)]="node.name">
                         <span class="spacer"></span>
                         <button mat-icon-button class="parent-node-more" [class.force-show]="parentFolderMenuOpen.menuOpen" [matMenuTriggerFor]="parentFolderMenu" #parentFolderMenuOpen="matMenuTrigger">

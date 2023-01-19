@@ -227,6 +227,7 @@ export class TestsComponent {
     var tests = this.testRunner.prepareTests(this.dataSource.data as FolderContentModel[]);
     this.testRunner.runTests(tests).subscribe(r => {
       console.log(r);
+      console.log(this.dataSource.data);
     });
   }
 }

@@ -106,7 +106,7 @@ export class TestBuilderService {
                 cases: model.cases.map(c => { return {
                     body: c.body.reduce((d: {[k: string]: string}, kvp: {key: string, value: string}) => (d[kvp.key]=kvp.value, d), {}),
                     meta: c.meta
-                }}),
+                }; }),
                 type: model.type,
                 meta: model.meta ?? {}
             }

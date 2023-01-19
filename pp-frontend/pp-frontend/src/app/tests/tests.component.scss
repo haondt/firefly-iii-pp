@@ -248,13 +248,16 @@ mat-form-field {
 }
 
 .checks-container {
-    margin-left: 57px;
+    width: 100%;
+    display: flex;
 }
 
 .checks {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-left: 57px;
+    width: 100%;
 }
 
 .check {
@@ -273,6 +276,14 @@ mat-form-field {
 
 /* #region cases */
 
+.cases {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 57px;
+    width: 100%;
+}
+
 .case-node-content-row {
     display: flex;
     flex-direction: row;
@@ -281,7 +292,8 @@ mat-form-field {
 }
 
 .cases-container {
-    margin-left: 57px;
+    width: 100%;
+    display: flex;
 }
 
 .case-row-container {

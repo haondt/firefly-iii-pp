@@ -111,9 +111,8 @@
                                                     <span class="case-title">Case {{ i+1 }}</span>
                                                     <span class="spacer"></span>
                                                     <div>
-
-                                                    <button mat-icon-button (click)="case.body.unshift({key: '', value: ''})"><mat-icon>add</mat-icon></button>
-                                                    <button mat-icon-button (click)="node.cases.splice(node.cases.indexOf(case), 1)" color="warn"><mat-icon>delete</mat-icon></button>
+                                                        <button mat-icon-button (click)="case.body.unshift({key: '', value: ''})"><mat-icon>add</mat-icon></button>
+                                                        <button mat-icon-button (click)="node.cases.splice(node.cases.indexOf(case), 1)" color="warn"><mat-icon>delete</mat-icon></button>
                                                     </div>
                                                 </div>
                                                 <div class="case-node-content-row" *ngIf="isCaseExpanded(case)">

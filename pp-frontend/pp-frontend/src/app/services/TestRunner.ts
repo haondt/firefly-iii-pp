@@ -50,7 +50,7 @@ export class TestRunnerService {
                     let cases = test.cases.slice();
                     let requests = test.cases.map(c =>
                         this.client.post<{[k: string]: Object}>(`${environment.NODERED_HOST}/apply`,
-                        c.body.reduce((d: {[k: string]: string}, kvp: {key: string, value: string}) => (d[kvp.key]=kvp.value, d), {}),
+                        c.body.reduce((d: {[k: string]: Object}, kvp: {key: string, value: Object}) => (d[kvp.key]=kvp.value, d), {}),
                         {
                             responseType: 'json',
                             observe: 'response'

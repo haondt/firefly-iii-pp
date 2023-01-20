@@ -1839,143 +1839,247 @@
                     "name": "General",
                     "item": [
                         {
-                            "name": "Keep Source id",
+                            "name": "Keep Source Id",
+                            "item": [
+                                {
+                                    "name": "Keep Source id",
+                                    "event": [
+                                        {
+                                            "listen": "test",
+                                            "script": {
+                                                "id": "c9c54765-afae-4d02-b067-31a8ec53de84",
+                                                "exec": [
+                                                    ""
+                                                ],
+                                                "type": "text/javascript"
+                                            }
+                                        }
+                                    ],
+                                    "id": "ea177c30-5386-41af-a797-085a171ea34b",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_id\": \"7\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AMZN Mktp CA 1234\"\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{base_url}}/apply",
+                                            "host": [
+                                                "{{base_url}}"
+                                            ],
+                                            "path": [
+                                                "apply"
+                                            ]
+                                        }
+                                    },
+                                    "response": []
+                                }
+                            ],
+                            "id": "4191a8ce-b3d8-4c07-88b8-557bf7583e1e",
                             "event": [
+                                {
+                                    "listen": "prerequest",
+                                    "script": {
+                                        "id": "f7b3f5cb-c400-4402-8221-67385a51e13a",
+                                        "type": "text/javascript",
+                                        "exec": [
+                                            ""
+                                        ]
+                                    }
+                                },
                                 {
                                     "listen": "test",
                                     "script": {
+                                        "id": "55bf5c5b-4bd3-47f3-be8b-92509998a5ff",
+                                        "type": "text/javascript",
                                         "exec": [
-                                            "pm.test('Source id', function() {\r",
-                                            "    var jsonData = pm.response.json();\r",
-                                            "    pm.expect(jsonData.source_id).to.eql(\"7\");\r",
+                                            "pm.test('Source id', function() {",
+                                            "    var jsonData = pm.response.json();",
+                                            "    pm.expect(jsonData.source_id).to.eql(\"7\");",
                                             "});"
-                                        ],
-                                        "type": "text/javascript"
+                                        ]
                                     }
                                 }
-                            ],
-                            "id": "ea177c30-5386-41af-a797-085a171ea34b",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_id\": \"7\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AMZN Mktp CA 1234\"\r\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "{{base_url}}/apply",
-                                    "host": [
-                                        "{{base_url}}"
-                                    ],
-                                    "path": [
-                                        "apply"
-                                    ]
-                                }
-                            },
-                            "response": []
+                            ]
                         },
                         {
                             "name": "Keep existing destination",
+                            "item": [
+                                {
+                                    "name": "Keep existing destination",
+                                    "event": [
+                                        {
+                                            "listen": "test",
+                                            "script": {
+                                                "id": "ae225d49-d8f2-4a19-8b27-23daf481c647",
+                                                "exec": [
+                                                    ""
+                                                ],
+                                                "type": "text/javascript"
+                                            }
+                                        }
+                                    ],
+                                    "id": "3feb6c47-5a79-4bc9-910c-bf8bf10a9f38",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n    \"destination_name\": \"myDest\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AMZN Mktp CA 1234\"\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{base_url}}/apply",
+                                            "host": [
+                                                "{{base_url}}"
+                                            ],
+                                            "path": [
+                                                "apply"
+                                            ]
+                                        }
+                                    },
+                                    "response": []
+                                }
+                            ],
+                            "id": "b1a0a174-b2a2-426c-aa3a-62cde86fa38a",
                             "event": [
+                                {
+                                    "listen": "prerequest",
+                                    "script": {
+                                        "id": "67d4d416-5aa1-4a4f-8b98-a0a2812e5f2d",
+                                        "type": "text/javascript",
+                                        "exec": [
+                                            ""
+                                        ]
+                                    }
+                                },
                                 {
                                     "listen": "test",
                                     "script": {
+                                        "id": "d0bf5097-8e21-4216-9025-5cb0d557ad7c",
+                                        "type": "text/javascript",
                                         "exec": [
-                                            "pm.test('Destination name', function() {\r",
-                                            "    var jsonData = pm.response.json();\r",
-                                            "    pm.expect(jsonData.destination_name).to.eql(\"myDest\");\r",
+                                            "pm.test('Destination name', function() {",
+                                            "    var jsonData = pm.response.json();",
+                                            "    pm.expect(jsonData.destination_name).to.eql(\"myDest\");",
                                             "});"
-                                        ],
-                                        "type": "text/javascript"
+                                        ]
                                     }
                                 }
-                            ],
-                            "id": "3feb6c47-5a79-4bc9-910c-bf8bf10a9f38",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\r\n    \"destination_name\": \"myDest\",\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AMZN Mktp CA 1234\"\r\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "{{base_url}}/apply",
-                                    "host": [
-                                        "{{base_url}}"
-                                    ],
-                                    "path": [
-                                        "apply"
-                                    ]
-                                }
-                            },
-                            "response": []
+                            ]
                         },
                         {
                             "name": "Save existing data",
+                            "item": [
+                                {
+                                    "name": "Save existing data",
+                                    "event": [
+                                        {
+                                            "listen": "test",
+                                            "script": {
+                                                "id": "98cabd89-002c-443b-871b-2fe8922e0c66",
+                                                "exec": [
+                                                    ""
+                                                ],
+                                                "type": "text/javascript"
+                                            }
+                                        }
+                                    ],
+                                    "id": "4127a67e-6cad-4948-82f5-252d9139cc0c",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AHHHH BEEES 1234\",\r\n    \"type\": \"withdrawal\",\r\n    \"date\": \"2022-11-22T00:00:00+01:00\",\r\n    \"amount\": \"2024.81\",\r\n    \"source_id\": \"3\",\r\n    \"bill_name\": \"Groceries\",\r\n    \"destination_name\": \"(no name)\",\r\n    \"tags\": [\r\n        \"beans\"\r\n    ],\r\n    \"original_source\": \"ff3-v5.7.17|api-v1.5.6\",\r\n    \"import_hash_v2\": \"071724920338c87e6f6c7942c8f072fd648038b6e677d23c21fa1b58b4ce7c5b\",\r\n    \"notes\": \"foo\"\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{base_url}}/apply",
+                                            "host": [
+                                                "{{base_url}}"
+                                            ],
+                                            "path": [
+                                                "apply"
+                                            ]
+                                        }
+                                    },
+                                    "response": []
+                                }
+                            ],
+                            "id": "db96d294-8bdb-4aec-a85e-28ff8fb45d7c",
                             "event": [
+                                {
+                                    "listen": "prerequest",
+                                    "script": {
+                                        "id": "bbf2086b-3d74-48f9-90ce-10dfd0d856cf",
+                                        "type": "text/javascript",
+                                        "exec": [
+                                            ""
+                                        ]
+                                    }
+                                },
                                 {
                                     "listen": "test",
                                     "script": {
+                                        "id": "3cb52325-68d5-4d10-a040-70a8d25ea3fb",
+                                        "type": "text/javascript",
                                         "exec": [
-                                            "pm.test('Destination name', function() {\r",
-                                            "    var jsonData = pm.response.json();\r",
-                                            "    pm.expect(jsonData).to.eql({\r",
-                                            "        \r",
-                                            "    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AHHHH BEEES 1234\",\r",
-                                            "    \"type\": \"withdrawal\",\r",
-                                            "    \"date\": \"2022-11-22T00:00:00+01:00\",\r",
-                                            "    \"amount\": \"2024.81\",\r",
-                                            "    \"source_id\": \"3\",\r",
-                                            "    \"bill_name\": \"Groceries\",\r",
-                                            "    \"destination_name\": \"(no name)\",\r",
-                                            "    \"tags\": [\r",
-                                            "        \"beans\"\r",
-                                            "    ],\r",
-                                            "    \"original_source\": \"ff3-v5.7.17|api-v1.5.6\",\r",
-                                            "    \"import_hash_v2\": \"071724920338c87e6f6c7942c8f072fd648038b6e677d23c21fa1b58b4ce7c5b\",\r",
-                                            "    \"notes\": \"foo\"\r",
-                                            "\r",
-                                            "    });\r",
+                                            "var jsonData = pm.response.json();",
+                                            "pm.test('Description', function() {",
+                                            "    pm.expect(jsonData.description).to.eql(",
+                                            "        \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AHHHH BEEES 1234\");",
+                                            "});",
+                                            "pm.test('Type', function() {",
+                                            "    pm.expect(jsonData.type).to.eql(\"withdrawal\");",
+                                            "});",
+                                            "pm.test('Date', function() {",
+                                            "    pm.expect(jsonData.date).to.eql(\"2022-11-22T00:00:00+01:00\");",
+                                            "});",
+                                            "pm.test('Amount', function() {",
+                                            "    pm.expect(jsonData.amount).to.eql(\"2024.81\");",
+                                            "});",
+                                            "pm.test('Source Id', function() {",
+                                            "    pm.expect(jsonData.source_id).to.eql(\"3\");",
+                                            "});",
+                                            "pm.test('Bill Name', function() {",
+                                            "    pm.expect(jsonData.bill_name).to.eql(\"Groceries\");",
+                                            "});",
+                                            "pm.test('Destination Name', function() {",
+                                            "    pm.expect(jsonData.destination_name).to.eql(\"(no name)\");",
+                                            "});",
+                                            "pm.test('Tags', function() {",
+                                            "    pm.expect(jsonData.tags).to.eql([",
+                                            "        \"beans\"",
+                                            "    ]);",
+                                            "});",
+                                            "pm.test('Original Source', function() {",
+                                            "    pm.expect(jsonData.original_source).to.eql(\"ff3-v5.7.17|api-v1.5.6\");",
+                                            "});",
+                                            "pm.test('Import Hash', function() {",
+                                            "    pm.expect(jsonData.import_hash_v2).to.eql(\"071724920338c87e6f6c7942c8f072fd648038b6e677d23c21fa1b58b4ce7c5b\");",
+                                            "});",
+                                            "pm.test('Notes', function() {",
+                                            "    pm.expect(jsonData.notes).to.eql(\"foo\");",
                                             "});"
-                                        ],
-                                        "type": "text/javascript"
+                                        ]
                                     }
                                 }
-                            ],
-                            "id": "4127a67e-6cad-4948-82f5-252d9139cc0c",
-                            "request": {
-                                "method": "POST",
-                                "header": [],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\r\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AHHHH BEEES 1234\",\r\n    \"type\": \"withdrawal\",\r\n    \"date\": \"2022-11-22T00:00:00+01:00\",\r\n    \"amount\": \"2024.81\",\r\n    \"source_id\": \"3\",\r\n    \"bill_name\": \"Groceries\",\r\n    \"destination_name\": \"(no name)\",\r\n    \"tags\": [\r\n        \"beans\"\r\n    ],\r\n    \"original_source\": \"ff3-v5.7.17|api-v1.5.6\",\r\n    \"import_hash_v2\": \"071724920338c87e6f6c7942c8f072fd648038b6e677d23c21fa1b58b4ce7c5b\",\r\n    \"notes\": \"foo\"\r\n}",
-                                    "options": {
-                                        "raw": {
-                                            "language": "json"
-                                        }
-                                    }
-                                },
-                                "url": {
-                                    "raw": "{{base_url}}/apply",
-                                    "host": [
-                                        "{{base_url}}"
-                                    ],
-                                    "path": [
-                                        "apply"
-                                    ]
-                                }
-                            },
-                            "response": []
+                            ]
                         }
                     ],
                     "id": "62406ff0-c8d6-446a-8ddb-c65a4474382d"
@@ -5053,7 +5157,7 @@
     ],
     "variable": [
         {
-            "id": "5d434c5a-b146-4289-890d-23deb8d0bb15",
+            "id": "060ff485-a23d-4dcf-820c-2d166b31fbdf",
             "key": "base_url",
             "value": "http://localhost:1880"
         }

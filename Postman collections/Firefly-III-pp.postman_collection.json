@@ -3,7 +3,7 @@
         "_postman_id": "2b68e26a-f1ac-445a-ae95-dc9490dc2be1",
         "name": "Firefly-III-pp",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "updatedAt": "2023-01-12T02:01:06.000Z"
+        "updatedAt": "2023-01-15T23:29:15.000Z"
     },
     "item": [
         {
@@ -175,6 +175,35 @@
                 }
             ],
             "id": "3c38d83c-db76-4b18-b341-b42132bf0113"
+        },
+        {
+            "name": "Firefly-III",
+            "item": [
+                {
+                    "name": "Get transaction",
+                    "id": "5d0f9101-8d0f-4448-8bab-c781c6d4fae5",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/firefly_iii/transactions/asd",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "firefly_iii",
+                                "transactions",
+                                "asd"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "id": "c2b0eb4b-bb36-49b4-9091-4560d6e5b18c"
         }
     ],
     "event": [
@@ -199,7 +228,7 @@
     ],
     "variable": [
         {
-            "id": "72404cb6-3be9-4dc8-9af3-d0bb7c5f2369",
+            "id": "4654b73f-d5c7-4951-b559-b746b4c42c75",
             "key": "base_url",
             "value": "localhost:49153"
         }

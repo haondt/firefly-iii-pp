@@ -70,7 +70,7 @@ export class TestBuilderService {
                     meta: c.meta ?? {}
                 })),
                 cases: folderContent.cases.map((c: any) => new CaseModel({
-                    body: Object.entries<string>(c.body).reduce((o: {key: string, value: string}[], [key, value]) => (o.push({
+                    body: Object.entries<Object>(c.body).reduce((o: {key: string, value: Object}[], [key, value]) => (o.push({
                         key: key,
                         value: value
                     }), o), []),
@@ -104,7 +104,7 @@ export class TestBuilderService {
                 name: model.name,
                 checks: model.checks,
                 cases: model.cases.map(c => { return {
-                    body: c.body.reduce((d: {[k: string]: string}, kvp: {key: string, value: string}) => (d[kvp.key]=kvp.value, d), {}),
+                    body: c.body.reduce((d: {[k: string]: Object}, kvp: {key: string, value: Object}) => (d[kvp.key]=kvp.value, d), {}),
                     meta: c.meta
                 }; }),
                 type: model.type,

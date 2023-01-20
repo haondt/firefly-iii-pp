@@ -16,6 +16,7 @@ import { TransactionFieldsDialog } from './transaction-fields-dialog/transaction
 import { MatDialog } from '@angular/material/dialog';
 import { CaseModel } from '../models/Case';
 import { TestRunnerService } from '../services/TestRunner';
+import { ingestPostmanFile } from './Utils/PostmanFile';
 
 @Component({
   selector: 'app-tests',
@@ -23,7 +24,7 @@ import { TestRunnerService } from '../services/TestRunner';
   styleUrls: ['./tests.component.scss'],
 })
 export class TestsComponent {
-  test_id = '0';
+  test_id = '2';
 
   treeControl = new NestedTreeControl<TreeNode>(m => m.items);
   dataSource = new MatTreeNestedDataSource<TreeNode>();
@@ -229,6 +230,13 @@ export class TestsComponent {
       console.log(r);
       console.log(this.dataSource.data);
     });
+  }
+
+  handleImportPostmanFile(event: any) {
+    if (event.target.files.length > 0) {
+      let x = ingestPostmanFile(event.target.files[0]);
+      console.log(x);
+    }
   }
 }
 

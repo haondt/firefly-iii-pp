@@ -112,7 +112,7 @@
     ],
     "variable": [
         {
-            "id": "8d1b8fb5-67bf-4c56-895f-3b2b527dd72e",
+            "id": "3ed89677-cfc0-4591-829b-f09514dccdc6",
             "key": "base_url",
             "value": "http://docker-selfhosted:8080"
         }

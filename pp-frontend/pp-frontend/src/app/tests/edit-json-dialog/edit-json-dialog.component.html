@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Edit Json</h1>
+<div mat-dialog-content class="content">
+    <div class="content-section">
+        <textarea class="text-input" [(ngModel)]="text"></textarea>
+        <mat-error *ngIf="!isValid(text)">Invalid JSON</mat-error>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onFinishClick()" [disabled]="!isValid(text)">Save</button>
+</div>

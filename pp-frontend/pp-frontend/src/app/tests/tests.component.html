@@ -94,7 +94,9 @@
                                                 <mat-icon>chevron_right</mat-icon>
                                                 <input class="node-name-input" type="text" [(ngModel)]="check.key">
                                                 <h1>=</h1>
-                                                <input class="node-name-input" type="text" [(ngModel)]="check.value">
+                                                <input *ngIf="isString(check.value)" class="node-name-input" type="text" [(ngModel)]="check.value">
+                                                <div class="tiny-gap"></div>
+                                                <button mat-stroked-button (click)="editJsonValue(check)">Edit as JSON</button>
                                                 <span class="spacer"></span>
                                                 <button mat-icon-button (click)="removeCheck(node, check)" color="warn"><mat-icon>delete</mat-icon></button>
                                             </div>
@@ -121,7 +123,8 @@
                                                         <div class="case-row" *ngFor="let row of case.body">
                                                             <input class="node-name-input" type="text" [(ngModel)]="row.key">
                                                             <h1>=</h1>
-                                                            <input class="node-name-input" type="text" [(ngModel)]="row.value">
+                                                            <input *ngIf="isString(row.value)" class="node-name-input" type="text" [(ngModel)]="row.value">
+                                                            <button mat-stroked-button (click)="editJsonValue(row)">Edit as JSON</button>
                                                             <span class="spacer"></span>
                                                             <button mat-icon-button (click)="case.body.splice(case.body.indexOf(row), 1)" color="warn"><mat-icon>delete</mat-icon></button>
                                                         </div>

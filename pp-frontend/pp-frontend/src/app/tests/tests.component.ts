@@ -17,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CaseModel } from '../models/Case';
 import { TestRunnerService } from '../services/TestRunner';
 import { ingestPostmanFile } from './Utils/PostmanFile';
+import { EditJsonDialog } from './edit-json-dialog/edit-json-dialog.component';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-tests',
@@ -237,6 +239,25 @@ export class TestsComponent {
       let x = ingestPostmanFile(event.target.files[0]);
       console.log(x);
     }
+  }
+
+  isString (obj: Object) {
+    return typeof obj === 'string';
+  }
+
+  editJsonValue(obj: {value: Object}) {
+    const dialogRef = this.dialog.open(EditJsonDialog, {
+      data: { obj: obj.value }
+    });
+
+    dialogRef.afterClosed().subscribe((result: {success: boolean, value: Object}) => {
+      if (result) {
+        if (result.success) {
+          obj.value = result.value;
+        }
+      }
+    });
+
   }
 }
 

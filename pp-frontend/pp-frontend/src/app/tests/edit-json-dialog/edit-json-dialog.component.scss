@@ -1,0 +1,41 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.content-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-row {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+}
+
+.text-input {
+    font: 400 14px/20px Roboto, sans-serif;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 15px;
+    backdrop-filter: brightness(110%);
+    min-width: 500px;
+    min-height: 200px;
+}
+
+.text-input:focus{
+    backdrop-filter: brightness(120%);
+}
+
+span, p {
+    color: white;
+}
+
+.mat-mdc-dialog-actions {
+    justify-content: end;
+}

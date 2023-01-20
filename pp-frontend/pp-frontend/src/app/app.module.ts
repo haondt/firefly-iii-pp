@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { TestsComponent } from './tests/tests.component';
 import { TransactionFieldsDialog } from './tests/transaction-fields-dialog/transaction-fields-dialog.component';
+import { EditJsonDialog } from './tests/edit-json-dialog/edit-json-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TransactionFieldsDialog } from './tests/transaction-fields-dialog/trans
     NavComponent,
     TestsComponent,
     TransactionFieldsDialog,
+    EditJsonDialog
   ],
   imports: [
     BrowserModule,

@@ -23,7 +23,7 @@ export class TestBuilderService {
                         {
                             "name": "Destination name",
                             "key": "destination_name",
-                            "value": "AMA"
+                            "value": ["AMA"]
                         },
                         {
                             "name": "Bill name",

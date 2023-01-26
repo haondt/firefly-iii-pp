@@ -236,9 +236,12 @@ export class TestsComponent {
 
   handleImportPostmanFile(event: any) {
     if (event.target.files.length > 0) {
-      let x = ingestPostmanFile(event.target.files[0]);
-      console.log(x);
+      ingestPostmanFile(event.target.files[0]).subscribe(r => {
+        this.dataSource.data = r;
+      });
     }
+    // allow trigger to happen every time
+    event.srcElement.value = null;
   }
 
   isString (obj: Object) {

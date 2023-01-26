@@ -1,3 +1,10 @@
+import { CheckModel } from "src/app/models/Check"
+import { FolderContentModel } from "src/app/models/FolderContent"
+import { TestModel } from "src/app/models/Test"
+import { FolderModel } from "src/app/models/Folder"
+import { CaseModel } from "src/app/models/Case"
+import { Observable } from "rxjs"
+
 interface PreProcessedFile {
     cases: {
         path: string[],
@@ -55,7 +62,7 @@ interface postmanNode {
     }
 }
 
-export const ingestPostmanFile = function(file: File | null) {
+export const ingestPostmanFile = function(file: File | null): Observable<FolderContentModel[]> {
     if (file === null) {
         throw new Error('null file provided');
     }
@@ -63,11 +70,95 @@ export const ingestPostmanFile = function(file: File | null) {
     let reader = new FileReader();
     reader.readAsBinaryString(file);
 
-    reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-            let x = preprocessFile(JSON.parse(reader.result) as postmanRoot);
-            console.log(x);
+    return new Observable(s => {
+        reader.onloadend = () => {
+            if (typeof reader.result === 'string') {
+                let pp = preprocessFile(JSON.parse(reader.result) as postmanRoot);
+                let root: FolderContentModel[] = [];
+                for (let key in  pp.tests) {
+                    addTest(root, {
+                        name: key,
+                        path: pp.tests[key].path,
+                        checks: pp.tests[key].checks
+                    });
+                }
+
+                for (let _case of pp.cases) {
+                    addCase(root, _case);
+                }
+                s.next(root);
+            } else {
+                throw Error("Failure during import of postman file");
+            }
+
+            s.complete();
         }
+    })
+
+}
+
+const addCase = function(root: FolderContentModel[], _case: {
+    path: string[],
+    body: {key: string, value:string}[]
+}) {
+    let prev = root.find(f => f.name === _case.path[0]);
+    for (let p of _case.path.slice(1)) {
+        if (prev instanceof FolderModel) {
+            prev = prev!.items!.find(f => f.name === p);
+        } else {
+            throw Error("Failure during import of postman file");
+        }
+    }
+
+    if (prev instanceof TestModel) {
+        prev.cases.push(new CaseModel({
+            body: _case.body
+        }));
+    } else {
+        throw Error("Failure during import of postman file");
+    }
+}
+
+const addTest = function(root: FolderContentModel[], test: {
+    name: string,
+    path: string[],
+    checks: {
+        name: string
+        key: string,
+        value:string
+    }[]
+    }) {
+    let testModel = new TestModel({
+        name: test.name,
+        checks: test.checks.map(c => new CheckModel(c)),
+    });
+
+    if (test.path.length === 0) {
+        root.push(testModel);
+    } else {
+        let prevName = test.path[0];
+        let prev = root.find(f => f.name === prevName && f instanceof FolderModel) as FolderModel | undefined;
+        if (!prev) {
+            prev = new FolderModel({
+                name: prevName
+            });
+            root.push(prev);
+        }
+
+        for (let nextName of test.path.slice(1)) {
+            let next = prev!.items.find(f => f.name === nextName && f instanceof FolderModel) as FolderModel | undefined;
+            if (!next) {
+                next = new FolderModel({
+                    name: nextName
+                });
+                prev.items.push(next);
+            }
+
+            prev = next;
+            prevName = nextName;
+        }
+
+        prev.items.push(testModel);
     }
 }
 

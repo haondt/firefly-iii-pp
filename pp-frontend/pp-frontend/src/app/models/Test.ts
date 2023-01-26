@@ -4,8 +4,9 @@ import { CaseModel } from './Case';
 
 export class TestModel implements FolderContentModel {
     type: string = "test";
-    name = "New Test";
     name_mutable = true;
+
+    name = "New Test";
     checks: CheckModel[] = [];
     cases: CaseModel[] = [];
     meta: { [key: string]: any; } = {};

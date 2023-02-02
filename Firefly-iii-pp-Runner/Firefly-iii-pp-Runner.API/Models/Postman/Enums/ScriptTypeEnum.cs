@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 namespace Firefly_iii_pp_Runner.API.Models.Postman.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum RequestBodyModeEnum
+    public enum ScriptTypeEnum
     {
-        [EnumMember(Value = "raw")]
-        Raw
+        [EnumMember(Value = "text/javascript")]
+        Javascript
     }
 }

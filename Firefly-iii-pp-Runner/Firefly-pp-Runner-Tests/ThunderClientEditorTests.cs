@@ -20,8 +20,26 @@ namespace Firefly_pp_Runner_Tests
             _sut = new ThunderClientEditorService(Options.Create(new ThunderClientEditorSettings
             {
                 Path = "."
-
             }));
+        }
+
+        private Firefly_iii_pp_Runner.API.Models.Postman.Item PrepareItem(List<string> exec)
+        {
+            return new Firefly_iii_pp_Runner.API.Models.Postman.Item
+            {
+                Event = new List<Firefly_iii_pp_Runner.API.Models.Postman.Event>
+                {
+                    new Firefly_iii_pp_Runner.API.Models.Postman.Event
+                    {
+                        Listen = Firefly_iii_pp_Runner.API.Models.Postman.Enums.EventTypeEnum.Test,
+                        Script = new Firefly_iii_pp_Runner.API.Models.Postman.Script
+                        {
+                            Type = Firefly_iii_pp_Runner.API.Models.Postman.Enums.ScriptTypeEnum.Javascript,
+                            Exec = exec
+                        }
+                    }
+                }
+            };
         }
 
 
@@ -35,7 +53,7 @@ namespace Firefly_pp_Runner_Tests
                 "    pm.expect(jsonData.destination_name).to.eql(\"Dollarama\");",
                 "});"
             };
-            var result = _sut.ExtractTests(exec);
+            var (_, result) = _sut.ExtractTests(PrepareItem(exec));
             Assert.Contains(result, r =>
                 r.Value == "Dollarama"
                 && r.Type == TestTypeEnum.JsonQuery
@@ -53,7 +71,7 @@ namespace Firefly_pp_Runner_Tests
                 "    pm.expect(jsonData.destination_name).to.eql(\"Amazon\");",
                 "});"
             };
-            var result = _sut.ExtractTests(exec);
+            var (_, result) = _sut.ExtractTests(PrepareItem(exec));
             Assert.Contains(result, r =>
                 r.Value == "Amazon"
                 && r.Type == TestTypeEnum.JsonQuery
@@ -75,7 +93,7 @@ namespace Firefly_pp_Runner_Tests
                 "    pm.expect(jsonData.bill_name).to.eql(\"Vehicle Insurance and Registration\");",
                 "});"
             };
-            var result = _sut.ExtractTests(exec);
+            var (_, result) = _sut.ExtractTests(PrepareItem(exec));
             Assert.Contains(result, r =>
                 r.Value == "AMA"
                 && r.Type == TestTypeEnum.JsonQuery
@@ -131,7 +149,7 @@ namespace Firefly_pp_Runner_Tests
                 "    pm.expect(jsonData.notes).to.eql(\"foo\");",
                 "});"
         };
-            var result = _sut.ExtractTests(exec);
+            var (_, result) = _sut.ExtractTests(PrepareItem(exec));
             Assert.Contains(result, r =>
                 r.Value == "[\"beans\"]"
                 && r.Type == TestTypeEnum.JsonQuery
@@ -142,6 +160,11 @@ namespace Firefly_pp_Runner_Tests
                 && r.Type == TestTypeEnum.JsonQuery
                 && r.Action == TestActionEnum.Equal
                 && r.Custom == "json.notes");
+            Assert.Contains(result, r =>
+                r.Value == "2022-11-22T00:00:00+01:00"
+                && r.Type == TestTypeEnum.JsonQuery
+                && r.Action == TestActionEnum.Equal
+                && r.Custom == "json.date");
         }
 
 

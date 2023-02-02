@@ -9,6 +9,7 @@ namespace Firefly_iii_pp_Runner.API.Models.Postman.Enums
     {
         [EnumMember(Value = "prerequest")]
         PreRequest,
+        [EnumMember(Value = "test")]
         Test
     }
 }

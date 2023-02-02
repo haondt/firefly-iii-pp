@@ -4572,7 +4572,7 @@
         "id": "f0a5618557d68dd6",
         "type": "function",
         "z": "e64d941838d90ecd",
-        "name": "set dest toTrapped",
+        "name": "set dest to Trapped",
         "func": "msg.output.destination_name = \"Trapped\";\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
@@ -4622,7 +4622,7 @@
         "headers": {
             "Content-Type": "application/json"
         },
-        "x": 560,
+        "x": 500,
         "y": 120,
         "wires": []
     },
@@ -4694,7 +4694,7 @@
             "9baf9560d6b34dcc",
             "e72e5308e39b5265"
         ],
-        "x": 205,
+        "x": 195,
         "y": 120,
         "wires": [
             [
@@ -4713,7 +4713,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 380,
+        "x": 320,
         "y": 120,
         "wires": [
             [
@@ -4766,8 +4766,55 @@
         "links": [
             "2ad1b7acb2d0c87e"
         ],
-        "x": 545,
+        "x": 535,
         "y": 60,
         "wires": []
+    },
+    {
+        "id": "4fa841dd2a2f3ed1",
+        "type": "catch",
+        "z": "9a14ad092bbedd01",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 240,
+        "y": 180,
+        "wires": [
+            [
+                "91c7eb54bc6b7d90"
+            ]
+        ]
+    },
+    {
+        "id": "87c05427e1de5f6b",
+        "type": "http response",
+        "z": "9a14ad092bbedd01",
+        "name": "",
+        "statusCode": "500",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 640,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "91c7eb54bc6b7d90",
+        "type": "function",
+        "z": "9a14ad092bbedd01",
+        "name": "Prepare error payload",
+        "func": "msg.payload = msg.error;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "87c05427e1de5f6b"
+            ]
+        ]
     }
 ]

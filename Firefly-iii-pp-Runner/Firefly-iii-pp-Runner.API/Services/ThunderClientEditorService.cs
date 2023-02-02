@@ -29,6 +29,7 @@ namespace Firefly_iii_pp_Runner.API.Services
                     new ItemConverter()
                 },
                 MissingMemberHandling = MissingMemberHandling.Error,
+                Formatting = Formatting.Indented
             };
         }
 
@@ -36,7 +37,7 @@ namespace Firefly_iii_pp_Runner.API.Services
         {
             var postmanCollection = JsonConvert.DeserializeObject<Models.Postman.Collection>(json, _serializerSettings);
             var existingCollections = await LoadCollections();
-            var collection = existingCollections.FirstOrDefault(c => c.ColName == _settings.CollectionName);
+            var collection = existingCollections.FirstOrDefault(c => c.ColName == _settings.CollectionName, null);
             var clients = (await LoadClients()).ToDictionary(x => x.Id, x => x);
 
             if (collection == null)
@@ -46,6 +47,8 @@ namespace Firefly_iii_pp_Runner.API.Services
             foreach (var item in postmanCollection.Item)
                 TransferPostmanItemToThunderClient(item, collection, clients);
 
+            SaveCollections(existingCollections);
+            SaveClients(clients.Select(kvp => kvp.Value).ToList());
         }
 
         private void TransferPostmanItemToThunderClient(Models.Postman.Item item, Collection collection, Dictionary<string, Client> clients)
@@ -64,7 +67,7 @@ namespace Firefly_iii_pp_Runner.API.Services
                 {
                     Id = request.Id.ToString(),
                     ColId = collection.Id,
-                    ContainerId = parent != null ? parent.Id.ToString() : "",
+                    ContainerId = parent?.Id.ToString() ?? string.Empty,
                     Name = request.Name,
                     Url = request.RequestInner.Url.Raw,
                     Method = request.RequestInner.Method,
@@ -76,38 +79,68 @@ namespace Firefly_iii_pp_Runner.API.Services
                     }
                 };
 
-                var tests = request.Event.FirstOrDefault(e => e.Listen == Models.Postman.Enums.EventTypeEnum.Test);
+                var (hasTests, tests) = ExtractTests(request);
+                if (hasTests)
+                    thunderItem.Tests = tests;
 
-                if (tests != null)
+
+                clients[thunderItem.Id] = thunderItem;
+
+            } 
+            else if (item is Models.Postman.Folder folder)
+            {
+                var thunderItem = new Folder
                 {
-                    if (tests.Script.Type != "text/javascript")
-                        throw new ArgumentException($"Unsupported script type: {tests.Script.Type}");
+                    Id = folder.Id.ToString(),
+                    Name = folder.Name,
+                    ContainerId = parent?.Id.ToString() ?? string.Empty,
+                    SortNum = 100,
+                };
 
-                    thunderItem.Tests = ExtractTests(tests.Script.Exec);
-                }
+                var (hasTests, tests) = ExtractTests(folder);
+                if (hasTests)
+                    thunderItem.Settings.Tests = tests;
 
-                if (parent != null)
-                {
+                if (_settings.KeepPostmanIds)
+                    collection.Folders.RemoveAll(x => x.Id.Equals(thunderItem.Id, StringComparison.InvariantCultureIgnoreCase));
+                collection.Folders.Add(thunderItem);
 
-                }
-
-
+                foreach (var child in folder.Item)
+                    TransferPostmanItemToThunderClient(folder, child, collection, clients);
+            } 
+            else
+            {
+                throw new ArgumentException("Unable to convert postman object {object}", item.GetType().FullName);
             }
 
         }
 
-        public List<Test> ExtractTests(List<string> postmanExec)
+        public (bool HasTests, List<Test>? Tests) ExtractTests(Models.Postman.Item item)
         {
-            var exec = string.Join(string.Empty, postmanExec);
+            var tests = item.Event.FirstOrDefault(e => e.Listen == Models.Postman.Enums.EventTypeEnum.Test, null);
+
+            if (tests == null || tests.Script == null)
+                return (false, null);
+
+            if (tests.Script.Type != Models.Postman.Enums.ScriptTypeEnum.Javascript)
+                throw new ArgumentException($"Unsupported script type: {tests.Script.Type}");
+
+            var exec = string.Join(string.Empty, tests.Script.Exec);
             var regex = new Regex(@"pm\.test\(['""](?<name>[\w\s]+)['""][^{]*{[^}]+pm\.expect\(jsonData\.(?<key>[\w_]+)\).to.eql\(\s*(?<value>.*?)\);");
             var matches = regex.Matches(exec);
             string convertJsonValue(string input) {
                 var val = JsonConvert.DeserializeObject(input);
-                if (val.GetType() == typeof(string))
-                    return (string)val;
-                return JsonConvert.SerializeObject(val);
+                switch (val)
+                {
+                    case string:
+                    case DateTime:
+                        return JsonConvert.DeserializeObject<string>(input);
+                    default:
+                        return JsonConvert.SerializeObject(val);
+                }
             }
-            return matches.Where(m => m.Success)
+
+            var thunderTests = matches.Where(m => m.Success)
                 .Where(m => m.Groups.ContainsKey("name")
                     && m.Groups.ContainsKey("key")
                     && m.Groups.ContainsKey("value"))
@@ -118,6 +151,8 @@ namespace Firefly_iii_pp_Runner.API.Services
                     Action = TestActionEnum.Equal,
                     Value = convertJsonValue(m.Groups["value"].Value)
                 }).ToList();
+
+            return (true, thunderTests);
         }
 
         private ClientBodyTypeEnum ExtractClientBodyTypeEnum(Models.Postman.Body postmanBody)
@@ -142,31 +177,55 @@ namespace Firefly_iii_pp_Runner.API.Services
             return (await LoadClients()).Count();
         }
 
-        private async  Task<List<Client>> LoadClients()
+        private  Task<List<Client>> LoadClients()
         {
-            var filePath = Path.Combine(_settings.Path, _settings.ClientFile);
-            if (!File.Exists(filePath))
-            {
-                throw new Exception($"File does not exist: {filePath}");
-            }
-            
-            using (var reader = new StreamReader(filePath))
-            {
-                return JsonConvert.DeserializeObject<List<Client>>(await reader.ReadToEndAsync(), _serializerSettings);
-            }
+            return ReadFromFileAsync<List<Client>>(Path.Combine(_settings.Path, _settings.ClientFile));
         }
-        private async  Task<List<Collection>> LoadCollections()
+        private void SaveClients(List<Client> clients)
         {
-            var filePath = Path.Combine(_settings.Path, _settings.CollectionFile);
-            if (!File.Exists(filePath))
+            WriteToFile(Path.Combine(_settings.Path, _settings.ClientFile), clients);
+        }
+
+        private Task<List<Collection>> LoadCollections()
+        {
+            return ReadFromFileAsync<List<Collection>>(Path.Combine(_settings.Path, _settings.CollectionFile));
+        }
+
+        private void SaveCollections(List<Collection> collections)
+        {
+            WriteToFile(Path.Combine(_settings.Path, _settings.CollectionFile), collections);
+        }
+
+        private async Task<T> ReadFromFileAsync<T>(string path)
+        {
+            if (!File.Exists(path))
+                throw new Exception($"File does not exist: {path}");
+            using var reader = new StreamReader(path, new FileStreamOptions
             {
-                throw new Exception($"File does not exist: {filePath}");
-            }
-            
-            using (var reader = new StreamReader(filePath))
+                Access = FileAccess.Read,
+                BufferSize = 4096, 
+                Mode = FileMode.Open,
+                Options = FileOptions.Asynchronous | FileOptions.SequentialScan
+            });
+
+            var text = await reader.ReadToEndAsync();
+
+            return JsonConvert.DeserializeObject<T>(text, _serializerSettings);
+        }
+        private void WriteToFile<T>(string path, T obj)
+        {
+            if (!File.Exists(path))
+                throw new Exception($"File does not exist: {path}");
+            using var writer = new StreamWriter(path, new FileStreamOptions
             {
-                return JsonConvert.DeserializeObject<List<Collection>>(await reader.ReadToEndAsync(), _serializerSettings);
-            }
+                Access = FileAccess.Write,
+                BufferSize = 4096, 
+                Mode = FileMode.Create,
+                Options = FileOptions.Asynchronous | FileOptions.SequentialScan
+            });
+
+            var serializer = JsonSerializer.CreateDefault(_serializerSettings);
+            serializer.Serialize(writer, obj);
         }
     }
 }

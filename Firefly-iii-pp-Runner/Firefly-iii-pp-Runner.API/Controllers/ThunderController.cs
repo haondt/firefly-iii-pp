@@ -36,11 +36,13 @@ namespace Firefly_iii_pp_Runner.API.Controllers
         [Route("postman")]
         public async Task<IActionResult> ImportPostmanFile()
         {
-            using var reader = new StreamReader(Request.Body);
-            var json = await reader.ReadToEndAsync();
-            _thunderService.ImportPostmanFile(json);
+            using (var reader = new StreamReader(Request.Body))
+            {
+                var json = await reader.ReadToEndAsync();
+                await _thunderService.ImportPostmanFile(json);
+            }
 
-            return new OkObjectResult(json);
+            return new OkResult();
         }
     }
 }

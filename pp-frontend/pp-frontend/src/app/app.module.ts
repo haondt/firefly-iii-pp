@@ -33,6 +33,7 @@ import { NavComponent } from './nav/nav.component';
 import { TestsComponent } from './tests/tests.component';
 import { TransactionFieldsDialog } from './tests/transaction-fields-dialog/transaction-fields-dialog.component';
 import { EditJsonDialog } from './tests/edit-json-dialog/edit-json-dialog.component';
+import { ThunderComponent } from './thunder/thunder.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { EditJsonDialog } from './tests/edit-json-dialog/edit-json-dialog.compon
     NavComponent,
     TestsComponent,
     TransactionFieldsDialog,
-    EditJsonDialog
+    EditJsonDialog,
+    ThunderComponent
   ],
   imports: [
     BrowserModule,

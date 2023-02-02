@@ -12,13 +12,16 @@ namespace Firefly_iii_pp_Runner.API.Extensions
         {
             services.Configure<FireflyIIISettings>(configuration.GetSection(nameof(FireflyIIISettings)));
             services.Configure<NodeRedSettings>(configuration.GetSection(nameof(NodeRedSettings)));
+            services.Configure<ThunderClientEditorSettings>(configuration.GetSection(nameof(ThunderClientEditorSettings)));
 
             services.AddSingleton<FireflyIIIService>();
             services.AddSingleton<NodeRedService>();
             services.AddSingleton<JobManager>();
+            services.AddSingleton<ThunderClientEditorService>();
 
             services.AddHttpClient<FireflyIIIService>()
-                .AddPolicyHandler(GetRetryPolicy());
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(5));
 
             return services;
         }

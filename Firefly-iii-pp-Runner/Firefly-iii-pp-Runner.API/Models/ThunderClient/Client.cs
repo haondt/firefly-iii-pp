@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Firefly_iii_pp_Runner.API.Models.ThunderClient.Enums;
+using Newtonsoft.Json;
 
 namespace Firefly_iii_pp_Runner.API.Models.ThunderClient
 {
@@ -22,7 +23,7 @@ namespace Firefly_iii_pp_Runner.API.Models.ThunderClient
 
     public class Body
     {
-        public string Type { get; set; }
+        public ClientBodyTypeEnum Type { get; set; }
         public string Raw { get; set; }
         public List<object> Form { get; set; } = new List<object>();
         public string Binary { get; set; }

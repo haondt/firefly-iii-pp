@@ -155,14 +155,46 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-02-02T02:31:02.518Z",
-    "modified": "2023-02-02T02:33:41.013Z",
+    "modified": "2023-02-02T13:50:44.262Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"DOLLARAMA # 466          EDMONTON     AB  (GOOGLE PAY)\"\r\n}",
+      "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"DOLLARAMA # 466          EDMONTON     AB  (GOOGLE PAY)\"\n}",
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "c278333a-c195-44e9-94a4-0556491cbfcb",
+    "colId": "ad2c2845-67d0-43b1-8673-6f2dadc0b896",
+    "containerId": "",
+    "name": "fooo",
+    "url": "{{base_url}}/apply",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2023-02-02T13:48:53.784Z",
+    "modified": "2023-02-02T14:01:17.628Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"description\": \"Point of Sale - Visa Debit VISA DEBIT RETAIL PURCHASE AHHHH BEEES 1234\",\n    \"type\": \"withdrawal\",\n    \"date\": \"2022-11-22T00:00:00+01:00\",\n    \"amount\": \"2024.81\",\n    \"source_id\": \"3\",\n    \"bill_name\": \"Groceries\",\n    \"destination_name\": \"(no name)\",\n    \"tags\": [\n        \"beans\"\n    ],\n    \"original_source\": \"ff3-v5.7.17|api-v1.5.6\",\n    \"import_hash_v2\": \"071724920338c87e6f6c7942c8f072fd648038b6e677d23c21fa1b58b4ce7c5b\",\n    \"notes\": \"foo\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "json-query",
+        "custom": "json.tags",
+        "action": "equal",
+        "value": "[\"beans\"]"
+      },
+      {
+        "type": "json-query",
+        "custom": "json.destination_name",
+        "action": "equal",
+        "value": "(no name)"
+      }
+    ]
   }
 ]

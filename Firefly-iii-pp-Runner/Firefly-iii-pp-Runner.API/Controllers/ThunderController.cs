@@ -38,7 +38,7 @@ namespace Firefly_iii_pp_Runner.API.Controllers
         {
             using var reader = new StreamReader(Request.Body);
             var json = await reader.ReadToEndAsync();
-            _thunderService.ConvertPostmanJson(json);
+            _thunderService.ImportPostmanFile(json);
 
             return new OkObjectResult(json);
         }

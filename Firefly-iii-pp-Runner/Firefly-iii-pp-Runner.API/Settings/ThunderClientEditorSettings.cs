@@ -9,5 +9,7 @@
 
         public string CollectionName { get; set; }
 
+        public bool KeepPostmanIds { get; set; }
+
     }
 }

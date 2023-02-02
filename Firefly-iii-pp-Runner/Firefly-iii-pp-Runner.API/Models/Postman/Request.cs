@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Firefly_iii_pp_Runner.API.Models.Postman.Enums;
+using Newtonsoft.Json;
 
 namespace Firefly_iii_pp_Runner.API.Models.Postman
 {
@@ -27,8 +28,18 @@ namespace Firefly_iii_pp_Runner.API.Models.Postman
 
     public class Body
     {
-        public string Mode { get; set; }
+        public RequestBodyModeEnum Mode { get; set; }
         public string Raw { get; set; }
-        public object Options { get; set; }
+        public BodyOptions Options { get; set; }
+    }
+
+    public class BodyOptions
+    {
+        public BodyOption Raw { get; set; }
+    }
+
+    public class BodyOption
+    {
+        public RequestBodyOptionsLanguageEnum Language { get; set; }
     }
 }

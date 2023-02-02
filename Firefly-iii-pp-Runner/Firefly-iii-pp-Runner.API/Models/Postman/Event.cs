@@ -1,8 +1,10 @@
-﻿namespace Firefly_iii_pp_Runner.API.Models.Postman
+﻿using Firefly_iii_pp_Runner.API.Models.Postman.Enums;
+
+namespace Firefly_iii_pp_Runner.API.Models.Postman
 {
     public class Event
     {
-        public string Listen { get; set; }
+        public EventTypeEnum Listen { get; set; }
         public Script Script { get; set; }
     }
 

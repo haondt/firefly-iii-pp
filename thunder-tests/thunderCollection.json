@@ -10,7 +10,7 @@
         "name": "Destinations",
         "containerId": "",
         "created": "2023-02-02T23:13:21.2412664+00:00",
-        "sortNum": 430,
+        "sortNum": 410,
         "settings": {
           "headers": [],
           "tests": []
@@ -21,7 +21,7 @@
         "name": "Dollarama",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2472502+00:00",
-        "sortNum": 440,
+        "sortNum": 420,
         "settings": {
           "headers": [],
           "tests": [
@@ -45,9 +45,9 @@
           "tests": [
             {
               "type": "json-query",
-              "custom": "json.destination_name",
+              "value": "A&W",
               "action": "equal",
-              "value": "A&W"
+              "custom": "json.destination_name"
             }
           ]
         }
@@ -81,7 +81,7 @@
         "name": "Blowers & Grafton",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2548471+00:00",
-        "sortNum": 250,
+        "sortNum": 230,
         "settings": {
           "headers": [],
           "tests": [
@@ -99,7 +99,7 @@
         "name": "Freshii",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2549106+00:00",
-        "sortNum": 630,
+        "sortNum": 610,
         "settings": {
           "headers": [],
           "tests": [
@@ -117,7 +117,7 @@
         "name": "United Sport & Cycle",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.254758+00:00",
-        "sortNum": 1560,
+        "sortNum": 1540,
         "settings": {
           "headers": [],
           "tests": [
@@ -189,7 +189,7 @@
         "name": "Calendar Club",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2557414+00:00",
-        "sortNum": 270,
+        "sortNum": 250,
         "settings": {
           "headers": [],
           "tests": [
@@ -207,7 +207,7 @@
         "name": "Canadian Tire",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2558564+00:00",
-        "sortNum": 290,
+        "sortNum": 270,
         "settings": {
           "headers": [],
           "tests": [
@@ -225,7 +225,7 @@
         "name": "CDKeys",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2556666+00:00",
-        "sortNum": 330,
+        "sortNum": 310,
         "settings": {
           "headers": [],
           "tests": [
@@ -243,7 +243,7 @@
         "name": "Coco Tea",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2561288+00:00",
-        "sortNum": 350,
+        "sortNum": 330,
         "settings": {
           "headers": [],
           "tests": [
@@ -261,7 +261,7 @@
         "name": "Coinamatic",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2562687+00:00",
-        "sortNum": 370,
+        "sortNum": 350,
         "settings": {
           "headers": [],
           "tests": [
@@ -279,7 +279,7 @@
         "name": "Dairy Queen",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2564122+00:00",
-        "sortNum": 400,
+        "sortNum": 380,
         "settings": {
           "headers": [],
           "tests": [
@@ -297,7 +297,7 @@
         "name": "Dream Tea",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2565329+00:00",
-        "sortNum": 460,
+        "sortNum": 440,
         "settings": {
           "headers": [],
           "tests": [
@@ -315,7 +315,7 @@
         "name": "Ebay",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2567938+00:00",
-        "sortNum": 480,
+        "sortNum": 460,
         "settings": {
           "headers": [],
           "tests": [
@@ -333,7 +333,7 @@
         "name": "Empire Park",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2568617+00:00",
-        "sortNum": 500,
+        "sortNum": 480,
         "settings": {
           "headers": [],
           "tests": [
@@ -357,7 +357,7 @@
         "name": "EPark",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2567209+00:00",
-        "sortNum": 520,
+        "sortNum": 500,
         "settings": {
           "headers": [],
           "tests": [
@@ -375,7 +375,7 @@
         "name": "Epcor",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2569932+00:00",
-        "sortNum": 540,
+        "sortNum": 520,
         "settings": {
           "headers": [],
           "tests": [
@@ -399,7 +399,7 @@
         "name": "Epic Games",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2571093+00:00",
-        "sortNum": 570,
+        "sortNum": 550,
         "settings": {
           "headers": [],
           "tests": [
@@ -417,7 +417,7 @@
         "name": "Etsy",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2571793+00:00",
-        "sortNum": 590,
+        "sortNum": 570,
         "settings": {
           "headers": [],
           "tests": [
@@ -435,7 +435,7 @@
         "name": "Fatburger",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2572462+00:00",
-        "sortNum": 610,
+        "sortNum": 590,
         "settings": {
           "headers": [],
           "tests": [
@@ -453,7 +453,7 @@
         "name": "Gateway Toyota",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2573242+00:00",
-        "sortNum": 650,
+        "sortNum": 630,
         "settings": {
           "headers": [],
           "tests": [
@@ -471,7 +471,7 @@
         "name": "General",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2574079+00:00",
-        "sortNum": 670,
+        "sortNum": 650,
         "settings": {
           "headers": [],
           "tests": []
@@ -482,7 +482,7 @@
         "name": "Keep existing destination",
         "containerId": "cec74124-990c-4af0-bb98-988c2e4cf894",
         "created": "2023-02-02T23:13:21.2575311+00:00",
-        "sortNum": 840,
+        "sortNum": 820,
         "settings": {
           "headers": [],
           "tests": [
@@ -500,7 +500,7 @@
         "name": "Keep Source Id",
         "containerId": "cec74124-990c-4af0-bb98-988c2e4cf894",
         "created": "2023-02-02T23:13:21.2574138+00:00",
-        "sortNum": 860,
+        "sortNum": 840,
         "settings": {
           "headers": [],
           "tests": [
@@ -518,7 +518,7 @@
         "name": "Save existing data",
         "containerId": "cec74124-990c-4af0-bb98-988c2e4cf894",
         "created": "2023-02-02T23:13:21.2576045+00:00",
-        "sortNum": 1240,
+        "sortNum": 1220,
         "settings": {
           "headers": [],
           "tests": [
@@ -596,7 +596,7 @@
         "name": "Home Depot",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2770117+00:00",
-        "sortNum": 720,
+        "sortNum": 700,
         "settings": {
           "headers": [],
           "tests": [
@@ -614,7 +614,7 @@
         "name": "Homesense",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2770727+00:00",
-        "sortNum": 740,
+        "sortNum": 720,
         "settings": {
           "headers": [],
           "tests": [
@@ -632,7 +632,7 @@
         "name": "Hughes",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2771225+00:00",
-        "sortNum": 760,
+        "sortNum": 740,
         "settings": {
           "headers": [],
           "tests": [
@@ -656,7 +656,7 @@
         "name": "IHop",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2771878+00:00",
-        "sortNum": 780,
+        "sortNum": 760,
         "settings": {
           "headers": [],
           "tests": [
@@ -674,7 +674,7 @@
         "name": "IKEA",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2772379+00:00",
-        "sortNum": 800,
+        "sortNum": 780,
         "settings": {
           "headers": [],
           "tests": [
@@ -692,7 +692,7 @@
         "name": "JD Sports",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2772933+00:00",
-        "sortNum": 820,
+        "sortNum": 800,
         "settings": {
           "headers": [],
           "tests": [
@@ -710,7 +710,7 @@
         "name": "Lego Store",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2773419+00:00",
-        "sortNum": 870,
+        "sortNum": 850,
         "settings": {
           "headers": [],
           "tests": [
@@ -728,7 +728,7 @@
         "name": "Lowe's",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2774156+00:00",
-        "sortNum": 900,
+        "sortNum": 880,
         "settings": {
           "headers": [],
           "tests": [
@@ -746,7 +746,7 @@
         "name": "McDonald's",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2774899+00:00",
-        "sortNum": 930,
+        "sortNum": 910,
         "settings": {
           "headers": [],
           "tests": [
@@ -764,7 +764,7 @@
         "name": "Memory Express",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2775414+00:00",
-        "sortNum": 950,
+        "sortNum": 930,
         "settings": {
           "headers": [],
           "tests": [
@@ -782,7 +782,7 @@
         "name": "Microsoft",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2776148+00:00",
-        "sortNum": 980,
+        "sortNum": 960,
         "settings": {
           "headers": [],
           "tests": [
@@ -800,7 +800,7 @@
         "name": "Mogouyan",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.277707+00:00",
-        "sortNum": 1020,
+        "sortNum": 1000,
         "settings": {
           "headers": [],
           "tests": [
@@ -818,7 +818,7 @@
         "name": "Namaste India",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2778082+00:00",
-        "sortNum": 1040,
+        "sortNum": 1020,
         "settings": {
           "headers": [],
           "tests": [
@@ -836,7 +836,7 @@
         "name": "Nando's",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2778609+00:00",
-        "sortNum": 1060,
+        "sortNum": 1040,
         "settings": {
           "headers": [],
           "tests": [
@@ -854,7 +854,7 @@
         "name": "NAPA",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2777603+00:00",
-        "sortNum": 1080,
+        "sortNum": 1060,
         "settings": {
           "headers": [],
           "tests": [
@@ -872,7 +872,7 @@
         "name": "Nexus Mods",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2779526+00:00",
-        "sortNum": 1100,
+        "sortNum": 1080,
         "settings": {
           "headers": [],
           "tests": [
@@ -890,7 +890,7 @@
         "name": "OEB Breakfast Co.",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2780114+00:00",
-        "sortNum": 1120,
+        "sortNum": 1100,
         "settings": {
           "headers": [],
           "tests": [
@@ -908,7 +908,7 @@
         "name": "Petro Canada",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2780662+00:00",
-        "sortNum": 1140,
+        "sortNum": 1120,
         "settings": {
           "headers": [],
           "tests": [
@@ -932,7 +932,7 @@
         "name": "Pizza 73",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2781222+00:00",
-        "sortNum": 1160,
+        "sortNum": 1140,
         "settings": {
           "headers": [],
           "tests": [
@@ -950,7 +950,7 @@
         "name": "Puma",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2781751+00:00",
-        "sortNum": 1180,
+        "sortNum": 1160,
         "settings": {
           "headers": [],
           "tests": [
@@ -968,7 +968,7 @@
         "name": "Rockin' Robyn's",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2782261+00:00",
-        "sortNum": 1200,
+        "sortNum": 1180,
         "settings": {
           "headers": [],
           "tests": [
@@ -986,7 +986,7 @@
         "name": "Safeway",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2782839+00:00",
-        "sortNum": 1220,
+        "sortNum": 1200,
         "settings": {
           "headers": [],
           "tests": [
@@ -1004,7 +1004,7 @@
         "name": "Scotiabank",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2783325+00:00",
-        "sortNum": 1250,
+        "sortNum": 1230,
         "settings": {
           "headers": [],
           "tests": [
@@ -1022,7 +1022,7 @@
         "name": "Shell",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2783818+00:00",
-        "sortNum": 1270,
+        "sortNum": 1250,
         "settings": {
           "headers": [],
           "tests": [
@@ -1046,7 +1046,7 @@
         "name": "SkipTheDishes",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2784639+00:00",
-        "sortNum": 1300,
+        "sortNum": 1280,
         "settings": {
           "headers": [],
           "tests": [
@@ -1064,7 +1064,7 @@
         "name": "Spotify",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2785384+00:00",
-        "sortNum": 1330,
+        "sortNum": 1310,
         "settings": {
           "headers": [],
           "tests": [
@@ -1088,7 +1088,7 @@
         "name": "Steam",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2785954+00:00",
-        "sortNum": 1370,
+        "sortNum": 1350,
         "settings": {
           "headers": [],
           "tests": [
@@ -1106,7 +1106,7 @@
         "name": "Superstore",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2786669+00:00",
-        "sortNum": 1410,
+        "sortNum": 1390,
         "settings": {
           "headers": [],
           "tests": [
@@ -1130,7 +1130,7 @@
         "name": "TD Insurance",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2787255+00:00",
-        "sortNum": 1430,
+        "sortNum": 1410,
         "settings": {
           "headers": [],
           "tests": [
@@ -1154,7 +1154,7 @@
         "name": "Telus",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.278786+00:00",
-        "sortNum": 1450,
+        "sortNum": 1430,
         "settings": {
           "headers": [],
           "tests": [
@@ -1178,7 +1178,7 @@
         "name": "Toyota on the Trail",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2788406+00:00",
-        "sortNum": 1470,
+        "sortNum": 1450,
         "settings": {
           "headers": [],
           "tests": [
@@ -1196,7 +1196,7 @@
         "name": "Trapped",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.278911+00:00",
-        "sortNum": 1490,
+        "sortNum": 1470,
         "settings": {
           "headers": [],
           "tests": [
@@ -1214,7 +1214,7 @@
         "name": "Tres Carnales",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2789747+00:00",
-        "sortNum": 1510,
+        "sortNum": 1490,
         "settings": {
           "headers": [],
           "tests": [
@@ -1232,7 +1232,7 @@
         "name": "Ubisoft",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2790312+00:00",
-        "sortNum": 1530,
+        "sortNum": 1510,
         "settings": {
           "headers": [],
           "tests": [
@@ -1250,7 +1250,7 @@
         "name": "Virgin",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2791023+00:00",
-        "sortNum": 1600,
+        "sortNum": 1580,
         "settings": {
           "headers": [],
           "tests": [
@@ -1274,7 +1274,7 @@
         "name": "Walmart",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2792027+00:00",
-        "sortNum": 1640,
+        "sortNum": 1620,
         "settings": {
           "headers": [],
           "tests": [
@@ -1292,7 +1292,7 @@
         "name": "Wheaton Honda",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2792521+00:00",
-        "sortNum": 1660,
+        "sortNum": 1640,
         "settings": {
           "headers": [],
           "tests": [
@@ -1310,7 +1310,7 @@
         "name": "Winners",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.2793047+00:00",
-        "sortNum": 1680,
+        "sortNum": 1660,
         "settings": {
           "headers": [],
           "tests": [
@@ -1328,7 +1328,7 @@
         "name": "Youtube",
         "containerId": "ebb55e05-91a4-4b58-aeae-da571531f3df",
         "created": "2023-02-02T23:13:21.279355+00:00",
-        "sortNum": 1690,
+        "sortNum": 1670,
         "settings": {
           "headers": [],
           "tests": [

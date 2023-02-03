@@ -17,7 +17,7 @@ namespace Firefly_iii_pp_Runner.API.Models.ThunderClient
         public DateTime Modified { get; set; } = DateTime.Now;
         public List<object> Headers { get; set; } = new List<object>();
         public List<object> Params { get; set; } = new List<object>();
-        public Body Body { get; set; } = new Body();
+        public Body Body { get; set; }
         public List<Test> Tests { get; set; } = new List<Test>();
     }
 

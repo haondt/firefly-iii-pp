@@ -32,4 +32,18 @@ export class ThunderService {
             })
         );
     }
+
+    sort(): Observable<ServiceResponseModel<Object>> {
+        return this.client.post(`${environment.API_HOST}/thunder/sort`, {
+            observe: 'response'
+        }).pipe(
+            map(r => { return { success: true }}),
+            catchError(e => {
+                return of({
+                    success: false,
+                    error: e.message
+                });
+            })
+        );
+    }
 }

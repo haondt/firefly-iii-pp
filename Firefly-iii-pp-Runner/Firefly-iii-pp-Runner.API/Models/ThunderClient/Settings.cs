@@ -7,6 +7,7 @@
         public List<Test> Tests { get; set; } = new List<Test>();
         public OptionsSettings Options { get; set; }
         public Guid? EnvId { get; set; }
+        public Dictionary<string, object> RunOptions { get; set; }
     }
 
     public class AuthSettings

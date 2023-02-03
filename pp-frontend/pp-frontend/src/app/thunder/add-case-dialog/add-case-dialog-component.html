@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{ data.title }} </h1>
+<div mat-dialog-content class="content">
+    <div class="content-section">
+        <div class="content-row">
+            <span>Transaction ID:</span>
+            <input class="transaction-id-input" type="text" [(ngModel)]="transactionId">
+            <span class="spacer"></span>
+            <button mat-raised-button (click)="getTransactionData()" color="primary" [disabled]="working">Get Transaction</button>
+        </div>
+    </div>
+    <div class="content-section" *ngIf="transactionData">
+        <p> Select fields:</p>
+        <mat-chip-listbox multiple="true">
+            <mat-chip-option *ngFor="let field of fields" [selected]="field.selected" (click)="field.selected = !field.selected">
+                {{ field.viewValue }}
+            </mat-chip-option>
+        </mat-chip-listbox>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onFinishClick()">Add</button>
+</div>

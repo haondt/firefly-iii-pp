@@ -33,6 +33,27 @@ namespace Firefly_iii_pp_Runner.API.Services
             };
         }
 
+        public async Task SortTests()
+        {
+            var collections = await LoadCollections();
+            var collection = collections.FirstOrDefault(c => c.ColName == _settings.CollectionName, null);
+            var clients = await LoadClients();
+
+            var names = collection.Folders.Select(f => f.Name)
+                .Concat(clients.Select(c => c.Name))
+                .Distinct().OrderBy(s => s)
+                .Select((s, i) => (s, 100 + i * 10))
+                .ToDictionary(t => t.s, t => t.Item2);
+
+            foreach(var folder in collection.Folders)
+                folder.SortNum = names[folder.Name];
+            foreach(var client in clients)
+                client.SortNum = names[client.Name];
+
+            SaveCollections(collections);
+            SaveClients(clients);
+        }
+
         public async Task ImportPostmanFile(string json)
         {
             var postmanCollection = JsonConvert.DeserializeObject<Models.Postman.Collection>(json, _serializerSettings);

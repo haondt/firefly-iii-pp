@@ -44,5 +44,13 @@ namespace Firefly_iii_pp_Runner.API.Controllers
 
             return new OkResult();
         }
+
+        [HttpPost]
+        [Route("sort")]
+        public async Task<IActionResult> Sort()
+        {
+            await _thunderService.SortTests();
+            return new OkResult();
+        }
     }
 }

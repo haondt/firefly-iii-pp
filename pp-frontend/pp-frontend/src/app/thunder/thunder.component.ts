@@ -36,4 +36,17 @@ export class ThunderComponent {
             }
         })
     }
+
+    sort(button: {disabled: boolean}) {
+        button.disabled = true;
+        this.thunderService.sort().subscribe(res => {
+            try {
+                if (!res.success) {
+                    this.showSnackError(res.error);
+                }
+            } finally {
+                button.disabled = false;
+            }
+        })
+    }
 }

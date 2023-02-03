@@ -18,6 +18,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,6 +36,7 @@ import { TestsComponent } from './tests/tests.component';
 import { TransactionFieldsDialog } from './tests/transaction-fields-dialog/transaction-fields-dialog.component';
 import { EditJsonDialog } from './tests/edit-json-dialog/edit-json-dialog.component';
 import { ThunderComponent } from './thunder/thunder.component';
+import { AddCaseDialog } from './thunder/add-case-dialog/add-case-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { ThunderComponent } from './thunder/thunder.component';
     TestsComponent,
     TransactionFieldsDialog,
     EditJsonDialog,
-    ThunderComponent
+    ThunderComponent,
+    AddCaseDialog
   ],
   imports: [
     BrowserModule,
@@ -64,10 +68,12 @@ import { ThunderComponent } from './thunder/thunder.component';
     MatAutocompleteModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
+    MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

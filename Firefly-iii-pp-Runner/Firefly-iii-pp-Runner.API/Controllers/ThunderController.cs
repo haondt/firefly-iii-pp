@@ -52,5 +52,12 @@ namespace Firefly_iii_pp_Runner.API.Controllers
             await _thunderService.SortTests();
             return new OkResult();
         }
+
+        [HttpGet]
+        [Route("foldernames")]
+        public async Task<IActionResult> GetFolderNames()
+        {
+            return new OkObjectResult(await _thunderService.GetFolderNames());
+        }
     }
 }

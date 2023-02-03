@@ -46,4 +46,25 @@ export class ThunderService {
             })
         );
     }
+
+    getFolderNames(): Observable<ServiceResponseModel<string[]>> {
+        return this.client.get(`${environment.API_HOST}/thunder/foldernames`, {
+            responseType: 'json',
+            observe: 'response'
+        }).pipe(
+            map(r => r ? {
+                success: true,
+                body: <string[]>r.body
+            } : {
+                success: false,
+                error: "Received empty response from backend"
+            }),
+            catchError(e => {
+                return of({
+                    success: false,
+                    error: e.message
+                });
+            })
+        );
+    }
 }

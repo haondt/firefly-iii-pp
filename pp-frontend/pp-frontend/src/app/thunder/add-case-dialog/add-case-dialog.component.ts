@@ -9,39 +9,67 @@ import { FireflyIIIService } from "src/app/services/FireflyIII";
 import { MatSelectChange } from "@angular/material/select";
 
 export interface DialogData {
-    title: string
+    title: string;
+    folderNameOptions: string[];
 }
 
 @Component({
-    selector: 'transaction-fields-dialog',
-    templateUrl: './transaction-fields-dialog.component.html',
+    selector: 'add-case-dialog',
+    templateUrl: './add-case-dialog.component.html',
     styleUrls: [
-        '../tests.component.scss',
-        './transaction-fields-dialog.component.scss'
+        './add-case-dialog.component.scss'
     ]
 })
-export class TransactionFieldsDialog {
+export class AddCaseDialog {
     fields: { viewValue: string, selected: boolean }[] = [];
     transactionId: string | null = null;
     transactionData: { [key: string]: any } | null = null;
     working: boolean = false;
+    gettingTransaction: boolean = false;
+    getTransactionError: string = "";
 
+    folderName: string | undefined;
+    allFolderNameOptions: string[] = [];
+    filteredFolderNameOptions: string[] = [];
+
+    folderCreationOption: string = "use-existing-or-create";
 
     constructor(
-        public dialogRef: MatDialogRef<TransactionFieldsDialog>,
+        public dialogRef: MatDialogRef<AddCaseDialog>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private fireflyIII: FireflyIIIService
     ) {
+        dialogRef.disableClose = true;
+        this.allFolderNameOptions = data.folderNameOptions;
+        console.log(this.allFolderNameOptions);
     }
 
     getTransactionData() {
-        this.fields = [];
-        this.working = true;
         if (this.transactionId !== null) {
+            // reset data
+            this.getTransactionError = "";
+            this.transactionData = null;
+            this.fields = [];
+            this.folderCreationOption = "use-existing-or-create";
+
+            // freeze ui
+            this.working = true;
+            this.gettingTransaction = true;
+
             this.fireflyIII.getTransactionData(this.transactionId).subscribe(r => {
-                this.transactionData = r;
-                this.loadFields();
-                this.working = false;
+                try {
+                    if (r.success) {
+                        this.transactionData = r.body!;
+                        this.loadFields();
+                        this.working = false;
+                    } else {
+                        this.getTransactionError = r.error ?? "Unable to retrieve transaction";
+                    }
+                } finally {
+                    // unfreeze ui
+                    this.gettingTransaction = false;
+                    this.working = false;
+                }
             });
         }
     }
@@ -58,23 +86,18 @@ export class TransactionFieldsDialog {
         }
     }
 
-    onCancelClick() {
-        this.dialogRef.close([])
+    onCloseClick() {
+        this.dialogRef.close()
     }
 
     onFinishClick() {
         if (this.fields !== null) {
             this.dialogRef.close(this.fields.filter(f => f.selected).map(f => {
-                if (this.transactionData) { // ?? idk why the compiler hates me
-                    return {
-                        key: f.viewValue,
-                        value: this.transactionData[f.viewValue]
-                    };
-                }
-                throw new Error("Transaction data null");
+                return {
+                    key: f.viewValue,
+                    value: this.transactionData![f.viewValue]
+                };
             }));
-        } else {
-            this.dialogRef.close([]);
         }
     }
 }

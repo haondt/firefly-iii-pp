@@ -1,3 +1,10 @@
+.content-container {
+    max-width: 1225px;
+    min-width: 600px;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+}
 .content {
     display: flex;
     flex-direction: column;
@@ -7,6 +14,7 @@
 .content-section {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
 .content-row {
@@ -36,4 +44,8 @@ span, p {
 
 .mat-mdc-dialog-actions {
     justify-content: end;
+}
+
+.error {
+    color: #f55246;
 }

@@ -33,10 +33,19 @@ namespace Firefly_iii_pp_Runner.API.Services
             };
         }
 
+        public async Task<List<string>> GetFolderNames()
+        {
+            var collections = await LoadCollections();
+            var collection = collections.FirstOrDefault(c => c.ColName == _settings.CollectionName, null);
+            if (collection == null) throw new NotFoundException($"Unable to find collection with name {_settings.CollectionName}");
+            return collection.Folders.Select(f => f.Name).Distinct(StringComparer.InvariantCultureIgnoreCase).ToList();
+        }
+
         public async Task SortTests()
         {
             var collections = await LoadCollections();
             var collection = collections.FirstOrDefault(c => c.ColName == _settings.CollectionName, null);
+            if (collection == null) throw new NotFoundException($"Unable to find collection with name {_settings.CollectionName}");
             var clients = await LoadClients();
 
             var names = collection.Folders.Select(f => f.Name)
@@ -59,10 +68,8 @@ namespace Firefly_iii_pp_Runner.API.Services
             var postmanCollection = JsonConvert.DeserializeObject<Models.Postman.Collection>(json, _serializerSettings);
             var existingCollections = await LoadCollections();
             var collection = existingCollections.FirstOrDefault(c => c.ColName == _settings.CollectionName, null);
+            if (collection == null) throw new NotFoundException($"Unable to find collection with name {_settings.CollectionName}");
             var clients = (await LoadClients()).ToDictionary(x => x.Id, x => x);
-
-            if (collection == null)
-                throw new NotFoundException($"Unable to find collection with name {_settings.CollectionName}");
 
             var collectionId = collection.Id;
             foreach (var item in postmanCollection.Item)

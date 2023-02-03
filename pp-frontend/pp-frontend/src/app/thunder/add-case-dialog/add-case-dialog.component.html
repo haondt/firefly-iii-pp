@@ -1,0 +1,51 @@
+<div class="content-container">
+    <h1 mat-dialog-title>{{ data.title }} </h1>
+    <div mat-dialog-content class="content">
+        <div class="content-section">
+            <div class="content-row">
+                <span>Transaction ID:</span>
+                <input class="transaction-id-input" type="text" [(ngModel)]="transactionId">
+                <span class="spacer"></span>
+                <button mat-raised-button (click)="getTransactionData()" color="primary" [disabled]="working">Get Transaction</button>
+                <mat-spinner *ngIf="gettingTransaction" diameter="25" color="accent" class="test-spinner"></mat-spinner>
+            </div>
+            <div class="content-row" *ngIf="getTransactionError">
+                <span class="error">{{ getTransactionError }}</span>
+            </div>
+        </div>
+        <div class="content-section" *ngIf="transactionData">
+            <p> Select fields:</p>
+            <mat-chip-listbox multiple="true">
+                <mat-chip-option *ngFor="let field of fields" [selected]="field.selected" (click)="field.selected = !field.selected">
+                    {{ field.viewValue }}
+                </mat-chip-option>
+            </mat-chip-listbox>
+        </div>
+        <div class="content-section">
+            <div class="content-row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Folder</mat-label>
+                    <input type="text" matInput [(ngModel)]="folderName" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredFolderNameOptions" [value]="option">{{ option }}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-radio-group [(ngModel)]="folderCreationOption">
+                    <mat-radio-button value="use-existing-or-create" selected="true">Use Existing Folder If Exists</mat-radio-button>
+                    <mat-radio-button value="force-create-new">Create New Folder</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="content-row">
+                <mat-checkbox>Configure expected values</mat-checkbox>
+            </div>
+        </div>
+        <div class="content-section">
+            <div class="content-row">
+                <button mat-raised-button color="primary">Create Case</button>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-stroked-button (click)="onCloseClick()" [disabled]="working">Close</button>
+    </div>
+</div>

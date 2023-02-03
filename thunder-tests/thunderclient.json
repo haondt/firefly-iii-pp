@@ -1878,5 +1878,19 @@
       "binary": null
     },
     "tests": []
+  },
+  {
+    "_id": "fbdaa5d4-a9cc-457b-9201-d14837eb2f61",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "a30c041b-e2fe-4f67-989c-a7789e19c06f",
+    "name": "Get Folder Names",
+    "url": "{{base_url}}/thunder/foldernames",
+    "method": "GET",
+    "sortNum": 11550,
+    "created": "2023-02-03T02:14:00.161Z",
+    "modified": "2023-02-03T02:14:13.174Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

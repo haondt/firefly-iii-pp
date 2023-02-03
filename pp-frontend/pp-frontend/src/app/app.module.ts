@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -70,6 +71,7 @@ import { AddCaseDialog } from './thunder/add-case-dialog/add-case-dialog.compone
     MatProgressSpinnerModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatTooltipModule,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,

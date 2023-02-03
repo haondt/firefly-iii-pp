@@ -3,7 +3,7 @@ import { FormControl } from "@angular/forms";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { map, Observable, startWith } from "rxjs";
+import { filter, map, Observable, startWith } from "rxjs";
 import { A, COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FireflyIIIService } from "src/app/services/FireflyIII";
 import { MatSelectChange } from "@angular/material/select";
@@ -11,6 +11,11 @@ import { MatSelectChange } from "@angular/material/select";
 export interface DialogData {
     title: string;
     folderNameOptions: string[];
+}
+
+interface CaseFieldChip {
+    selected: boolean;
+    viewValue: string;
 }
 
 @Component({
@@ -21,7 +26,7 @@ export interface DialogData {
     ]
 })
 export class AddCaseDialog {
-    fields: { viewValue: string, selected: boolean }[] = [];
+    fields: CaseFieldChip[] = [];
     transactionId: string | null = null;
     transactionData: { [key: string]: any } | null = null;
     working: boolean = false;
@@ -33,9 +38,12 @@ export class AddCaseDialog {
     filteredFolderNameOptions: string[] = [];
 
     folderCreationOption: string = "use-existing-or-create";
+    configureExpectedValues: boolean = false;
 
     selectedField: string | undefined;
     expectedFieldValue: string | undefined;
+
+    createCaseError: string | undefined;
 
     constructor(
         public dialogRef: MatDialogRef<AddCaseDialog>,
@@ -44,7 +52,7 @@ export class AddCaseDialog {
     ) {
         dialogRef.disableClose = true;
         this.allFolderNameOptions = data.folderNameOptions;
-        console.log(this.allFolderNameOptions);
+        this.filteredFolderNameOptions = this.allFolderNameOptions;
     }
 
     getTransactionData() {
@@ -54,6 +62,10 @@ export class AddCaseDialog {
             this.transactionData = null;
             this.fields = [];
             this.folderCreationOption = "use-existing-or-create";
+            this.configureExpectedValues = false;
+            this.folderName = undefined;
+            this.createCaseError = undefined;
+            this.filteredFolderNameOptions = this.allFolderNameOptions;
 
             // freeze ui
             this.working = true;
@@ -93,7 +105,7 @@ export class AddCaseDialog {
         this.dialogRef.close()
     }
 
-    onFinishClick() {
+    ______onFinishClick() {
         if (this.fields !== null) {
             this.dialogRef.close(this.fields.filter(f => f.selected).map(f => {
                 return {
@@ -104,7 +116,33 @@ export class AddCaseDialog {
         }
     }
 
+    onCaseFieldClick(chip: CaseFieldChip) {
+        chip.selected = !chip.selected;
+    }
+
     addExpectedValue() {
 
+    }
+
+    createCase(button: { disabled: boolean }) {
+        if (!this.transactionData) {
+            this.createCaseError = "No transaction loaded";
+        } else if (this.fields.filter(f => f.selected).length <= 0) {
+            this.createCaseError = "No fields selected";
+        } else if (!this.folderName) {
+            this.createCaseError = "Folder name not set";
+        } else {
+            this.createCaseError = undefined;
+
+            button.disabled = true;
+            button.disabled = false;
+        }
+    }
+
+    folderNameAutocompleteChanged(name: string) {
+        this.folderName = name;
+        const filterValue = name.toLowerCase();
+        this.filteredFolderNameOptions = this.allFolderNameOptions.filter(f => f.toLowerCase().includes(filterValue));
+        console.log(this.folderName);
     }
 }

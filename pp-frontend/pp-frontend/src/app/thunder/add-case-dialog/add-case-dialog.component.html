@@ -1,6 +1,7 @@
 <div class="content-container">
     <h1 mat-dialog-title>{{ data.title }} </h1>
     <div mat-dialog-content class="content">
+        <!-- Get Transaction -->
         <div class="content-section">
             <div class="content-row">
                 <span>Transaction ID:</span>
@@ -13,32 +14,42 @@
                 <span class="error">{{ getTransactionError }}</span>
             </div>
         </div>
+
+        <!-- Configure data to pull from transaction -->
+        <div class="content-section-sep" *ngIf="transactionData"></div>
         <div class="content-section" *ngIf="transactionData">
-            <p> Select fields:</p>
-            <mat-chip-listbox multiple="true">
-                <mat-chip-option *ngFor="let field of fields" [selected]="field.selected" (click)="field.selected = !field.selected">
-                    {{ field.viewValue }}
-                </mat-chip-option>
-            </mat-chip-listbox>
-        </div>
-        <div class="content-section">
+            <div class="content-row">
+                <p> Select fields:</p>
+            </div>
+            <div class="content-row">
+                <mat-chip-listbox multiple="true">
+                    <mat-chip-option *ngFor="let field of fields" [selected]="field.selected" (click)="onCaseFieldClick(field)">
+                        {{ field.viewValue }}
+                    </mat-chip-option>
+                </mat-chip-listbox>
+            </div>
             <div class="content-row">
                 <mat-form-field appearance="fill">
                     <mat-label>Folder</mat-label>
-                    <input type="text" matInput [(ngModel)]="folderName" [matAutocomplete]="auto">
+                    <input type="text" matInput [ngModel]="folderName" [matAutocomplete]="auto" (ngModelChange)="folderNameAutocompleteChanged($event)">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredFolderNameOptions" [value]="option">{{ option }}</mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <mat-icon>info</mat-icon>
+                <mat-icon matTooltip="Seperate nested directories with a forward slash. Example: Foo/Bar">info</mat-icon>
                 <mat-radio-group class="folder-options-radio-group" [(ngModel)]="folderCreationOption">
                     <mat-radio-button value="use-existing-or-create" selected="true">Use Existing Folder If Exists</mat-radio-button>
                     <mat-radio-button value="force-create-new">Create New Folder</mat-radio-button>
                 </mat-radio-group>
             </div>
             <div class="content-row">
-                <mat-checkbox>Configure expected values</mat-checkbox>
+                <mat-checkbox [(ngModel)]="configureExpectedValues">Configure expected values</mat-checkbox>
             </div>
+        </div>
+
+        <!-- Configure expected values -->
+        <div class="content-section-sep" *ngIf="configureExpectedValues"></div>
+        <div class="content-section" *ngIf="configureExpectedValues">
             <div class="content-row">
                 <mat-form-field class="field-select" appearance="fill">
                     <mat-label>Select Field</mat-label>
@@ -59,9 +70,14 @@
                 </mat-chip-option>
             </mat-chip-listbox>
         </div>
+
+        <div class="content-section-sep"></div>
         <div class="content-section">
             <div class="content-row">
-                <button mat-raised-button color="primary">Create Case</button>
+                <button mat-raised-button color="primary" #r (click)="createCase(r)">Create Case</button>
+            </div>
+            <div class="content-row" *ngIf="createCaseError">
+                <span class="error">{{ createCaseError }}</span>
             </div>
         </div>
     </div>

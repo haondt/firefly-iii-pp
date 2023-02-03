@@ -40,7 +40,49 @@ namespace Firefly_iii_pp_Runner.API.Services
             var collections = await LoadCollections();
             var collection = collections.FirstOrDefault(c => c.ColName == _settings.CollectionName, null);
             if (collection == null) throw new NotFoundException($"Unable to find collection with name {_settings.CollectionName}");
-            return collection.Folders.Select(f => f.Name).Distinct(StringComparer.InvariantCultureIgnoreCase).ToList();
+
+            var folderDict = collection.Folders.ToDictionary(f => f.Id, f => (f.Name, f.ContainerId));
+            var pathDict = new Dictionary<string, (bool IsRoot, string Path)>() { { "", (true, "root")} };
+
+            foreach(var kvp in folderDict)
+            {
+                var parentId = kvp.Value.ContainerId;
+
+                if (!pathDict.ContainsKey(parentId))
+                {
+                    var depth = 0;
+                    var maxDepth = 100;
+                    var idStack = new Stack<string>();
+                    while (!pathDict.ContainsKey(parentId))
+                    {
+                        idStack.Push(parentId);
+                        parentId = folderDict[parentId].ContainerId;
+
+                        depth++;
+                        if (depth > maxDepth)
+                            throw new Exception("Exceeded max depth while attempting to assemble folders");
+                    }
+
+                    while(idStack.Count > 0)
+                    {
+                        var id = idStack.Pop();
+                        var _parentPath = pathDict[parentId];
+                        if (_parentPath.IsRoot)
+                            pathDict[id] = (false, $"{folderDict[id].Name}");
+                        else
+                            pathDict[id] = (false, $"{_parentPath.Path}/{folderDict[id].Name}");
+                        parentId = id;
+                    }
+                }
+
+                var parentPath = pathDict[parentId];
+                if (parentPath.IsRoot)
+                    pathDict[kvp.Key] = (false, $"{kvp.Value.Name}");
+                else
+                    pathDict[kvp.Key] = (false, $"{parentPath.Path}/{kvp.Value.Name}");
+            }
+
+            return pathDict.Where(kvp => !kvp.Value.IsRoot).Select(kvp => kvp.Value.Path).ToList();
         }
 
         public async Task SortTests()

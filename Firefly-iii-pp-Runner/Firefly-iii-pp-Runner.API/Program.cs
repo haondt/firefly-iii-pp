@@ -1,4 +1,7 @@
+using Firefly_iii_pp_Runner.API.Converters;
 using Firefly_iii_pp_Runner.API.Extensions;
+using Newtonsoft.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 var CORS_POLICY = "_ppRunnerPolicy";
 
 builder.Services.AddControllers()
-    .AddNewtonsoftJson();
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        options.SerializerSettings.Converters.Add(new ItemConverter());
+        options.SerializerSettings.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Error;
+        options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    });
+
 builder.Services.AddCors(o =>
 {
     o.AddPolicy(name: CORS_POLICY,

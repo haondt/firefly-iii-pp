@@ -59,5 +59,17 @@ namespace Firefly_iii_pp_Runner.API.Controllers
         {
             return new OkObjectResult(await _thunderService.GetFolderNames());
         }
+
+        [HttpPost]
+        [Route("testcase")]
+        public async Task<IActionResult> AddTestCase([FromBody] CreateTestCaseRequestDto request)
+        {
+            var result = await _thunderService.CreateTestCase(request);
+            return new OkObjectResult(new
+            {
+                Folder = result.Folder,
+                Client = result.Client
+            });
+        }
     }
 }

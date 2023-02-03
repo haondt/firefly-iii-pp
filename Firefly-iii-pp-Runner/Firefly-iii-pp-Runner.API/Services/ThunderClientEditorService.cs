@@ -1,6 +1,7 @@
 ﻿using Firefly_iii_pp_Runner.API.Converters;
 using Firefly_iii_pp_Runner.API.Exceptions;
 using Firefly_iii_pp_Runner.API.Models.ThunderClient;
+using Firefly_iii_pp_Runner.API.Models.ThunderClient.Dtos;
 using Firefly_iii_pp_Runner.API.Models.ThunderClient.Enums;
 using Firefly_iii_pp_Runner.API.Settings;
 using Microsoft.Extensions.Options;
@@ -29,7 +30,8 @@ namespace Firefly_iii_pp_Runner.API.Services
                     new ItemConverter()
                 },
                 MissingMemberHandling = MissingMemberHandling.Error,
-                Formatting = Formatting.Indented
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
             };
         }
 
@@ -48,6 +50,14 @@ namespace Firefly_iii_pp_Runner.API.Services
             if (collection == null) throw new NotFoundException($"Unable to find collection with name {_settings.CollectionName}");
             var clients = await LoadClients();
 
+            Sort(collection, clients);
+
+            SaveCollections(collections);
+            SaveClients(clients);
+        }
+
+        private void Sort(Collection collection, List<Client> clients)
+        {
             var names = collection.Folders.Select(f => f.Name)
                 .Concat(clients.Select(c => c.Name))
                 .Distinct().OrderBy(s => s)
@@ -58,9 +68,102 @@ namespace Firefly_iii_pp_Runner.API.Services
                 folder.SortNum = names[folder.Name];
             foreach(var client in clients)
                 client.SortNum = names[client.Name];
+        }
+
+        private Folder GenerateFolderPath(Collection collection, CreateTestCaseFolderModeEnum createFolderMode, string folderName)
+        {
+            if (folderName.Split('/').Select(s => s.Trim()).Any(s => string.IsNullOrWhiteSpace(s)))
+                throw new ArgumentException($"Invalid folder path: {folderName}");
+
+            var path = folderName.Split('/').Select(s => s.Trim());
+            Folder? parent = null;
+            foreach (var name in path)
+            {
+
+                Folder? folder = null;
+                if (createFolderMode == CreateTestCaseFolderModeEnum.UseExistingOrCreate)
+                    folder = collection.Folders.FirstOrDefault(f => f.ContainerId == (parent?.Id ?? string.Empty)
+                    && f.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+
+                if (folder == null)
+                {
+                    folder = new Folder
+                    {
+                        Name = name,
+                        ContainerId = (parent?.Id ?? string.Empty)
+                    };
+
+                    collection.Folders.Add(folder);
+                }
+
+                parent = folder;
+            }
+
+            if (parent == null)
+                throw new ArgumentException($"Unable to resolve folder name {folderName} with create folder mode {createFolderMode}");
+
+            return parent;
+        }
+
+        public async Task<(Folder Folder, Client Client)> CreateTestCase(CreateTestCaseRequestDto request)
+        {
+            var collections = await LoadCollections();
+            var clients = await LoadClients();
+
+            var collection = collections.FirstOrDefault(c => c.ColName == _settings.CollectionName, null);
+            if (collection == null) throw new NotFoundException($"Unable to find collection with name {_settings.CollectionName}");
+
+            var folder = GenerateFolderPath(collection, request.CreateFolderMode, request.FolderName);
+
+            if (request.ConfigureExpectedValues)
+            {
+                var existingTests = folder.Settings.Tests.ToHashSet();
+                foreach(var kvp in request.ExpectedValues)
+                {
+                    existingTests.Add(new Test
+                    {
+                        Type = TestTypeEnum.JsonQuery,
+                        Value = kvp.Value,
+                        Action = TestActionEnum.Equal,
+                        Custom = $"json.{kvp.Key}"
+                    });
+
+                }
+
+                folder.Settings.Tests = existingTests.ToList();
+            }
+
+            var clientNames = clients.Where(c => c.ContainerId == folder.Id).Select(c => c.Name).ToHashSet(StringComparer.InvariantCultureIgnoreCase);
+            var clientNum = 1;
+            var clientName = $"{folder.Name} {clientNum}";
+            while (clientNames.Contains(clientName))
+            {
+                clientNum++;
+                clientName = $"{folder.Name} {clientNum}";
+            }
+
+            var client = new Client
+            {
+                ColId = collection.Id,
+                ContainerId = folder.Id,
+                Name = clientName,
+                Url = "{{base_url}}/apply",
+                Method = "POST",
+                Body = new Body
+                {
+                    Type = ClientBodyTypeEnum.Json,
+                    Raw = JsonConvert.SerializeObject(request.BodyFields, _serializerSettings),
+                }
+            };
+
+            clients.Add(client);
+
+            Sort(collection, clients);
 
             SaveCollections(collections);
             SaveClients(clients);
+
+            return (folder, client);
         }
 
         public async Task ImportPostmanFile(string json)

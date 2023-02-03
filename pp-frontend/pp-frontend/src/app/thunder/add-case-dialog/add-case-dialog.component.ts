@@ -34,6 +34,9 @@ export class AddCaseDialog {
 
     folderCreationOption: string = "use-existing-or-create";
 
+    selectedField: string | undefined;
+    expectedFieldValue: string | undefined;
+
     constructor(
         public dialogRef: MatDialogRef<AddCaseDialog>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -99,5 +102,9 @@ export class AddCaseDialog {
                 };
             }));
         }
+    }
+
+    addExpectedValue() {
+
     }
 }

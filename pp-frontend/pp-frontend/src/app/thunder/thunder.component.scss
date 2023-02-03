@@ -3,6 +3,7 @@
     justify-content: center;
 
 }
+
 .content {
     display: flex;
     max-width: 1370px;
@@ -23,4 +24,14 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
+}
+
+td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.cell-content {
+    display: flex;
+    flex-direction: column;
 }

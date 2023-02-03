@@ -1,16 +1,33 @@
 <div class="content-container">
     <div class="content">
-        <div class="content-region">
-            <div class="content-section">
-                <button mat-raised-button #r (click)="getStats(r)">Get Stats</button>
-                <span>Num cases: {{ clientInfo?.count }}</span>
-            </div>
-        </div>
-        <div class="content-region">
-            <div class="content-section">
-                <button mat-raised-button #r (click)="sort(r)">Sort</button>
-                <button mat-raised-button #r (click)="addCaseFromTransaction(r)">Add Case from Transaction</button>
-            </div>
-        </div>
+        <table border=1 frame=void rules="rows">
+            <tr>
+                <td>
+                    <button mat-raised-button #r (click)="getStats(r)">Get Stats</button>
+                </td>
+                <td>
+                    <div class="cell-content">
+                        <span>Fetch stats about the tests</span>
+                        <span *ngIf="clientInfo">Num cases: {{ clientInfo?.count }}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button mat-raised-button #r (click)="sort(r)">Sort</button>
+                </td>
+                <td>
+                    <span>Sort tests alphabetically</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button mat-raised-button #r (click)="addCaseFromTransaction(r)">Add Case from Transaction</button>
+                </td>
+                <td>
+                    <span>Generate a test case and optionally the test itself from an existing transaction.</span>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>

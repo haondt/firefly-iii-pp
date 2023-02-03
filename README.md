@@ -1,4 +1,8 @@
+## Development workflow
+
 ### Setup
+- Add VS Code extension [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
+  - [Enable Git Sync -> Save To Workspace](https://github.com/rangav/thunder-client-support#git-sync)
 - Generate postman api key at https://web.postman.co/settings/me/api-keys
 - create a workspace for firefly-iii-pp
 - get workspace id with Postman API > Workspaces > Get all workspaces
@@ -9,7 +13,7 @@
 
 ### Startup
 - Ensure docker desktop running
-- Run node red with docker compose and import flows from `flows.json`.
+- Run node red with docker compose (`docker compose up -d`) and import flows from `flows.json`.
 - Run the vs project (will deploy to docker)
 
 ### Workflow

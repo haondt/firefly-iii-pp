@@ -33,9 +33,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
-import { TestsComponent } from './tests/tests.component';
-import { TransactionFieldsDialog } from './tests/transaction-fields-dialog/transaction-fields-dialog.component';
-import { EditJsonDialog } from './tests/edit-json-dialog/edit-json-dialog.component';
 import { ThunderComponent } from './thunder/thunder.component';
 import { AddCaseDialog } from './thunder/add-case-dialog/add-case-dialog.component';
 
@@ -43,9 +40,6 @@ import { AddCaseDialog } from './thunder/add-case-dialog/add-case-dialog.compone
   declarations: [
     AppComponent,
     NavComponent,
-    TestsComponent,
-    TransactionFieldsDialog,
-    EditJsonDialog,
     ThunderComponent,
     AddCaseDialog
   ],

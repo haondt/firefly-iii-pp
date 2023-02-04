@@ -1,6 +1,6 @@
-﻿using Firefly_iii_pp_Runner.API.Models.ThunderClient.Enums;
-using Firefly_iii_pp_Runner.API.Services;
-using Firefly_iii_pp_Runner.API.Settings;
+﻿using Firefly_iii_pp_Runner.Models.ThunderClient.Enums;
+using Firefly_iii_pp_Runner.Services;
+using Firefly_iii_pp_Runner.Settings;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -23,18 +23,18 @@ namespace Firefly_pp_Runner_Tests
             }));
         }
 
-        private Firefly_iii_pp_Runner.API.Models.Postman.Item PrepareItem(List<string> exec)
+        private Firefly_iii_pp_Runner.Models.Postman.Item PrepareItem(List<string> exec)
         {
-            return new Firefly_iii_pp_Runner.API.Models.Postman.Item
+            return new Firefly_iii_pp_Runner.Models.Postman.Item
             {
-                Event = new List<Firefly_iii_pp_Runner.API.Models.Postman.Event>
+                Event = new List<Firefly_iii_pp_Runner.Models.Postman.Event>
                 {
-                    new Firefly_iii_pp_Runner.API.Models.Postman.Event
+                    new Firefly_iii_pp_Runner.Models.Postman.Event
                     {
-                        Listen = Firefly_iii_pp_Runner.API.Models.Postman.Enums.EventTypeEnum.Test,
-                        Script = new Firefly_iii_pp_Runner.API.Models.Postman.Script
+                        Listen = Firefly_iii_pp_Runner.Models.Postman.Enums.EventTypeEnum.Test,
+                        Script = new Firefly_iii_pp_Runner.Models.Postman.Script
                         {
-                            Type = Firefly_iii_pp_Runner.API.Models.Postman.Enums.ScriptTypeEnum.Javascript,
+                            Type = Firefly_iii_pp_Runner.Models.Postman.Enums.ScriptTypeEnum.Javascript,
                             Exec = exec
                         }
                     }

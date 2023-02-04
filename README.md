@@ -4,11 +4,10 @@
 - Add [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client) VS Code extension
   - [Enable Git Sync -> Save To Workspace](https://github.com/rangav/thunder-client-support#git-sync)
 - Adjust `docker-compose.build.yml` if needed (e.g. `thunder-tests` is elsewhere).
-
-Run
-```shell
-./docker-compose-build.sh
-```
+- Run
+    ```shell
+    ./docker-compose-build.sh
+    ```
 
 ### Build for Development
 
@@ -18,7 +17,10 @@ Run
 #### Startup
 - Ensure docker desktop running
 - Start nodered
-    - Run node red with docker compose `docker compose up -d -f docker-compose.dev.yml`
+    - Run node red with docker compose
+        ```shell
+        docker compose up -d -f docker-compose.dev.yml
+        ```
     - open up nodered (`http://localhost:1880/`) and import flows from `flows.json`.
 - Start api
     - Open up `Firefly-iii-pp-Runner` in Visual studio
@@ -26,11 +28,11 @@ Run
 - Start UI
     - Check `pp-frontend/pp-frontend/src/environments/environment.ts` to make sure the api url matches that of the api, port included.
     - Run the app. Me personally I have better luck doing this in powershell than wsl
-```shell
-cd pp-frontend/pp-frontend
-npm install
-ng serve
-```
+        ```shell
+        cd pp-frontend/pp-frontend
+        npm install
+        ng serve
+        ```
     - Navigate to `http://localhost:4200/`
 - Open thunder client
     - Open environment `firefly-pp-dev` and verify `base_url` is pointing at the correct port for the api

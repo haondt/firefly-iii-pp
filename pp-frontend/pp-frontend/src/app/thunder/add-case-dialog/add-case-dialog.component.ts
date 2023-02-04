@@ -7,6 +7,8 @@ import { filter, map, Observable, startWith } from "rxjs";
 import { A, COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FireflyIIIService } from "src/app/services/FireflyIII";
 import { MatSelectChange } from "@angular/material/select";
+import { ThunderService } from "src/app/services/Thunder";
+import { dict } from "../../utils/ArrayUtils";
 
 export interface DialogData {
     title: string;
@@ -52,11 +54,15 @@ export class AddCaseDialog {
     caseFields: {[key: string]: object} = {};
 
     createCaseError: string | undefined;
+    creatingCase: boolean = false;
+    caseCreated: boolean = false;
+    createdCase: string | undefined;
 
     constructor(
         public dialogRef: MatDialogRef<AddCaseDialog>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
-        private fireflyIII: FireflyIIIService
+        private fireflyIII: FireflyIIIService,
+        private thunder: ThunderService
     ) {
         dialogRef.disableClose = true;
         this.allFolderNameOptions = data.folderNameOptions;
@@ -77,6 +83,8 @@ export class AddCaseDialog {
             this.expectedFields = [];
             this.selectedExpectedField = undefined;
             this.expectedFieldValue = undefined;
+            this.caseCreated = false;
+            this.createdCase = undefined;
 
             // freeze ui
             this.working = true;
@@ -114,17 +122,6 @@ export class AddCaseDialog {
 
     onCloseClick() {
         this.dialogRef.close()
-    }
-
-    ______onFinishClick() {
-        if (this.fields !== null) {
-            this.dialogRef.close(this.fields.filter(f => f.selected).map(f => {
-                return {
-                    key: f.viewValue,
-                    value: this.transactionData![f.viewValue]
-                };
-            }));
-        }
     }
 
     onCaseFieldClick(chip: CaseFieldChip) {
@@ -169,7 +166,8 @@ export class AddCaseDialog {
         }
     }
 
-    createCase(button: { disabled: boolean }) {
+    createCase() {
+        this.caseCreated = false;
         if (!this.transactionData) {
             this.createCaseError = "No transaction loaded";
         } else if (this.fields.filter(f => f.selected).length <= 0) {
@@ -178,9 +176,33 @@ export class AddCaseDialog {
             this.createCaseError = "Folder name not set";
         } else {
             this.createCaseError = undefined;
+            const body = {
+                bodyFields: dict(this.fields.filter(f => f.selected).map(f => { return { key: f.viewValue, value: this.transactionData![f.viewValue]};})),
+                folderName: this.folderName,
+                createFolderMode: this.folderCreationOption,
+                configureExpectedValues: this.configureExpectedValues,
+                expectedValues: this.configureExpectedValues
+                    ? dict(this.expectedFields)
+                    : {}
+            };
 
-            button.disabled = true;
-            button.disabled = false;
+            this.working = true;
+            this.creatingCase = true;
+
+            this.thunder.createCase(body).subscribe(r => {
+                try {
+                    if (r.success) {
+                        this.caseCreated = true;
+                        console.log(r);
+                        this.createdCase = r.body.client.name;
+                    } else {
+                        this.createCaseError = r.error ?? "Error while creating case";
+                    }
+                } finally {
+                    this.working = false;
+                    this.creatingCase = false;
+                }
+            });
         }
     }
 

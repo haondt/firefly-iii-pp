@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { ClientInfoDto } from "../models/dtos/ClientInfo";
 import { ServiceResponseModel } from "../models/ServiceResponse";
 import { Observable, catchError, of, map } from "rxjs";
+import { CreateTestCaseRequestDto } from "../models/dtos/CreateTestCaseRequest";
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,7 @@ export class ThunderService {
     }
 
     sort(): Observable<ServiceResponseModel<Object>> {
-        return this.client.post(`${environment.API_HOST}/thunder/sort`, {
+        return this.client.post(`${environment.API_HOST}/thunder/sort`, null, {
             observe: 'response'
         }).pipe(
             map(r => { return { success: true }}),
@@ -60,6 +61,22 @@ export class ThunderService {
                 error: "Received empty response from backend"
             }),
             catchError(e => {
+                return of({
+                    success: false,
+                    error: e.message
+                });
+            })
+        );
+    }
+
+    createCase(dto: CreateTestCaseRequestDto): Observable<ServiceResponseModel<any>> {
+        return this.client.post(`${environment.API_HOST}/thunder/testcase`, dto, {
+            observe: 'response',
+            responseType: 'json'
+        }).pipe(
+            map(r => { return { success: true, body: r.body }}),
+            catchError(e => {
+                console.log(e);
                 return of({
                     success: false,
                     error: e.message

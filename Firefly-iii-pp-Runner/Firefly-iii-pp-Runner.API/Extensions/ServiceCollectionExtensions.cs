@@ -36,7 +36,7 @@ namespace Firefly_iii_pp_Runner.API.Extensions
             var transientErrorPolicy = HttpPolicyExtensions
                 .HandleTransientHttpError() // firefly-iii sometimes gives socket errors
                 .Or<TimeoutRejectedException>()
-                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2), (e, t, i, c) =>
+                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(2), (e, t, i, c) =>
                 {
                     logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to error: {error}", i, e.Exception.Message);
                 });

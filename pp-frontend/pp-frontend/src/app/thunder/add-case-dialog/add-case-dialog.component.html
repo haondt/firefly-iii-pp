@@ -5,7 +5,7 @@
         <div class="content-section">
             <div class="content-row">
                 <span>Transaction ID:</span>
-                <input class="transaction-id-input" type="text" [(ngModel)]="transactionId">
+                <input [disabled]="working" class="transaction-id-input" type="text" [(ngModel)]="transactionId">
                 <span class="spacer"></span>
                 <button mat-raised-button (click)="getTransactionData()" color="primary" [disabled]="working">Get Transaction</button>
                 <mat-spinner *ngIf="gettingTransaction" diameter="25" color="accent" class="test-spinner"></mat-spinner>
@@ -22,7 +22,7 @@
                 <p> Select fields:</p>
             </div>
             <div class="content-row">
-                <mat-chip-listbox multiple="true">
+                <mat-chip-listbox [disabled]="working" multiple="true">
                     <mat-chip-option *ngFor="let field of fields" [selected]="field.selected" (click)="onCaseFieldClick(field)">
                         {{ field.viewValue }}
                     </mat-chip-option>
@@ -31,19 +31,19 @@
             <div class="content-row">
                 <mat-form-field appearance="fill">
                     <mat-label>Folder</mat-label>
-                    <input type="text" matInput [ngModel]="folderName" [matAutocomplete]="auto" (ngModelChange)="folderNameAutocompleteChanged($event)">
+                    <input [disabled]="working" type="text" matInput [ngModel]="folderName" [matAutocomplete]="auto" (ngModelChange)="folderNameAutocompleteChanged($event)">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredFolderNameOptions" [value]="option">{{ option }}</mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
                 <mat-icon matTooltip="Seperate nested directories with a forward slash. Example: Foo/Bar">info</mat-icon>
-                <mat-radio-group class="folder-options-radio-group" [(ngModel)]="folderCreationOption">
+                <mat-radio-group [disabled]="working" class="folder-options-radio-group" [(ngModel)]="folderCreationOption">
                     <mat-radio-button value="use-existing-or-create" selected="true">Use Existing Folder If Exists</mat-radio-button>
                     <mat-radio-button value="force-create-new">Create New Folder</mat-radio-button>
                 </mat-radio-group>
             </div>
             <div class="content-row">
-                <mat-checkbox [(ngModel)]="configureExpectedValues">Configure expected values</mat-checkbox>
+                <mat-checkbox [disabled]="working" [(ngModel)]="configureExpectedValues">Configure expected values</mat-checkbox>
             </div>
         </div>
 
@@ -62,9 +62,9 @@
             </div>
             <div class="content-row">
                 <button mat-raised-button (click)="loadExpectedValueFromTransaction()">Populate with transaction Value</button>
-                <button mat-raised-button color="primary" (click)="addExpectedValue()">Add</button>
+                <button [disabled]="working" mat-raised-button color="primary" (click)="addExpectedValue()">Add</button>
             </div>
-            <mat-chip-listbox multiple="true">
+            <mat-chip-listbox [disabled]="working" multiple="true">
                 <mat-chip *ngFor="let field of expectedFields">
                     {{ field.key }} = {{ field.value.length > 10 ? field.value.slice(0, 7) + "..." : field.value }}
                     <button matChipRemove (click)="removeExpectedFieldChip(field.key)">
@@ -77,7 +77,9 @@
         <div class="content-section-sep"></div>
         <div class="content-section">
             <div class="content-row">
-                <button mat-raised-button [color]="createCaseError ? 'warn' : 'primary'" #r (click)="createCase(r)">Create Case</button>
+                <button mat-raised-button [color]="createCaseError ? 'warn' : 'primary'" (click)="createCase()" [disabled]="creatingCase || working">Create Case</button>
+                <mat-spinner *ngIf="creatingCase" diameter="25" color="accent" class="test-spinner"></mat-spinner>
+                <span class="success" *ngIf="createdCase">Created case {{ createdCase }}</span>
             </div>
             <div class="content-row" *ngIf="createCaseError">
                 <span class="error">{{ createCaseError }}</span>

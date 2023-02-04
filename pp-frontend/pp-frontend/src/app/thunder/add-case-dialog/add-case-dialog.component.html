@@ -53,28 +53,31 @@
             <div class="content-row">
                 <mat-form-field class="field-select" appearance="fill">
                     <mat-label>Select Field</mat-label>
-                    <mat-select [(value)]="selectedField">
+                    <mat-select [(value)]="selectedExpectedField" (selectionChange)="expectedFieldValueChanged()">
                         <mat-option>None</mat-option>
-                        <mat-option *ngFor="let option of allFolderNameOptions" [value]="option">{{ option }}</mat-option>
+                        <mat-option *ngFor="let option of fields" [value]="option.viewValue">{{ option.viewValue }}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <input class="transaction-id-input" type="text" [(ngModel)]="expectedFieldValue">
+            </div>
+            <div class="content-row">
+                <button mat-raised-button (click)="loadExpectedValueFromTransaction()">Populate with transaction Value</button>
                 <button mat-raised-button color="primary" (click)="addExpectedValue()">Add</button>
             </div>
             <mat-chip-listbox multiple="true">
-                <mat-chip-option *ngFor="let field of allFolderNameOptions">
-                    {{ field }}
-                    <button matChipRemove>
+                <mat-chip *ngFor="let field of expectedFields">
+                    {{ field.key }} = {{ field.value.length > 10 ? field.value.slice(0, 7) + "..." : field.value }}
+                    <button matChipRemove (click)="removeExpectedFieldChip(field.key)">
                         <mat-icon>cancel</mat-icon>
                     </button>
-                </mat-chip-option>
+                </mat-chip>
             </mat-chip-listbox>
         </div>
 
         <div class="content-section-sep"></div>
         <div class="content-section">
             <div class="content-row">
-                <button mat-raised-button color="primary" #r (click)="createCase(r)">Create Case</button>
+                <button mat-raised-button [color]="createCaseError ? 'warn' : 'primary'" #r (click)="createCase(r)">Create Case</button>
             </div>
             <div class="content-row" *ngIf="createCaseError">
                 <span class="error">{{ createCaseError }}</span>

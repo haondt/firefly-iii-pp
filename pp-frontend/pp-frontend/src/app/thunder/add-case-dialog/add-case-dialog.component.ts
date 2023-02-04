@@ -18,6 +18,11 @@ interface CaseFieldChip {
     viewValue: string;
 }
 
+interface expectedField {
+    key: string;
+    value: string;
+}
+
 @Component({
     selector: 'add-case-dialog',
     templateUrl: './add-case-dialog.component.html',
@@ -40,8 +45,11 @@ export class AddCaseDialog {
     folderCreationOption: string = "use-existing-or-create";
     configureExpectedValues: boolean = false;
 
-    selectedField: string | undefined;
+    selectedExpectedField: string | undefined;
     expectedFieldValue: string | undefined;
+    expectedFields: expectedField[] = [];
+
+    caseFields: {[key: string]: object} = {};
 
     createCaseError: string | undefined;
 
@@ -66,6 +74,9 @@ export class AddCaseDialog {
             this.folderName = undefined;
             this.createCaseError = undefined;
             this.filteredFolderNameOptions = this.allFolderNameOptions;
+            this.expectedFields = [];
+            this.selectedExpectedField = undefined;
+            this.expectedFieldValue = undefined;
 
             // freeze ui
             this.working = true;
@@ -118,10 +129,44 @@ export class AddCaseDialog {
 
     onCaseFieldClick(chip: CaseFieldChip) {
         chip.selected = !chip.selected;
+        if (chip.selected) {
+            this.caseFields[chip.viewValue] = this.transactionData![chip.viewValue];
+        } else {
+            if (chip.viewValue in this.caseFields) {
+                delete this.caseFields[chip.viewValue];
+            }
+        }
+    }
+
+    loadExpectedValueFromTransaction() {
+        if (this.selectedExpectedField && this.transactionData) {
+            if (this.selectedExpectedField in this.transactionData) {
+                this.expectedFieldValue = this.transactionData[this.selectedExpectedField];
+            }
+        }
+    }
+
+    expectedFieldValueChanged() {
+        this.expectedFieldValue = undefined;
+    }
+
+    removeExpectedFieldChip(key: string) {
+        this.expectedFields = this.expectedFields.filter(f => f.key !== key);
     }
 
     addExpectedValue() {
-
+        if (this.selectedExpectedField && this.expectedFieldValue) {
+            for(let field of this.expectedFields) {
+                if (field.key === this.selectedExpectedField) {
+                    field.value = this.expectedFieldValue;
+                    return;
+                }
+            }
+            this.expectedFields.push({
+                key: this.selectedExpectedField,
+                value: this.expectedFieldValue
+            });
+        }
     }
 
     createCase(button: { disabled: boolean }) {
@@ -143,6 +188,5 @@ export class AddCaseDialog {
         this.folderName = name;
         const filterValue = name.toLowerCase();
         this.filteredFolderNameOptions = this.allFolderNameOptions.filter(f => f.toLowerCase().includes(filterValue));
-        console.log(this.folderName);
     }
 }

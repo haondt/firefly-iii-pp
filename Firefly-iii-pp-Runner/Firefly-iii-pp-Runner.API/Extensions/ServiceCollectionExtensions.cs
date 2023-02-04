@@ -43,12 +43,5 @@ namespace Firefly_iii_pp_Runner.API.Extensions
             var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(2);
             return Policy.WrapAsync(transientErrorPolicy, timeoutPolicy);
         }
-
-        public static IServiceCollection AddMongoServices(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
-            services.AddSingleton<MongoService>();
-            return services;
-        }
     }
 }

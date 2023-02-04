@@ -10,18 +10,6 @@ services:
       - 1880:1880
     volumes:
       - node-red-data:/data
-  pp-db:
-    image: mongo
-    container_name: mongodb
-    environment:
-      - TZ=America/Edmonton
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
-    ports:
-      - 27017:27017
-    volumes:
-      - mongo-db-data:/data
-        
+
 volumes:
   node-red-data:
-  mongo-db-data:

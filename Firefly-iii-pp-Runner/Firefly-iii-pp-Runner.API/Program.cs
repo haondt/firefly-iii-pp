@@ -28,7 +28,6 @@ builder.Services.AddCors(o =>
         });
 });
 builder.Services.AddFireflyIIIPPRunnerServices(builder.Configuration);
-builder.Services.AddMongoServices(builder.Configuration);
 
 var app = builder.Build();
 

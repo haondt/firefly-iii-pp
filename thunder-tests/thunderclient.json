@@ -1812,5 +1812,60 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "7a5b00a3-b2ee-4ce0-8bc2-e6f60a68979b",
+    "colId": "6c78395b-4152-4d23-a01a-64ca932e9272",
+    "containerId": "",
+    "name": "Get transactions",
+    "url": "{{base_url}}/api/v1/transactions?page=1&start=2022-12-01&end=2022-12-02",
+    "method": "GET",
+    "sortNum": 11560,
+    "created": "2023-02-04T04:31:52.945Z",
+    "modified": "2023-02-04T04:40:12.650Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      },
+      {
+        "name": "start",
+        "value": "2022-12-01",
+        "isPath": false
+      },
+      {
+        "name": "end",
+        "value": "2022-12-02",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "b0d3a4cc-f7e1-4143-8dbf-0fb058e16974",
+    "colId": "6c78395b-4152-4d23-a01a-64ca932e9272",
+    "containerId": "",
+    "name": "Search transactions",
+    "url": "{{base_url}}/api/v1/search/transactions?query=date_after:2022-12-01 date_before:2022-12-02&page=1",
+    "method": "GET",
+    "sortNum": 21560,
+    "created": "2023-02-04T04:33:13.786Z",
+    "modified": "2023-02-04T04:41:45.424Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "query",
+        "value": "date_after:2022-12-01 date_before:2022-12-02",
+        "isPath": false
+      },
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "tests": []
   }
 ]

@@ -3,6 +3,7 @@ using Firefly_iii_pp_Runner.API.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
+using Polly.Timeout;
 
 namespace Firefly_iii_pp_Runner.API.Extensions
 {
@@ -20,17 +21,27 @@ namespace Firefly_iii_pp_Runner.API.Extensions
             services.AddSingleton<ThunderClientEditorService>();
 
             services.AddHttpClient<FireflyIIIService>()
-                .AddPolicyHandler(GetRetryPolicy())
-                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(5));
+                .AddPolicyHandler(GetRetryPolicy());
 
             return services;
         }
 
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
-            return HttpPolicyExtensions
+            var logger = LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+                builder.AddConsole();
+            }).CreateLogger<Policy>();
+            var transientErrorPolicy = HttpPolicyExtensions
                 .HandleTransientHttpError() // firefly-iii sometimes gives socket errors
-                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(1));
+                .Or<TimeoutRejectedException>()
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(1), (e, t, i, c) =>
+                {
+                    logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to error: {error}", i, e.Exception.Message);
+                });
+            var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(2);
+            return Policy.WrapAsync(transientErrorPolicy, timeoutPolicy);
         }
 
         public static IServiceCollection AddMongoServices(this IServiceCollection services, IConfiguration configuration)

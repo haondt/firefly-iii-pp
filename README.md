@@ -1,4 +1,17 @@
+# Firefly-iii-pp
+
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/haondt/firefly-iii-pp)](https://github.com/haondt/firefly-iii-pp/releases/latest)
+[![Docker Hub release (latest by semver)](https://img.shields.io/docker/v/haumea/fireflyiii-pp?sort=semver)](https://hub.docker.com/r/haumea/fireflyiii-pp)
+
+A set of companion tools for post-processing transactions in Firefly-iii.
+
 ## Deployment
+
+### Deploy docker hub images
+- Run
+    ```shell
+    docker compose -f docker-compose.prod.yml up -d
+    ```
 
 ### Build locally and deploy
 - Add [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client) VS Code extension
@@ -36,6 +49,12 @@
     - Navigate to `http://localhost:4200/`
 - Open thunder client
     - Open environment `firefly-pp-dev` and verify `base_url` is pointing at the correct port for the api
+
+#### Build and deploy to docker hub
+- Run
+    ```shell
+    ./docker-builder.sh
+    ```
 
 ## Workflow
 - Create rules in nodered

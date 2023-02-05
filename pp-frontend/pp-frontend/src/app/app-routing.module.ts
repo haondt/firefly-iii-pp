@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FireflyIIIPPComponent } from './firefly-iii-pp/firefly-iii-pp.component';
-import { ThunderComponent } from './thunder/thunder.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'firefly-iii', pathMatch: 'full'},
-  { path: 'thunder', component: ThunderComponent},
-  { path: 'firefly-iii', component: FireflyIIIPPComponent }
+  { path: 'thunder', loadChildren: () =>
+    import('./thunder/thunder.module').then(m => m.ThunderModule)},
+  { path: 'firefly-iii', loadChildren: () =>
+    import('./firefly-iii-pp/firefly-iii-pp.module').then(m => m.FireflyIIIPPModule)}
 ];
 
 @NgModule({

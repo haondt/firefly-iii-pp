@@ -1,6 +1,8 @@
 ﻿using Firefly_iii_pp_Runner.Exceptions;
 using Firefly_iii_pp_Runner.Models;
 using Firefly_iii_pp_Runner.Models.FireflyIII;
+using Firefly_pp_Runner.Models.Runner;
+using Firefly_pp_Runner.Models.Runner.Dtos;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -73,7 +75,19 @@ namespace Firefly_iii_pp_Runner.Services
             return _status;
         }
 
-        public async Task<RunnerStatus> StartJob(RunnerDto dto)
+        public Task<RunnerStatus> StartJob(RunnerDto dto)
+        {
+            var start = dto.Start.HasValue ? dto.Start.Value : throw new ArgumentNullException("start date");
+            var end = dto.End.HasValue ? dto.End.Value : throw new ArgumentNullException("end date");
+            return StartJob(p => _fireflyIII.GetTransactions(start, end, p));
+        } 
+
+        public Task<RunnerStatus> StartJob(QueryStartJobRequestDto dto)
+        {
+            return StartJob(p => _fireflyIII.GetTransactions(dto.Operators, p));
+        }
+
+        public async Task<RunnerStatus> StartJob(Func<int, Task<ManyTransactionsContainerDto>> getTransactions)
         {
             if (_status.State == RunnerState.Running)
             {
@@ -85,13 +99,13 @@ namespace Firefly_iii_pp_Runner.Services
             _tokenSource = new CancellationTokenSource();
             try
             {
-                var initialRequest = await _fireflyIII.GetTransactions(dto.Start, dto.End, 1);
+                var initialRequest = await getTransactions(1);
                 _status.State = RunnerState.Running;
                 _status.CompletedTransactions = 0;
                 _status.TotalTransactions = initialRequest.Meta.Pagination.Total;
                 _status.CurrentPage = 1;
                 _status.TotalPages = initialRequest.Meta.Pagination.Total_pages;
-                _ = Task.Run(() => JobTask(dto.Start, dto.End, initialRequest, _tokenSource.Token));
+                _ = Task.Run(() => JobTask(getTransactions, initialRequest, _tokenSource.Token));
             }
             catch
             {
@@ -123,7 +137,7 @@ namespace Firefly_iii_pp_Runner.Services
             }
         }
 
-        private async Task JobTask(DateTime start, DateTime end, ManyTransactionsContainerDto initialRequest, CancellationToken cancellationToken)
+        private async Task JobTask(Func<int, Task<ManyTransactionsContainerDto>> getTransactions, ManyTransactionsContainerDto initialRequest, CancellationToken cancellationToken)
         {
             try
             {
@@ -143,7 +157,7 @@ namespace Firefly_iii_pp_Runner.Services
                     else
                         break;
 
-                    currentSet = await _fireflyIII.GetTransactions(start, end, _status.CurrentPage);
+                    currentSet = await getTransactions(_status.CurrentPage);
                 }
                 _status.State = RunnerState.Completed;
             }

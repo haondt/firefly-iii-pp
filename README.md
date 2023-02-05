@@ -19,7 +19,7 @@
 - Start nodered
     - Run node red with docker compose
         ```shell
-        docker compose up -d -f docker-compose.dev.yml
+        docker compose up -f docker-compose.dev.yml -d
         ```
     - open up nodered (`http://localhost:1880/`) and import flows from `flows.json`.
 - Start api

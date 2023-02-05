@@ -1,6 +1,7 @@
 ﻿using Firefly_iii_pp_Runner.Exceptions;
 using Firefly_iii_pp_Runner.Models.FireflyIII;
 using Firefly_iii_pp_Runner.Settings;
+using Firefly_pp_Runner.Models.Runner;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
@@ -39,6 +40,53 @@ namespace Firefly_iii_pp_Runner.Services
                 { "end", end.ToString("yyyy-M-d") }
             });
 
+
+            var result = await _httpClient.GetAsync(method);
+            result.EnsureSuccessStatusCode();
+
+            return await result.Content.ReadFromJsonAsync<ManyTransactionsContainerDto>();
+        }
+
+        private string StringifyOperatorValue(object value)
+        {
+            if (value == null)
+                throw new ArgumentException($"Cannot encode null query value");
+            switch(value)
+            {
+                case string valueString:
+                    if (valueString.Contains(' '))
+                        return $"\"{valueString}\"";
+                    return valueString;
+                case bool valueBool:
+                    return valueBool ? "true" : "false";
+                case decimal:
+                case double:
+                case float:
+                case int:
+                case uint:
+                case nint:
+                case long:
+                case ulong:
+                case short:
+                case ushort:
+                    return value.ToString();
+                default:
+                    throw new ArgumentException($"Unsure how to encode query value ${value} of type ${value.GetType().ToString()}");
+            }
+        }
+
+        public string PrepareQuery(List<RunnerQueryOperator> queryOperators)
+        {
+            var query = string.Join(' ', queryOperators.Select(o =>
+                $"{o.Name}_{o.Option}:{StringifyOperatorValue(o.Value)}"));
+             query = HttpUtility.UrlEncode(query);
+            return query;
+        }
+
+        public async Task<ManyTransactionsContainerDto> GetTransactions(List<RunnerQueryOperator> queryOperators, int page)
+        {
+            var query = PrepareQuery(queryOperators);
+            var method = $"/api/v1/search/transactions?page={page}&query={query}";
 
             var result = await _httpClient.GetAsync(method);
             result.EnsureSuccessStatusCode();

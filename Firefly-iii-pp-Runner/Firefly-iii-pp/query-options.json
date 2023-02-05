@@ -1,0 +1,117 @@
+[
+  {
+    "name": "source_account",
+    "viewValue": "Source account",
+    "options": [
+      {
+        "name": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "name": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "name": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "name": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "destination_account",
+    "viewValue": "Destination account",
+    "options": [
+      {
+        "name": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "name": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "name": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "name": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "account",
+    "viewValue": "Either account",
+    "options": [
+      {
+        "name": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "name": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "name": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "name": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "tag",
+    "viewValue": "Tag",
+    "options": [
+      {
+        "name": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "name": "is_not",
+        "viewValue": "is not",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "date",
+    "viewValue": "Date",
+    "options": [
+      {
+        "name": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "name": "before",
+        "viewValue": "is before",
+        "type": "string"
+      },
+      {
+        "name": "after",
+        "viewValue": "is after",
+        "type": "string"
+      }
+    ]
+  }
+]

@@ -8,13 +8,9 @@
     "method": "GET",
     "sortNum": 700,
     "created": "2023-02-01T22:27:54.667Z",
-    "modified": "2023-02-03T00:02:19.178Z",
+    "modified": "2023-02-04T21:59:34.164Z",
     "headers": [],
     "params": [],
-    "body": {
-      "type": "binary",
-      "form": []
-    },
     "tests": []
   },
   {
@@ -1848,24 +1844,57 @@
     "colId": "6c78395b-4152-4d23-a01a-64ca932e9272",
     "containerId": "",
     "name": "Search transactions",
-    "url": "{{base_url}}/api/v1/search/transactions?query=date_after:2022-12-01 date_before:2022-12-02&page=1",
+    "url": "{{base_url}}/api/v1/search/transactions?page=1&query=source_account_is%3a%22(no+name)%22",
     "method": "GET",
     "sortNum": 1270,
     "created": "2023-02-04T04:33:13.786Z",
-    "modified": "2023-02-04T04:41:45.424Z",
+    "modified": "2023-02-05T01:14:18.704Z",
     "headers": [],
     "params": [
-      {
-        "name": "query",
-        "value": "date_after:2022-12-01 date_before:2022-12-02",
-        "isPath": false
-      },
       {
         "name": "page",
         "value": "1",
         "isPath": false
+      },
+      {
+        "name": "query",
+        "value": "source_account_is%3a%22(no+name)%22",
+        "isPath": false
       }
     ],
+    "tests": []
+  },
+  {
+    "_id": "92661bd6-0414-4755-bcaf-a6c40c6b4372",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "bc210543-647f-4bb9-83aa-3b7a3fc0cea2",
+    "name": "Dry Run",
+    "url": "{{base_url}}/runner/query/dry-run",
+    "method": "POST",
+    "sortNum": 11410,
+    "created": "2023-02-04T22:00:24.991Z",
+    "modified": "2023-02-05T01:17:19.934Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"operators\": [\n      {\n        \"name\": \"source_account\",\n        \"option\": \"is\",\n        \"value\": \"(no name)\"\n      },\n      {\n        \"name\": \"date\",\n        \"option\": \"after\",\n        \"value\": \"2022-06-30\"\n      }\n    ]\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "88a39134-a9ed-4e33-b921-6aca9cd6dd45",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "bc210543-647f-4bb9-83aa-3b7a3fc0cea2",
+    "name": "Get Query Options",
+    "url": "{{base_url}}/runner/query-options",
+    "method": "GET",
+    "sortNum": 21410,
+    "created": "2023-02-04T23:05:45.892Z",
+    "modified": "2023-02-04T23:06:07.788Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]

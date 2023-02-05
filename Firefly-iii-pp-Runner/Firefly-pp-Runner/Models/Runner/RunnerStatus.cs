@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace Firefly_iii_pp_Runner.Models
+namespace Firefly_pp_Runner.Models.Runner
 {
     public class RunnerStatus
     {

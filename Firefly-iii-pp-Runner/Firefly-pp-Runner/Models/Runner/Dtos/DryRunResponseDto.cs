@@ -11,7 +11,7 @@ namespace Firefly_pp_Runner.Models.Runner.Dtos
     {
         public List<RunnerQueryOperation> Operations { get; set; } = new List<RunnerQueryOperation>();
         public string Query { get; set; }
-        public int TotalTranasactions { get; set; }
+        public int TotalTransactions { get; set; }
         public int TotalPages { get; set; }
         public TransactionPartDto? Sample { get; set; }
     }

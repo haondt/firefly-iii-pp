@@ -69,3 +69,33 @@ table.status-table > tr > td {
     display: flex;
     gap: 10px;
 }
+
+.dry-run-attribute {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+
+}
+
+.dry-run-sample {
+    white-space: pre-wrap;
+}
+
+.dry-run-attribute > span, .dry-run-attribute > div.dry-run-sample {
+    background: #242424;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 4px;
+}
+
+.dry-run-sample {
+    font-family: monospace;
+}
+
+table.dry-run-response-table > tr > td {
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: top;
+}

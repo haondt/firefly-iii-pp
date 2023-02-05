@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { DryRunResponseDto } from '../models/dtos/DryRunResponse';
 import { QueryOptionDto } from '../models/dtos/QueryOption';
 import { RunnerStateDto } from '../models/dtos/RunnerState';
 import { QueryOperationModel } from '../models/QueryOperation';
+import { ServiceResponseModel } from '../models/ServiceResponse';
 import { RunnerService } from '../services/Runner';
 
 interface QueryOperatorModel {
@@ -25,6 +28,8 @@ export class FireflyIIIPPComponent {
   jobType: string = "single";
   queryOptions: QueryOptionDto[] = [];
 
+  singleId: string | null = null;
+
   startDate: Date | null = null;
   endDate: Date | null = null;
 
@@ -33,6 +38,8 @@ export class FireflyIIIPPComponent {
   queryOperator: QueryOperatorModel | null = null;
   queryResult: any;
   queryOperations: { viewValue: string, queryOperation: QueryOperationModel }[] = [];
+
+  dryRunResponse: DryRunResponseDto | null = null;
 
   constructor(private runnerService: RunnerService,
         private snackBar: MatSnackBar) {
@@ -48,7 +55,7 @@ export class FireflyIIIPPComponent {
         if (res.success) {
           this.queryOptions = res.body!;
         } else {
-          this.status = undefined;
+          this.queryOptions = [];
           this.showSnackError(res.error);
         }
       } finally {
@@ -110,7 +117,7 @@ export class FireflyIIIPPComponent {
     this.runnerService.getStatus().subscribe(res => {
       try {
         if (res.success) {
-          this.status = res.body;
+          this.status = res.body!;
         } else {
           this.status = undefined;
           this.showSnackError(res.error);
@@ -146,6 +153,7 @@ export class FireflyIIIPPComponent {
     this.jobType = event;
 
     // reset
+    this.singleId = null;
     this.startDate = null;
     this.endDate = null;
     this.queryOperations = [];
@@ -197,5 +205,70 @@ export class FireflyIIIPPComponent {
     if (i >= 0) {
       this.queryOperations.splice(i, 1);
     }
+  }
+
+  startJob() {
+    if (this.busy) {
+      return;
+    }
+
+    let obs: Observable<ServiceResponseModel<RunnerStateDto>> | null = null;
+    if (this.jobType === "single" && this.singleId) {
+      obs = this.runnerService.startSingleJob({id: this.singleId});
+    } else if (this.jobType === "many" && this.startDate && this.endDate) {
+      obs = this.runnerService.startJob({
+        start: this.startDate.toISOString(),
+        end: this.endDate.toISOString()
+      });
+    } else if (this.jobType === "query") {
+      obs = this.runnerService.startQueryJob({
+        operations: this.queryOperations.map(op => op.queryOperation)
+      });
+    }
+
+    if (obs) {
+      this.busy = true;
+      obs.subscribe(res => {
+        try {
+          if (res.success) {
+            this.status = res.body!;
+          } else {
+            this.status = undefined;
+            this.showSnackError(res.error);
+          }
+        } finally {
+          this.busy = false;
+        }
+      });
+    }
+  }
+
+  dryRunJob() {
+    if (this.jobType !== "query"){
+      this.showSnackError("Set job type to 'query' to enable dry run");
+      return;
+    }
+    if (this.busy) {
+      return;
+    }
+    this.busy = true;
+    this.runnerService.dryRunJob({
+      operations: this.queryOperations.map(op => op.queryOperation)
+    }).subscribe(res => {
+      try {
+        if (res.success) {
+          this.dryRunResponse = res.body!;
+        } else {
+          this.status = undefined;
+          this.showSnackError(res.error);
+        }
+      } finally {
+        this.busy = false;
+      }
+    });
+  }
+
+  formatDryRunSample(sample: Object) {
+    return JSON.stringify(sample, null, 4);
   }
 }

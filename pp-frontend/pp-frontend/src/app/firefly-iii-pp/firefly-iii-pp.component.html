@@ -61,7 +61,7 @@
                         <mat-radio-button value="many">By Date</mat-radio-button>
                         <mat-radio-button value="query">Query</mat-radio-button>
                     </mat-radio-group>
-                    <mat-divider *ngIf="jobType !== 'single'"></mat-divider>
+                    <mat-divider></mat-divider>
                     <div *ngIf="jobType === 'many'" class="pp-accordion-content-row">
                         <mat-form-field appearance="fill">
                             <mat-date-range-input [rangePicker]="rangePicker">
@@ -76,6 +76,12 @@
                                     <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
                                 </mat-date-range-picker-actions>
                             </mat-date-range-picker>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="jobType === 'single'" class="pp-accordion-content-row">
+                        <mat-form-field>
+                            <mat-label>Transaction ID</mat-label>
+                            <input matInput type="text" [(ngModel)]="singleId">
                         </mat-form-field>
                     </div>
                     <div *ngIf="jobType === 'query'" class="pp-accordion-content-row">
@@ -131,9 +137,32 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="pp-accordion-content">
-                    ahhh bees
-                    <mat-divider></mat-divider>
-                    AHHHH BEEES
+                    <div class="pp-accordion-content-row">
+                        <button color="primary" (click)="dryRunJob()" mat-raised-button>Dry Run Query</button>
+                        <button color="accent" (click)="startJob()" mat-raised-button>Start Job</button>
+                    </div>
+                    <mat-divider *ngIf="dryRunResponse"></mat-divider>
+                    <div *ngIf="dryRunResponse" class="pp-accordion-content-row">
+                        <table class="dry-run-response-table">
+                            <tr><td>Operations:</td><td class="dry-run-attribute">
+                                <span *ngFor="let op of dryRunResponse.operations">
+                                    {{ op.operand }}_{{ op.operator }}:{{ op.result }}
+                                </span>
+                            </td></tr>
+                            <tr><td>Query:</td><td class="dry-run-attribute">
+                                <span *ngIf="dryRunResponse?.query">{{ dryRunResponse.query }}</span>
+                            </td></tr>
+                            <tr><td>Total transactions:</td><td class="dry-run-attribute">
+                                <span>{{ dryRunResponse.totalTransactions }}</span>
+                            </td></tr>
+                            <tr><td>Total pages:</td><td class="dry-run-attribute">
+                                <span>{{ dryRunResponse.totalPages }}</span>
+                            </td></tr>
+                            <tr><td>Sample:</td><td class="dry-run-attribute">
+                                <div *ngIf="dryRunResponse?.sample" class="dry-run-sample">{{ formatDryRunSample(dryRunResponse.sample) }}</div>
+                            </td></tr>
+                        </table>
+                    </div>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>

@@ -51,7 +51,7 @@ namespace Firefly_iii_pp_Runner.Controllers
             {
                 Operations = dto.Operations,
                 Query = query,
-                TotalTranasactions = container.Meta.Pagination.Total,
+                TotalTransactions = container.Meta.Pagination.Total,
                 TotalPages = container.Meta.Pagination.Total_pages,
                 Sample = sample
             });

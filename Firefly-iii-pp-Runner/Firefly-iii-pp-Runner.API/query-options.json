@@ -100,17 +100,17 @@
       {
         "name": "is",
         "viewValue": "is",
-        "type": "string"
+        "type": "date"
       },
       {
         "name": "before",
         "viewValue": "is before",
-        "type": "string"
+        "type": "date"
       },
       {
         "name": "after",
         "viewValue": "is after",
-        "type": "string"
+        "type": "date"
       }
     ]
   }

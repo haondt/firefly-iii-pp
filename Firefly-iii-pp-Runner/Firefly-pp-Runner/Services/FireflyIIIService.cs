@@ -1,6 +1,7 @@
 ﻿using Firefly_iii_pp_Runner.Exceptions;
 using Firefly_iii_pp_Runner.Models.FireflyIII;
 using Firefly_iii_pp_Runner.Settings;
+using Firefly_pp_Runner.Exceptions;
 using Firefly_pp_Runner.Models.Runner;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
@@ -36,8 +37,8 @@ namespace Firefly_iii_pp_Runner.Services
             var method = QueryHelpers.AddQueryString("/api/v1/transactions", new Dictionary<string, string?>
             {
                 { "page", page.ToString() },
-                { "start", start.ToString("yyyy-M-d") },
-                { "end", end.ToString("yyyy-M-d") }
+                { "start", start.ToString("yyyy-MM-dd") },
+                { "end", end.ToString("yyyy-MM-dd") }
             });
 
 
@@ -70,6 +71,8 @@ namespace Firefly_iii_pp_Runner.Services
                 case short:
                 case ushort:
                     return value.ToString();
+                case DateTime valueDateTime:
+                    return valueDateTime.ToString("yyyy-MM-dd");
                 default:
                     throw new ArgumentException($"Unsure how to encode query value ${value} of type ${value.GetType().ToString()}");
             }
@@ -89,7 +92,13 @@ namespace Firefly_iii_pp_Runner.Services
             var method = $"/api/v1/search/transactions?page={page}&query={query}";
 
             var result = await _httpClient.GetAsync(method);
-            result.EnsureSuccessStatusCode();
+            if (!result.IsSuccessStatusCode)
+            {
+                var content = "null";
+                if (result?.Content != null)
+                    content = await result.Content.ReadAsStringAsync() ?? "null";
+                throw new DownstreamException($"Firefly-iii returned status: {result.StatusCode} with content: {content}");
+            }
 
             return await result.Content.ReadFromJsonAsync<ManyTransactionsContainerDto>();
         }

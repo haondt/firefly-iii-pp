@@ -35,15 +35,14 @@ namespace Firefly_iii_pp_Runner.Extensions
                 builder.ClearProviders();
                 builder.AddConsole();
             }).CreateLogger<Policy>();
-            var transientErrorPolicy = HttpPolicyExtensions
-                .HandleTransientHttpError() // firefly-iii sometimes gives socket errors
-                .Or<TimeoutRejectedException>()
-                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(2), (e, t, i, c) =>
+            var policy2 = Policy<HttpResponseMessage>
+                .Handle<TimeoutRejectedException>()  // firefly-iii sometimes gives socket errors
+                .WaitAndRetryAsync<HttpResponseMessage>(5, retryAttempt => TimeSpan.FromSeconds(2), (e, t, i, c) =>
                 {
-                    logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to error: {error}", i, e.Exception.Message);
+                    logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to error: {error}", i, e.Exception?.Message ?? "null exception");
                 });
             var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(2);
-            return Policy.WrapAsync(transientErrorPolicy, timeoutPolicy);
+            return Policy.WrapAsync(policy2, timeoutPolicy);
         }
     }
 }

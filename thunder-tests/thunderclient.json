@@ -372,12 +372,12 @@
     "method": "POST",
     "sortNum": 230,
     "created": "2023-02-02T23:13:21.2556367+00:00",
-    "modified": "2023-02-02T23:13:21.2556368+00:00",
+    "modified": "2023-02-05T03:58:31.661Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\r\n    \"destination_name\": \"(no name)\",\r\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\r\n    \"description\": \"APPLE STORE #R411        EDMONTON     AB  (GOOGLE PAY)\"\r\n}",
+      "raw": "{\n    \"destination_name\": \"(no name)\",\n    \"source_name\": \"Scotia Momentum VISA Infinite\",\n    \"description\": \"APPLE STORE #R411        EDMONTON     AB  (GOOGLE PAY)\"\n}",
       "form": []
     },
     "tests": []
@@ -1836,12 +1836,17 @@
     "colId": "6c78395b-4152-4d23-a01a-64ca932e9272",
     "containerId": "",
     "name": "Search transactions",
-    "url": "{{base_url}}/api/v1/search/transactions?page=1&query=source_account_is%3a%22(no+name)%22",
+    "url": "{{base_url}}/api/v1/search/transactions?page=1&query=source_account_is%3a%22(no+name)%22+date_after%3a2022-12-04",
     "method": "GET",
     "sortNum": 1270,
     "created": "2023-02-04T04:33:13.786Z",
-    "modified": "2023-02-05T01:14:18.704Z",
-    "headers": [],
+    "modified": "2023-02-05T04:52:18.248Z",
+    "headers": [
+      {
+        "name": "Accept",
+        "value": "application/json"
+      }
+    ],
     "params": [
       {
         "name": "page",
@@ -1850,7 +1855,7 @@
       },
       {
         "name": "query",
-        "value": "source_account_is%3a%22(no+name)%22",
+        "value": "source_account_is%3a%22(no+name)%22+date_after%3a2022-12-04",
         "isPath": false
       }
     ],
@@ -1865,12 +1870,12 @@
     "method": "POST",
     "sortNum": 11410,
     "created": "2023-02-04T22:00:24.991Z",
-    "modified": "2023-02-05T01:17:19.934Z",
+    "modified": "2023-02-05T04:16:44.798Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"operators\": [\n      {\n        \"name\": \"source_account\",\n        \"option\": \"is\",\n        \"value\": \"(no name)\"\n      },\n      {\n        \"name\": \"date\",\n        \"option\": \"after\",\n        \"value\": \"2022-06-30\"\n      }\n    ]\n}",
+      "raw": "{\n    \"operators\": [\n      {\n        \"name\": \"source_account\",\n        \"option\": \"is\",\n        \"value\": \"(no name)\"\n      },\n      {\n        \"name\": \"date\",\n        \"option\": \"after\",\n        \"value\": \"2022-12-04T00:00:00-07:00\"\n      }\n    ]\n}",
       "form": []
     },
     "tests": []

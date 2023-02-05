@@ -21,6 +21,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,13 +38,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { ThunderComponent } from './thunder/thunder.component';
 import { AddCaseDialog } from './thunder/add-case-dialog/add-case-dialog.component';
+import { FireflyIIIPPComponent } from './firefly-iii-pp/firefly-iii-pp.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     ThunderComponent,
-    AddCaseDialog
+    AddCaseDialog,
+    FireflyIIIPPComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,9 @@ import { AddCaseDialog } from './thunder/add-case-dialog/add-case-dialog.compone
     MatRadioModule,
     MatCheckboxModule,
     MatTooltipModule,
+    MatExpansionModule,
+    MatDividerModule,
+    MatProgressBarModule,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,

@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json.Converters;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace Firefly_iii_pp_Runner.Models
 {
     public class RunnerStatus
     {
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public RunnerState State { get; set; } = RunnerState.Completed;
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
@@ -13,11 +13,16 @@ namespace Firefly_iii_pp_Runner.Models
         public int TotalTransactions { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum RunnerState
     {
+        [EnumMember(Value = "running")]
         Running,
+        [EnumMember(Value = "failed")]
         Failed,
+        [EnumMember(Value = "stopped")]
         Stopped,
+        [EnumMember(Value = "completed")]
         Completed
     }
 }

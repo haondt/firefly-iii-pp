@@ -22,13 +22,9 @@
     "method": "GET",
     "sortNum": 690,
     "created": "2023-02-01T22:29:44.592Z",
-    "modified": "2023-02-01T22:29:48.947Z",
+    "modified": "2023-02-05T02:25:36.701Z",
     "headers": [],
     "params": [],
-    "body": {
-      "type": "binary",
-      "form": []
-    },
     "tests": []
   },
   {
@@ -78,13 +74,9 @@
     "method": "POST",
     "sortNum": 1410,
     "created": "2023-02-01T22:30:42.696Z",
-    "modified": "2023-02-01T22:31:01.638Z",
+    "modified": "2023-02-05T03:52:07.903Z",
     "headers": [],
     "params": [],
-    "body": {
-      "type": "binary",
-      "form": []
-    },
     "tests": []
   },
   {

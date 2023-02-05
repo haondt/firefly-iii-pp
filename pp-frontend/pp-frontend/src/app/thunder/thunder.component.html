@@ -1,9 +1,11 @@
 <div class="content-container">
     <div class="content">
+        <mat-card class="content-card">
+
         <table border=1 frame=void rules="rows">
             <tr>
                 <td>
-                    <button mat-raised-button #r (click)="getStats(r)">Get Stats</button>
+                    <button color="primary" mat-raised-button #r (click)="getStats(r)">Get Stats</button>
                 </td>
                 <td>
                     <div class="cell-content">
@@ -14,7 +16,7 @@
             </tr>
             <tr>
                 <td>
-                    <button mat-raised-button #r (click)="sort(r)">Sort</button>
+                    <button color="primary" mat-raised-button #r (click)="sort(r)">Sort</button>
                 </td>
                 <td>
                     <span>Sort tests alphabetically</span>
@@ -22,12 +24,13 @@
             </tr>
             <tr>
                 <td>
-                    <button mat-raised-button #r (click)="addCaseFromTransaction(r)">Add Case from Transaction</button>
+                    <button color="primary" mat-raised-button #r (click)="addCaseFromTransaction(r)">Add Case from Transaction</button>
                 </td>
                 <td>
                     <span>Generate a test case and optionally the test itself from an existing transaction.</span>
                 </td>
             </tr>
         </table>
+        </mat-card>
     </div>
 </div>

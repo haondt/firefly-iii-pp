@@ -1,7 +1,7 @@
 # Firefly-iii-pp
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/haondt/firefly-iii-pp)](https://github.com/haondt/firefly-iii-pp/releases/latest)
-[![Docker Hub release (latest by semver)](https://img.shields.io/docker/v/haumea/fireflyiii-pp?sort=semver)](https://hub.docker.com/r/haumea/fireflyiii-pp)
+[![Docker Hub release (latest by semver)](https://img.shields.io/docker/v/haumea/fireflyiii-pp?label=docker%20hub&sort=semver)](https://hub.docker.com/r/haumea/fireflyiii-pp)
 
 A set of companion tools for post-processing transactions in Firefly-iii.
 

@@ -9,6 +9,6 @@ namespace Firefly_pp_Runner.Models.Runner.Dtos
 {
     public class QueryStartJobRequestDto
     {
-        public List<RunnerQueryOperator> Operators { get; set; } = new List<RunnerQueryOperator>();
+        public List<RunnerQueryOperation> Operations { get; set; } = new List<RunnerQueryOperation>();
     }
 }

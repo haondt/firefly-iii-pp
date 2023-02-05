@@ -78,15 +78,19 @@ namespace Firefly_iii_pp_Runner.Services
             }
         }
 
-        public string PrepareQuery(List<RunnerQueryOperator> queryOperators)
+        public string PrepareQuery(List<RunnerQueryOperation> queryOperators)
         {
+            var groupedOperators = queryOperators.Select(o => $"{o.Operand}+{o.Operator}").GroupBy(v => v).Where(grp => grp.Count() > 1).Select(grp => grp.Key).ToList();
+            if (groupedOperators.Count > 0)
+                throw new ArgumentException($"Found multiple entries for the following operand+operator pairs: {string.Join(", ", groupedOperators)}");
+
             var query = string.Join(' ', queryOperators.Select(o =>
-                $"{o.Name}_{o.Option}:{StringifyOperatorValue(o.Value)}"));
+                $"{o.Operand}_{o.Operator}:{StringifyOperatorValue(o.Result)}"));
              query = HttpUtility.UrlEncode(query);
             return query;
         }
 
-        public async Task<ManyTransactionsContainerDto> GetTransactions(List<RunnerQueryOperator> queryOperators, int page)
+        public async Task<ManyTransactionsContainerDto> GetTransactions(List<RunnerQueryOperation> queryOperators, int page)
         {
             var query = PrepareQuery(queryOperators);
             var method = $"/api/v1/search/transactions?page={page}&query={query}";

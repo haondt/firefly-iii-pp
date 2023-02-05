@@ -84,7 +84,7 @@ namespace Firefly_iii_pp_Runner.Services
 
         public Task<RunnerStatus> StartJob(QueryStartJobRequestDto dto)
         {
-            return StartJob(p => _fireflyIII.GetTransactions(dto.Operators, p));
+            return StartJob(p => _fireflyIII.GetTransactions(dto.Operations, p));
         }
 
         public async Task<RunnerStatus> StartJob(Func<int, Task<ManyTransactionsContainerDto>> getTransactions)

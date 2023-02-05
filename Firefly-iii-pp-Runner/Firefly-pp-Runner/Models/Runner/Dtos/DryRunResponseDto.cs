@@ -9,7 +9,7 @@ namespace Firefly_pp_Runner.Models.Runner.Dtos
 {
     public class DryRunResponseDto
     {
-        public List<RunnerQueryOperator> Operators { get; set; } = new List<RunnerQueryOperator>();
+        public List<RunnerQueryOperation> Operations { get; set; } = new List<RunnerQueryOperation>();
         public string Query { get; set; }
         public int TotalTranasactions { get; set; }
         public int TotalPages { get; set; }

@@ -1870,12 +1870,12 @@
     "method": "POST",
     "sortNum": 11410,
     "created": "2023-02-04T22:00:24.991Z",
-    "modified": "2023-02-05T04:16:44.798Z",
+    "modified": "2023-02-05T14:08:56.079Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"operators\": [\n      {\n        \"name\": \"source_account\",\n        \"option\": \"is\",\n        \"value\": \"(no name)\"\n      },\n      {\n        \"name\": \"date\",\n        \"option\": \"after\",\n        \"value\": \"2022-12-04T00:00:00-07:00\"\n      }\n    ]\n}",
+      "raw": "{\n    \"operations\": [\n      {\n        \"operand\": \"source_account\",\n        \"operator\": \"is\",\n        \"result\": \"(no name)\"\n      },\n      {\n        \"operand\": \"date\",\n        \"operator\": \"after\",\n        \"result\": \"2022-12-04T00:00:00-07:00\"\n      }\n    ]\n}",
       "form": []
     },
     "tests": []

@@ -42,14 +42,14 @@ namespace Firefly_iii_pp_Runner.Controllers
         [Route("query/dry-run")]
         public async Task<IActionResult> DryRunJob([FromBody] QueryStartJobRequestDto dto)
         {
-            var query = _fireflyIIIService.PrepareQuery(dto.Operators);
-            var container = await _fireflyIIIService.GetTransactions(dto.Operators, 1);
+            var query = _fireflyIIIService.PrepareQuery(dto.Operations);
+            var container = await _fireflyIIIService.GetTransactions(dto.Operations, 1);
             var sample = container.Data.FirstOrDefault(c => c.Attributes.Transactions.Count > 0)
                 ?.Attributes.Transactions.First();
 
             return new OkObjectResult(new DryRunResponseDto
             {
-                Operators = dto.Operators,
+                Operations = dto.Operations,
                 Query = query,
                 TotalTranasactions = container.Meta.Pagination.Total,
                 TotalPages = container.Meta.Pagination.Total_pages,

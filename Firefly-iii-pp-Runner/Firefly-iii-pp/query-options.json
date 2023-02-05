@@ -1,114 +1,114 @@
 [
   {
-    "name": "source_account",
+    "operand": "source_account",
     "viewValue": "Source account",
-    "options": [
+    "operators": [
       {
-        "name": "starts",
+        "operator": "starts",
         "viewValue": "starts with",
         "type": "string"
       },
       {
-        "name": "ends",
+        "operator": "ends",
         "viewValue": "ends with",
         "type": "string"
       },
       {
-        "name": "is",
+        "operator": "is",
         "viewValue": "is",
         "type": "string"
       },
       {
-        "name": "contains",
+        "operator": "contains",
         "viewValue": "contains",
         "type": "string"
       }
     ]
   },
   {
-    "name": "destination_account",
+    "operand": "destination_account",
     "viewValue": "Destination account",
-    "options": [
+    "operators": [
       {
-        "name": "starts",
+        "operator": "starts",
         "viewValue": "starts with",
         "type": "string"
       },
       {
-        "name": "ends",
+        "operator": "ends",
         "viewValue": "ends with",
         "type": "string"
       },
       {
-        "name": "is",
+        "operator": "is",
         "viewValue": "is",
         "type": "string"
       },
       {
-        "name": "contains",
+        "operator": "contains",
         "viewValue": "contains",
         "type": "string"
       }
     ]
   },
   {
-    "name": "account",
+    "operand": "account",
     "viewValue": "Either account",
-    "options": [
+    "operators": [
       {
-        "name": "starts",
+        "operator": "starts",
         "viewValue": "starts with",
         "type": "string"
       },
       {
-        "name": "ends",
+        "operator": "ends",
         "viewValue": "ends with",
         "type": "string"
       },
       {
-        "name": "is",
+        "operator": "is",
         "viewValue": "is",
         "type": "string"
       },
       {
-        "name": "contains",
+        "operator": "contains",
         "viewValue": "contains",
         "type": "string"
       }
     ]
   },
   {
-    "name": "tag",
+    "operand": "tag",
     "viewValue": "Tag",
-    "options": [
+    "operators": [
       {
-        "name": "is",
+        "operator": "is",
         "viewValue": "is",
         "type": "string"
       },
       {
-        "name": "is_not",
+        "operator": "is_not",
         "viewValue": "is not",
         "type": "string"
       }
     ]
   },
   {
-    "name": "date",
+    "operand": "date",
     "viewValue": "Date",
-    "options": [
+    "operators": [
       {
-        "name": "is",
+        "operator": "is",
         "viewValue": "is",
         "type": "date"
       },
       {
-        "name": "before",
+        "operator": "before",
         "viewValue": "is before",
         "type": "date"
       },
       {
-        "name": "after",
+        "operator": "after",
         "viewValue": "is after",
         "type": "date"
       }

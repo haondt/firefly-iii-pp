@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Firefly_pp_Runner.Models.Runner
 {
-    public class RunnerQueryOperator
+    public class RunnerQueryOperation
     {
         [Required]
-        public string Name { get; set; }
+        public string Operand { get; set; }
         [Required]
-        public string Option { get; set; }
+        public string Operator { get; set; }
         [Required]
-        public object Value { get; set; }
+        public object Result { get; set; }
     }
 }

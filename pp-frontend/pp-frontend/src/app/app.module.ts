@@ -24,12 +24,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // other
 import { HttpClientModule } from "@angular/common/http";
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 // pp-frontend
 import { AppRoutingModule } from './app-routing.module';
@@ -39,6 +42,7 @@ import { NavComponent } from './nav/nav.component';
 import { ThunderComponent } from './thunder/thunder.component';
 import { AddCaseDialog } from './thunder/add-case-dialog/add-case-dialog.component';
 import { FireflyIIIPPComponent } from './firefly-iii-pp/firefly-iii-pp.component';
+
 
 @NgModule({
   declarations: [
@@ -74,12 +78,16 @@ import { FireflyIIIPPComponent } from './firefly-iii-pp/firefly-iii-pp.component
     MatExpansionModule,
     MatDividerModule,
     MatProgressBarModule,
+    MatDatepickerModule,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
-    HttpClientModule
+    HttpClientModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: "en-CA" }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

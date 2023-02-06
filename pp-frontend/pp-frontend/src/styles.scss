@@ -20,3 +20,27 @@ $my-theme: mat.define-dark-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #575656;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: grey;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: lightgrey;
+}
+
+.cdk-global-scrollblock {
+  overflow: auto;
+}

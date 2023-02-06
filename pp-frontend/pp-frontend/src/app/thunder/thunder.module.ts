@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -36,7 +37,8 @@ import { MatSelectModule } from '@angular/material/select';
         MatCardModule,
         MatDialogModule,
         MatSnackBarModule,
-        MatButtonModule
+        MatButtonModule,
+        MatInputModule
     ],
     declarations: [
         ThunderComponent,

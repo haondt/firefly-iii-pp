@@ -1,0 +1,27 @@
+<div class="content-container">
+    <div class="content">
+        <mat-card class="content-card">
+            <div class="content-row">
+                <button color="primary" mat-raised-button (click)="exportFlows()">Export Flows</button>
+                <span>Export Node-Red flows to file</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-row">
+                <button color="primary" mat-raised-button (click)="sendPassthrough()">Send to Node-Red</button>
+                <button mat-stroked-button (click)="formatRequest()">Prettify Request</button>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-row request-row">
+                <div class="request-block">
+                    <span>Request</span>
+                    <textarea [(ngModel)]="requestText"></textarea>
+                </div>
+                <mat-divider [vertical]="true"></mat-divider>
+                <div class="response-block">
+                    <span>Response</span>
+                    <div class="code-block">{{ responseText }}</div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

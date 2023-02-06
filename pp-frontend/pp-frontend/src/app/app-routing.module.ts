@@ -6,7 +6,9 @@ const routes: Routes = [
   { path: 'thunder', loadChildren: () =>
     import('./thunder/thunder.module').then(m => m.ThunderModule)},
   { path: 'firefly-iii', loadChildren: () =>
-    import('./firefly-iii-pp/firefly-iii-pp.module').then(m => m.FireflyIIIPPModule)}
+    import('./firefly-iii-pp/firefly-iii-pp.module').then(m => m.FireflyIIIPPModule)},
+  { path: 'node-red', loadChildren: () =>
+    import('./node-red/node-red.module').then(m => m.NodeRedModule)},
 ];
 
 @NgModule({

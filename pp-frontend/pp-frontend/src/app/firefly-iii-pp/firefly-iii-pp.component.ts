@@ -67,7 +67,10 @@ export class FireflyIIIPPComponent {
     this.runnerService.getStatus().subscribe(res => {
       try {
         if (res.success) {
-          this.status = res.body;
+          this.status = res.body!;
+          if (this.status.state === "running") {
+            this.startRefreshTimer();
+          }
         } else {
           this.status = undefined;
           this.showSnackError(res.error);
@@ -129,7 +132,10 @@ export class FireflyIIIPPComponent {
   }
 
   startRefreshTimer() {
-    clearInterval(this.timer);
+    if (this.timer !== undefined) {
+      clearInterval(this.timer);
+    }
+
     this.timer = setInterval(() => {
       if (this.status && this.status.state === "running") {
         this._refreshStatus();
@@ -232,6 +238,9 @@ export class FireflyIIIPPComponent {
         try {
           if (res.success) {
             this.status = res.body!;
+            if (this.status.state === "running") {
+              this.startRefreshTimer();
+            }
           } else {
             this.status = undefined;
             this.showSnackError(res.error);

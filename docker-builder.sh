@@ -1,5 +1,5 @@
 if [ $# -eq 0 ]; then
-    >&2 echo "No tag provided"
+    >&2 printf "No tag provided. Run with version tag, for example\n./docker-builder.sh 6.9.0\n"
     exit 1
 fi
 

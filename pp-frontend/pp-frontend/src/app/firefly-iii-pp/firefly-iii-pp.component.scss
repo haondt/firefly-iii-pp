@@ -57,6 +57,7 @@ table.status-table > tr > td {
 
 .progress-bar-gap {
     height: 4px;
+    color:orange;
 }
 
 .accordion-panel-title {
@@ -92,6 +93,11 @@ table.status-table > tr > td {
 
 .dry-run-sample {
     font-family: monospace;
+}
+
+.busy-progress-bar {
+    position: sticky;
+    top: 0;
 }
 
 table.dry-run-response-table > tr > td {

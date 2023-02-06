@@ -5,6 +5,9 @@
 
 A set of companion tools for post-processing transactions in Firefly-iii.
 
+# Screenshots
+![img](https://github.com/haondt/firefly-iii-pp/blob/master/assets/ff3.png)
+
 ## Deployment
 
 ### Deploy docker hub images

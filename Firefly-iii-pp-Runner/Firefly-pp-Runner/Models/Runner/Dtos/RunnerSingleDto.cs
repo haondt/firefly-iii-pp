@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Firefly_iii_pp_Runner.Models
+namespace Firefly_pp_Runner.Models.Runner.Dtos
 {
     public class RunnerSingleDto
     {

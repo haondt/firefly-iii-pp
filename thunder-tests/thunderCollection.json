@@ -1340,6 +1340,13 @@
             }
           ]
         }
+      },
+      {
+        "_id": "47fd1d03-a5f4-4b98-b130-51d35e09f00e",
+        "name": "NodeRed Stuff",
+        "containerId": "",
+        "created": "2023-02-05T22:12:05.116Z",
+        "sortNum": 11700
       }
     ],
     "settings": {
@@ -1391,6 +1398,13 @@
           "headers": [],
           "tests": []
         }
+      },
+      {
+        "_id": "6171b6da-f6b1-4b3b-a23b-7e747744d4bc",
+        "name": "Node-Red",
+        "containerId": "",
+        "created": "2023-02-05T23:12:34.738Z",
+        "sortNum": 50000
       }
     ],
     "settings": {

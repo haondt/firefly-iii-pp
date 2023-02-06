@@ -2,6 +2,7 @@
 using Firefly_iii_pp_Runner.Models.FireflyIII;
 using Firefly_iii_pp_Runner.Settings;
 using Firefly_pp_Runner.Exceptions;
+using Firefly_pp_Runner.Extensions;
 using Firefly_pp_Runner.Models.Runner;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
@@ -96,13 +97,7 @@ namespace Firefly_iii_pp_Runner.Services
             var method = $"/api/v1/search/transactions?page={page}&query={query}";
 
             var result = await _httpClient.GetAsync(method);
-            if (!result.IsSuccessStatusCode)
-            {
-                var content = "null";
-                if (result?.Content != null)
-                    content = await result.Content.ReadAsStringAsync() ?? "null";
-                throw new DownstreamException($"Firefly-iii returned status: {result.StatusCode} with content: {content}");
-            }
+            await result.EnsureDownstreamSuccessStatusCode("Firefly-iii");
 
             return await result.Content.ReadFromJsonAsync<ManyTransactionsContainerDto>();
         }

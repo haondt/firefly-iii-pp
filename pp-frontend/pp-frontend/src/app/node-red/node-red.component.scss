@@ -1,0 +1,78 @@
+.content-container {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    max-width: 1370px;
+    flex-direction: column;
+    flex: 1 1 auto;
+    margin: 25px;
+    gap: 10px;
+}
+
+.content-card {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    gap: 15px;
+}
+
+.content-row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.mat-divider {
+    border-top-color: grey;
+    border-right-color: grey;
+}
+
+.request-block, .response-block {
+    display: flex;
+    flex-direction: column;
+    background-color: #292929;
+    border-radius: 5px;
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.request-block > textarea, .response-block > .code-block {
+    background-color: #343434;
+    color: white;
+    font-family: monospace;
+    padding: 15px;
+    flex: 1 1 auto;
+}
+
+.code-block {
+    white-space: pre-wrap;
+    overflow: auto;
+}
+
+.request-block > textarea {
+    border: none;
+    outline: none;
+    overflow: auto;
+    resize: none;
+}
+
+
+.request-block > span, .response-block span {
+    margin: 10px;
+}
+
+.request-row {
+    height: 350px;
+}
+
+.request-row > mat-divider {
+    height: 100%;
+}

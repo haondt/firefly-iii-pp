@@ -24,7 +24,7 @@ export class NodeRedService {
             body: r.body!
         } : {
             success: false,
-            error: "Received eempty response from backend"
+            error: "Received empty response from backend"
         }),
         catchError(e => {
             if (e.error && e.error.exception && e.error.statusCode) {

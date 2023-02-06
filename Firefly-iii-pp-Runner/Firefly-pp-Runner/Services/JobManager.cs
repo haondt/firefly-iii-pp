@@ -14,6 +14,7 @@ namespace Firefly_iii_pp_Runner.Services
         private readonly FireflyIIIService _fireflyIII;
         private readonly NodeRedService _nodeRed;
         private readonly RunnerStatus _status;
+        private int _completedTransactions = 0;
         private CancellationTokenSource _tokenSource;
 
         public JobManager(ILogger<JobManager> logger, FireflyIIIService fireflyIII, NodeRedService nodeRed)
@@ -24,7 +25,11 @@ namespace Firefly_iii_pp_Runner.Services
             _status = new RunnerStatus();
         }
 
-        public RunnerStatus GetStatus() => _status;
+        public RunnerStatus GetStatus()
+        {
+            _status.CompletedTransactions = _completedTransactions;
+            return _status;
+        }
 
         public async Task<RunnerStatus> StartSingle(RunnerSingleDto dto)
         {
@@ -45,16 +50,18 @@ namespace Firefly_iii_pp_Runner.Services
 
                 _status.State = RunnerState.Running;
                 _status.CompletedTransactions = 0;
+                _completedTransactions = 0;
                 _status.TotalTransactions = 1;
                 _status.CurrentPage = 1;
                 _status.TotalPages = 1;
                 _ = Task.Run(async () =>
                 {
-
                     try
                     {
                         await UpdateTransaction(initialRequest, _tokenSource.Token);
                         _status.State = RunnerState.Completed;
+                        _status.CompletedTransactions = 1;
+                        _completedTransactions = 1;
                     }
                     catch (TaskCanceledException)
                     {
@@ -102,6 +109,7 @@ namespace Firefly_iii_pp_Runner.Services
                 var initialRequest = await getTransactions(1);
                 _status.State = RunnerState.Running;
                 _status.CompletedTransactions = 0;
+                _completedTransactions = 0;
                 _status.TotalTransactions = initialRequest.Meta.Pagination.Total;
                 _status.CurrentPage = 1;
                 _status.TotalPages = initialRequest.Meta.Pagination.Total_pages;
@@ -119,8 +127,6 @@ namespace Firefly_iii_pp_Runner.Services
         {
             if (transaction.Attributes.Transactions.Count != 1)
                 return;
-            if (transaction.Attributes.Transactions[0].Destination_name != "(no name)")
-                return;
 
             var transactionData = transaction.Attributes.Transactions[0];
             var newTransactionData = await _nodeRed.ApplyRules(transactionData, cancellationToken);
@@ -133,7 +139,7 @@ namespace Firefly_iii_pp_Runner.Services
             if (!newTransactionData.Equals(transactionData))
             {
                 await _fireflyIII.UpdateTransaction(transaction.Id, updateDto, cancellationToken);
-                _logger.LogInformation($"Updated transaction {transaction.Id} with dest {newTransactionData.Destination_name} (was: {transactionData.Destination_name})");
+                _logger.LogInformation("Updated transaction {transactionId}", transaction.Id);
             }
         }
 
@@ -144,12 +150,13 @@ namespace Firefly_iii_pp_Runner.Services
                 var currentSet = initialRequest;
                 while (true)
                 {
-                    await Task.WhenAll(currentSet.Data.Select(t => Task.Run(async () =>
+                    await Task.WhenAll(currentSet.Data.Select(async t =>
                     {
                         await UpdateTransaction(t, cancellationToken);
-                        _status.CompletedTransactions++;
-                    })));
+                        Interlocked.Increment(ref _completedTransactions);
+                    }));
 
+                    _status.CompletedTransactions = _completedTransactions;
                     if (cancellationToken.IsCancellationRequested)
                         break;
                     else if (_status.CurrentPage < _status.TotalPages)

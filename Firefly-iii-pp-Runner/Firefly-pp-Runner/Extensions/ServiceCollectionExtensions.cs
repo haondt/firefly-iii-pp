@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
+using System.Net.Sockets;
 
 namespace Firefly_iii_pp_Runner.Extensions
 {
@@ -35,14 +36,20 @@ namespace Firefly_iii_pp_Runner.Extensions
                 builder.ClearProviders();
                 builder.AddConsole();
             }).CreateLogger<Policy>();
-            var policy2 = Policy<HttpResponseMessage>
-                .Handle<TimeoutRejectedException>()  // firefly-iii sometimes gives socket errors
-                .WaitAndRetryAsync<HttpResponseMessage>(5, retryAttempt => TimeSpan.FromSeconds(2), (e, t, i, c) =>
+            var socketExceptionPolicy = Policy<HttpResponseMessage>
+                .HandleInner<SocketException>()  // firefly-iii sometimes gives socket errors
+                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (e, t, i, c) =>
                 {
-                    logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to error: {error}", i, e.Exception?.Message ?? "null exception");
+                    logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to socket exception", i);
                 });
-            var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(2);
-            return Policy.WrapAsync(policy2, timeoutPolicy);
+            var timeoutRejectionPolicy = Policy<HttpResponseMessage>
+                .Handle<TimeoutRejectedException>()
+                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(2), (e, t, i, c) =>
+                {
+                    logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to timeout", i);
+                });
+            var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(30);
+            return Policy.WrapAsync(socketExceptionPolicy, timeoutRejectionPolicy, timeoutPolicy);
         }
     }
 }

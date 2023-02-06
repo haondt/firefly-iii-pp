@@ -98,6 +98,8 @@ table.status-table > tr > td {
 .busy-progress-bar {
     position: sticky;
     top: 0;
+    z-index: 1000;
+    background-color: #303030;
 }
 
 table.dry-run-response-table > tr > td {

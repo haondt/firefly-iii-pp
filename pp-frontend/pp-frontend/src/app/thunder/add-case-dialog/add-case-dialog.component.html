@@ -4,8 +4,10 @@
         <!-- Get Transaction -->
         <div class="content-section">
             <div class="content-row">
-                <span>Transaction ID:</span>
-                <input [disabled]="working" class="transaction-id-input" type="text" [(ngModel)]="transactionId">
+                <mat-form-field appearance="fill" class="remove-padding">
+                    <mat-label>Transaction ID</mat-label>
+                    <input [disabled]="working" matInput type="text" [(ngModel)]="transactionId">
+                </mat-form-field>
                 <span class="spacer"></span>
                 <button mat-raised-button (click)="getTransactionData()" color="primary" [disabled]="working">Get Transaction</button>
                 <mat-spinner *ngIf="gettingTransaction" diameter="25" color="accent" class="test-spinner"></mat-spinner>
@@ -16,7 +18,7 @@
         </div>
 
         <!-- Configure data to pull from transaction -->
-        <div class="content-section-sep" *ngIf="transactionData"></div>
+        <mat-divider *ngIf="transactionData"></mat-divider>
         <div class="content-section" *ngIf="transactionData">
             <div class="content-row">
                 <p> Select fields:</p>
@@ -29,7 +31,7 @@
                 </mat-chip-listbox>
             </div>
             <div class="content-row">
-                <mat-form-field appearance="fill">
+                <mat-form-field class="remove-padding" appearance="fill">
                     <mat-label>Folder</mat-label>
                     <input [disabled]="working" type="text" matInput [ngModel]="folderName" [matAutocomplete]="auto" (ngModelChange)="folderNameAutocompleteChanged($event)">
                     <mat-autocomplete #auto="matAutocomplete">
@@ -48,20 +50,22 @@
         </div>
 
         <!-- Configure expected values -->
-        <div class="content-section-sep" *ngIf="configureExpectedValues"></div>
+        <mat-divider *ngIf="configureExpectedValues"></mat-divider>
         <div class="content-section" *ngIf="configureExpectedValues">
             <div class="content-row">
-                <mat-form-field class="field-select" appearance="fill">
+                <mat-form-field class="remove-padding" appearance="fill">
                     <mat-label>Select Field</mat-label>
                     <mat-select [(value)]="selectedExpectedField" (selectionChange)="expectedFieldValueChanged()">
                         <mat-option>None</mat-option>
                         <mat-option *ngFor="let option of fields" [value]="option.viewValue">{{ option.viewValue }}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <input class="transaction-id-input" type="text" [(ngModel)]="expectedFieldValue">
+                <mat-form-field class="remove-padding">
+                    <input matInput class="transaction-id-input" type="text" [(ngModel)]="expectedFieldValue">
+                </mat-form-field>
             </div>
             <div class="content-row">
-                <button mat-raised-button (click)="loadExpectedValueFromTransaction()">Populate with transaction Value</button>
+                <button mat-stroked-button (click)="loadExpectedValueFromTransaction()">Populate with transaction Value</button>
                 <button [disabled]="working" mat-raised-button color="primary" (click)="addExpectedValue()">Add</button>
             </div>
             <mat-chip-listbox [disabled]="working" multiple="true">
@@ -74,10 +78,10 @@
             </mat-chip-listbox>
         </div>
 
-        <div class="content-section-sep"></div>
+        <mat-divider></mat-divider>
         <div class="content-section">
             <div class="content-row">
-                <button mat-raised-button [color]="createCaseError ? 'warn' : 'primary'" (click)="createCase()" [disabled]="creatingCase || working">Create Case</button>
+                <button mat-raised-button [color]="createCaseError ? 'warn' : 'accent'" (click)="createCase()" [disabled]="creatingCase || working">Create Case</button>
                 <mat-spinner *ngIf="creatingCase" diameter="25" color="accent" class="test-spinner"></mat-spinner>
                 <span class="success" *ngIf="createdCase">Created case {{ createdCase }}</span>
             </div>

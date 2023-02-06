@@ -44,3 +44,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .cdk-global-scrollblock {
   overflow: auto;
 }
+
+.mat-divider {
+    border-top-color: grey;
+    border-right-color: grey;
+}
+
+mat-form-field.remove-padding {
+    margin-bottom: -25px;
+}

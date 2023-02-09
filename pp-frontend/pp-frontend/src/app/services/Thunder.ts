@@ -13,75 +13,71 @@ export class ThunderService {
     constructor(private client: HttpClient) {
     }
 
-    getClientData(): Observable<ServiceResponseModel<ClientInfoDto>> {
-        return this.client.get(`${environment.API_HOST}/thunder/clientinfo`, {
+    private performGetRequest<TResponse>(url: string): Observable<ServiceResponseModel<TResponse>> {
+        return this.client.get<TResponse>(url, {
             responseType: 'json',
             observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: <ClientInfoDto>r.body
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
+        }).pipe(map(r => r ? {
+            success: true,
+            body: r.body!
+        } : {
+            success: false,
+            error: "Received empty response from backend"
+        }),
+        catchError(e => {
+            if (e.error && e.error.exception && e.error.statusCode) {
+                return of({
+                    success: false,
+                    error: `${e.error.exception}: ${e.error.details ?? e.error.statusCode}`
+                });
+            } else {
                 return of({
                     success: false,
                     error: e.message
                 });
-            })
-        );
+            }
+        }));
+    }
+
+    private performPostRequest<TRequest, TResponse>(url: string, requestDto: TRequest): Observable<ServiceResponseModel<TResponse>> {
+        return this.client.post<TResponse>(url, requestDto, {
+            responseType: 'json',
+            observe: 'response'
+        }).pipe(map(r => r ? {
+            success: true,
+            body: r.body!
+        } : {
+            success: false,
+            error: "Received empty response from backend"
+        }),
+        catchError(e => {
+            if (e.error && e.error.exception && e.error.statusCode) {
+                return of({
+                    success: false,
+                    error: `${e.error.exception}: ${e.error.details ?? e.error.statusCode}`
+                });
+            } else {
+                return of({
+                    success: false,
+                    error: e.message
+                });
+            }
+        }));
+    }
+
+    getClientData(): Observable<ServiceResponseModel<ClientInfoDto>> {
+        return this.performGetRequest(`${environment.API_HOST}/thunder/clientinfo`);
     }
 
     sort(): Observable<ServiceResponseModel<Object>> {
-        return this.client.post(`${environment.API_HOST}/thunder/sort`, null, {
-            observe: 'response'
-        }).pipe(
-            map(r => { return { success: true }}),
-            catchError(e => {
-                return of({
-                    success: false,
-                    error: e.message
-                });
-            })
-        );
+        return this.performPostRequest(`${environment.API_HOST}/thunder/sort`, null);
     }
 
     getFolderNames(): Observable<ServiceResponseModel<string[]>> {
-        return this.client.get(`${environment.API_HOST}/thunder/foldernames`, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: <string[]>r.body
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                return of({
-                    success: false,
-                    error: e.message
-                });
-            })
-        );
+        return this.performGetRequest(`${environment.API_HOST}/thunder/foldernames`);
     }
 
     createCase(dto: CreateTestCaseRequestDto): Observable<ServiceResponseModel<any>> {
-        return this.client.post(`${environment.API_HOST}/thunder/testcase`, dto, {
-            observe: 'response',
-            responseType: 'json'
-        }).pipe(
-            map(r => { return { success: true, body: r.body }}),
-            catchError(e => {
-                console.log(e);
-                return of({
-                    success: false,
-                    error: e.message
-                });
-            })
-        );
+        return this.performPostRequest(`${environment.API_HOST}/thunder/testcase`, dto);
     }
 }

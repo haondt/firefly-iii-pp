@@ -8,6 +8,8 @@ namespace Firefly_iii_pp_Runner.Models.ThunderClient.Enums
     public enum TestActionEnum
     {
         [EnumMember(Value = "equal")]
-        Equal
+        Equal,
+        [EnumMember (Value = "contains")]
+        Contains
     }
 }

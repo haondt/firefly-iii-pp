@@ -24,12 +24,28 @@ namespace Firefly_iii_pp_Runner.Extensions
             services.AddSingleton<ThunderClientEditorService>();
 
             services.AddHttpClient<FireflyIIIService>()
-                .AddPolicyHandler(GetRetryPolicy());
+                .AddPolicyHandler(GetFireflyIIIPolicy());
+            services.AddHttpClient<NodeRedService>()
+                .AddPolicyHandler(GetNodeRedPolicy());
 
             return services;
         }
+        private static IAsyncPolicy<HttpResponseMessage> GetNodeRedPolicy()
+        {
+            var logger = LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+                builder.AddConsole();
+            }).CreateLogger<Policy>();
+            var timeoutPolicy = Policy
+                .TimeoutAsync<HttpResponseMessage>(1, async (ct, ts, t) =>
+                {
+                    logger.LogInformation("Timed out NodeRed request.");
+                });
+            return timeoutPolicy;
+        }
 
-        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        private static IAsyncPolicy<HttpResponseMessage> GetFireflyIIIPolicy()
         {
             var logger = LoggerFactory.Create(builder =>
             {
@@ -38,17 +54,17 @@ namespace Firefly_iii_pp_Runner.Extensions
             }).CreateLogger<Policy>();
             var socketExceptionPolicy = Policy<HttpResponseMessage>
                 .HandleInner<SocketException>()  // firefly-iii sometimes gives socket errors
-                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (e, t, i, c) =>
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (e, t, i, c) =>
                 {
                     logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to socket exception", i);
                 });
             var timeoutRejectionPolicy = Policy<HttpResponseMessage>
                 .Handle<TimeoutRejectedException>()
-                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(2), (e, t, i, c) =>
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2), (e, t, i, c) =>
                 {
                     logger.LogInformation("Retrying http call (retry attempt: {attempt}) due to timeout", i);
                 });
-            var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(30);
+            var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
             return Policy.WrapAsync(socketExceptionPolicy, timeoutRejectionPolicy, timeoutPolicy);
         }
     }

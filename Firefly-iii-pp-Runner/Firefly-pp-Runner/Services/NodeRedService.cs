@@ -14,11 +14,11 @@ namespace Firefly_iii_pp_Runner.Services
         private readonly ILogger<NodeRedService> _logger;
         private readonly HttpClient _httpClient;
 
-        public NodeRedService(IOptions<NodeRedSettings> options, ILogger<NodeRedService> logger, IHttpClientFactory httpClientFactory)
+        public NodeRedService(IOptions<NodeRedSettings> options, ILogger<NodeRedService> logger, HttpClient httpClient)
         {
             _settings = options.Value;
             _logger = logger;
-            _httpClient = httpClientFactory.CreateClient();
+            _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(_settings.BaseUrl);
         }
 

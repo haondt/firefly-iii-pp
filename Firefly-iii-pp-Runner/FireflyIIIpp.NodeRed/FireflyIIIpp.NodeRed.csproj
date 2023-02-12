@@ -2,22 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>Firefly_pp_Runner</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.13" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Runner\Enums\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Firefly-iii-pp.Firefly-III.Abstractions\FireflyIIIpp.FireflyIII.Abstractions.csproj" />
+    <ProjectReference Include="..\FireflyIIIpp.Core\FireflyIIIpp.Core.csproj" />
     <ProjectReference Include="..\FireflyIIIpp.NodeRed.Abstractions\FireflyIIIpp.NodeRed.Abstractions.csproj" />
   </ItemGroup>
 

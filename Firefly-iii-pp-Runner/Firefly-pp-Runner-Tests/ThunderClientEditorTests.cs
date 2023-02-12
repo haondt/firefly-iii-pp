@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Firefly_pp_Runner_Tests
+namespace FireflyIIIpp.Thunder.Tests
 {
     public class ThunderClientEditorTests
     {

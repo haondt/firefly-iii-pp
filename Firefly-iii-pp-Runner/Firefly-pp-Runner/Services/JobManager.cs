@@ -5,6 +5,7 @@ using Firefly_pp_Runner.Models.Runner;
 using Firefly_pp_Runner.Models.Runner.Dtos;
 using FireflyIIIpp.FireflyIII.Abstractions;
 using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
+using FireflyIIIpp.NodeRed.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -14,13 +15,13 @@ namespace Firefly_iii_pp_Runner.Services
     {
         private readonly ILogger<JobManager> _logger;
         private readonly IFireflyIIIService _fireflyIII;
-        private readonly NodeRedService _nodeRed;
+        private readonly INodeRedService _nodeRed;
         private readonly RunnerStatus _status;
         private int _completedTransactions = 0;
         private CancellationTokenSource _tokenSource;
         private JsonSerializerSettings _serializerSettings;
 
-        public JobManager(ILogger<JobManager> logger, IFireflyIIIService fireflyIII, NodeRedService nodeRed)
+        public JobManager(ILogger<JobManager> logger, IFireflyIIIService fireflyIII, INodeRedService nodeRed)
         {
             _logger = logger;
             _fireflyIII = fireflyIII;
@@ -94,12 +95,12 @@ namespace Firefly_iii_pp_Runner.Services
             return StartJob(p => _fireflyIII.GetTransactions(start, end, p));
         } 
 
-        public Task<RunnerStatus> StartJob(QueryStartJobRequestDto dto)
+        public Task<RunnerStatus> StartJob(QueryStartJobRequestDto dto, Func<Task>? onJobFinish = null)
         {
-            return StartJob(p => _fireflyIII.GetTransactions(dto.Operations, p));
+            return StartJob(p => _fireflyIII.GetTransactions(dto.Operations, p), onJobFinish);
         }
 
-        public async Task<RunnerStatus> StartJob(Func<int, Task<ManyTransactionsContainerDto>> getTransactions)
+        private async Task<RunnerStatus> StartJob(Func<int, Task<ManyTransactionsContainerDto>> getTransactions, Func<Task>? onJobFinish = null)
         {
             if (_status.State == RunnerState.Running)
             {
@@ -118,7 +119,7 @@ namespace Firefly_iii_pp_Runner.Services
                 _status.TotalTransactions = initialRequest.Meta.Pagination.Total;
                 _status.CurrentPage = 1;
                 _status.TotalPages = initialRequest.Meta.Pagination.Total_pages;
-                _ = Task.Run(() => JobTask(getTransactions, initialRequest, _tokenSource.Token));
+                _ = Task.Run(() => JobTask(getTransactions, initialRequest, _tokenSource.Token, onJobFinish));
             }
             catch
             {
@@ -150,7 +151,7 @@ namespace Firefly_iii_pp_Runner.Services
             }
         }
 
-        private async Task JobTask(Func<int, Task<ManyTransactionsContainerDto>> getTransactions, ManyTransactionsContainerDto initialRequest, CancellationToken cancellationToken)
+        private async Task JobTask(Func<int, Task<ManyTransactionsContainerDto>> getTransactions, ManyTransactionsContainerDto initialRequest, CancellationToken cancellationToken, Func<Task>? onJobFinish = null)
         {
             try
             {
@@ -174,6 +175,8 @@ namespace Firefly_iii_pp_Runner.Services
                     currentSet = await getTransactions(_status.CurrentPage);
                 }
                 _status.State = RunnerState.Completed;
+                if (onJobFinish != null)
+                    await onJobFinish();
             }
             catch (TaskCanceledException)
             {

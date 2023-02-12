@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firefly_pp_Runner.Models.NodeRed
+namespace FireflyIIIpp.NodeRed.Abstractions.Models.Dtos
 {
     public class NodeRedPassthroughRequestDto
     {

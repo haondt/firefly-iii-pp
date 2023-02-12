@@ -2,6 +2,7 @@ using Firefly_iii_pp_Runner.Converters;
 using Firefly_iii_pp_Runner.Extensions;
 using Firefly_pp_Runner.Extensions;
 using FireflyIIIpp.FireflyIII.Extensions;
+using FireflyIIIpp.NodeRed.Extensions;
 using Newtonsoft.Json.Serialization;
 using System.Text.Json;
 
@@ -26,6 +27,7 @@ builder.Services.AddCors(o =>
         });
 });
 builder.Services
+    .AddNodeRedServices(builder.Configuration)
     .AddFireflyIIIServices(builder.Configuration)
     .AddFireflyIIIPPRunnerServices(builder.Configuration);
 

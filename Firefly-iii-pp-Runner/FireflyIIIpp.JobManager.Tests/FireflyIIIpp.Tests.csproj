@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>Firefly_pp_Runner_Tests</RootNamespace>
+    <RootNamespace>FireflyIIIpp.Tests</RootNamespace>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Firefly-iii-pp-Runner.API\Firefly-iii-pp-Runner.API.csproj" />
+    <ProjectReference Include="..\Firefly-pp-Runner\Firefly-pp-Runner.csproj" />
+    <ProjectReference Include="..\FireflyIIIpp.Core.Tests.Utilities\FireflyIIIpp.Core.Tests.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

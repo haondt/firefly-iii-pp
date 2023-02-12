@@ -1,4 +1,4 @@
-﻿namespace Firefly_iii_pp_Runner.Settings
+﻿namespace FireflyIIIpp.NodeRed.Settings
 {
     public class NodeRedSettings
     {

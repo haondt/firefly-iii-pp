@@ -1,6 +1,7 @@
 using Firefly_iii_pp_Runner.Extensions;
 using Firefly_pp_Runner.Extensions;
 using FireflyIIIpp.FireflyIII.Extensions;
+using FireflyIIIpp.NodeRed.Extensions;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 var builder = WebApplication.CreateBuilder();
@@ -11,6 +12,7 @@ builder.Services.AddControllers()
     });
 builder.Services
     .AddFireflyIIIServices(builder.Configuration)
+    .AddNodeRedServices(builder.Configuration)
     .AddFireflyIIIPPRunnerServices(builder.Configuration);
 
 var app = builder.Build();

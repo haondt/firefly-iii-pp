@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Firefly_iii_pp_Runner.Controllers;
 using Firefly_iii_pp_Runner.Services;
-using Firefly_pp_Runner.Models.NodeRed;
+using FireflyIIIpp.NodeRed.Abstractions;
+using FireflyIIIpp.NodeRed.Abstractions.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -14,9 +15,9 @@ namespace Firefly_pp_Runner.Controllers
     [Route("api/v1/node-red")]
     public class NodeRedController : BaseController
     {
-        private readonly NodeRedService _nodeRed;
+        private readonly INodeRedService _nodeRed;
 
-        public NodeRedController(NodeRedService nodeRed)
+        public NodeRedController(INodeRedService nodeRed)
         {
             _nodeRed = nodeRed;
         }

@@ -1,15 +1,14 @@
-﻿using Firefly_iii_pp_Runner.Settings;
-using Firefly_pp_Runner.Extensions;
-using FireflyIIIpp.Core.Extensions;
-using Microsoft.AspNetCore.Http;
+﻿using FireflyIIIpp.Core.Extensions;
+using FireflyIIIpp.NodeRed.Abstractions;
+using FireflyIIIpp.NodeRed.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 using System.Text;
 
-namespace Firefly_iii_pp_Runner.Services
+namespace FireflyIIIpp.NodeRed.Services
 {
-    public class NodeRedService
+    public class NodeRedService : INodeRedService
     {
         private readonly NodeRedSettings _settings;
         private readonly ILogger<NodeRedService> _logger;

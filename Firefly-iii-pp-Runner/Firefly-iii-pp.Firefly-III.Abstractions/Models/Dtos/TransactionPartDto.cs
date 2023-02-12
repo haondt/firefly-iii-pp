@@ -18,9 +18,23 @@
 
         public override int GetHashCode()
         {
-            return (Type, Date, Amount, Description, Source_id, Destination_name,
-                Tags.Aggregate(19, (h, t) => h * 31 +t.GetHashCode()),
-                Original_source, Import_hash_v2, Notes, Category_name, Bill_name).GetHashCode();
+            var hash = new HashCode();
+            hash.Add(Type);
+            hash.Add(Amount);
+            hash.Add(Description);
+            hash.Add(Source_id);
+            hash.Add(Destination_name);
+            hash.Add((Tags ?? new List<string>()).Aggregate(new HashCode(), (hc, s) =>
+            {
+                hc.Add(s);
+                return hc;
+            }).ToHashCode());
+            hash.Add(Original_source);
+            hash.Add(Import_hash_v2);
+            hash.Add(Notes);
+            hash.Add(Category_name);
+            hash.Add(Bill_name);
+            return hash.ToHashCode();
         }
 
         public bool Equals(TransactionPartDto? other)

@@ -142,7 +142,7 @@ export class FireflyIIIPPComponent {
       } else {
         clearInterval(this.timer);
       }
-    }, 1000);
+    }, 250);
   }
 
   getProgress() {

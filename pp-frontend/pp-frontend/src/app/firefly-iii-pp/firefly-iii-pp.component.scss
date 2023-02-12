@@ -37,7 +37,7 @@
 .state-attribute.state-stopped {
     color: rgb(224, 162, 46);
 }
-.state-attribute.state-running {
+.state-attribute.state-running, .state-attribute.state-getting-transactions {
     color: rgb(46, 168, 224);
 }
 

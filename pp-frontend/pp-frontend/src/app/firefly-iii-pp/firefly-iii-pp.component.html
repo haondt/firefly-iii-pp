@@ -6,7 +6,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title class="accordion-panel-title">
-                            <mat-spinner *ngIf="status && status.state === 'running'" diameter="25" color="accent" class="test-spinner"></mat-spinner>
+                            <mat-spinner *ngIf="status && (status.state === 'running' || status.state === 'getting-transactions')" diameter="25" color="accent" class="test-spinner"></mat-spinner>
                             Status
                         </mat-panel-title>
                         <mat-panel-description>
@@ -15,7 +15,7 @@
                     </mat-expansion-panel-header>
                     <div class="pp-accordion-content">
                         <div class="pp-accordion-content-row">
-                            <mat-progress-bar *ngIf="status?.state === 'running'" mode="determinate" [value]="getProgress()"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="status?.state === 'running' || status?.state === 'getting-transactions'" mode="determinate" [value]="getProgress()"></mat-progress-bar>
                         </div>
                         <div class="pp-accordion-content-row">
                             <button color="primary" (click)="refreshStatus()" mat-raised-button>Refresh Status</button>
@@ -27,6 +27,7 @@
                                     [class.state-completed]="status.state === 'completed'"
                                     [class.state-failed]="status.state === 'failed'"
                                     [class.state-stopped]="status.state === 'stopped'"
+                                    [class.state-getting-transactions]="status.state === 'getting-transactions'"
                                     [class.state-running]="status.state === 'running'">
                                     <span>{{ status.state }}</span>
                                 </td></tr>

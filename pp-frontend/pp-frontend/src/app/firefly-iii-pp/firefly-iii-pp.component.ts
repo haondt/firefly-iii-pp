@@ -68,7 +68,7 @@ export class FireflyIIIPPComponent {
       try {
         if (res.success) {
           this.status = res.body!;
-          if (this.status.state === "running") {
+          if (this.status.state === "running" || this.status.state === "getting-transactions") {
             this.startRefreshTimer();
           }
         } else {
@@ -137,7 +137,7 @@ export class FireflyIIIPPComponent {
     }
 
     this.timer = setInterval(() => {
-      if (this.status && this.status.state === "running") {
+      if (this.status && (this.status.state === "running" || this.status.state === "getting-transactions")) {
         this._refreshStatus();
       } else {
         clearInterval(this.timer);
@@ -146,11 +146,16 @@ export class FireflyIIIPPComponent {
   }
 
   getProgress() {
-    if (this.status
-      && this.status.state === "running"
-      && this.status.totalTransactions > 0
-      && this.status.completedTransactions <= this.status.totalTransactions) {
-        return (this.status.completedTransactions / this.status.totalTransactions) * 100;
+    if (this.status) {
+      if (this.status.state === "running"
+        && this.status.totalTransactions > 0
+        && this.status.completedTransactions <= this.status.totalTransactions) {
+          return (this.status.completedTransactions / this.status.totalTransactions) * 100;
+      } else if (this.status.state === "getting-transactions"
+        && this.status.totalTransactions > 0
+        && this.status.queuedTransactions <= this.status.totalTransactions) {
+          return (this.status.queuedTransactions / this.status.totalTransactions) * 100;
+        }
     }
     return 0;
   }
@@ -238,7 +243,7 @@ export class FireflyIIIPPComponent {
         try {
           if (res.success) {
             this.status = res.body!;
-            if (this.status.state === "running") {
+            if (this.status.state === "running" || this.status.state === "getting-transactions") {
               this.startRefreshTimer();
             }
           } else {

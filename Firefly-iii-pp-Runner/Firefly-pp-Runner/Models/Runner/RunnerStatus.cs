@@ -9,6 +9,7 @@ namespace Firefly_pp_Runner.Models.Runner
         public RunnerState State { get; set; } = RunnerState.Completed;
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        public int QueuedTransactions { get; set; }
         public int CompletedTransactions { get; set; }
         public int TotalTransactions { get; set; }
     }

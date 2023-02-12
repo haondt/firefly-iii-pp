@@ -48,6 +48,7 @@ namespace Firefly_iii_pp_Runner.Services
             {
                 _status.State = RunnerState.GettingTransactions;
                 _status.CompletedTransactions = 0;
+                _status.QueuedTransactions = 0;
                 _status.TotalTransactions = 0;
                 _status.CurrentPage = 1;
                 _status.TotalPages = 1;
@@ -57,6 +58,7 @@ namespace Firefly_iii_pp_Runner.Services
                 if (initialRequest.Attributes.Transactions.Count != 1)
                     throw new InvalidOperationException("Multi-part transaction");
 
+                _status.QueuedTransactions = 1;
                 _status.State = RunnerState.RunningTransactions;
                 _status.TotalTransactions = 1;
 
@@ -111,6 +113,7 @@ namespace Firefly_iii_pp_Runner.Services
             {
                 _status.State = RunnerState.GettingTransactions;
                 _status.CompletedTransactions = 0;
+                _status.QueuedTransactions = 1;
                 _status.TotalTransactions = 0;
                 _status.CurrentPage = 1;
                 _status.TotalPages = 1;
@@ -161,7 +164,7 @@ namespace Firefly_iii_pp_Runner.Services
                 while (true)
                 {
                     transactionIds.AddRange(currentSet.Data.Select(t => t.Id));
-                    _status.TotalTransactions = transactionIds.Count;
+                    _status.QueuedTransactions = transactionIds.Count;
 
                     if (cancellationToken.IsCancellationRequested)
                     {
@@ -186,6 +189,7 @@ namespace Firefly_iii_pp_Runner.Services
                         await UpdateTransaction(transaction, cancellationToken);
                         lock(_status)
                         {
+                            _status.QueuedTransactions--;
                             _status.CompletedTransactions++;
                         }
                     }));

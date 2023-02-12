@@ -1,8 +1,10 @@
 ﻿using Firefly_iii_pp_Runner.Exceptions;
 using Firefly_iii_pp_Runner.Models;
-using Firefly_iii_pp_Runner.Models.FireflyIII;
+using Firefly_pp_Runner.Extensions;
 using Firefly_pp_Runner.Models.Runner;
 using Firefly_pp_Runner.Models.Runner.Dtos;
+using FireflyIIIpp.FireflyIII.Abstractions;
+using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -11,18 +13,21 @@ namespace Firefly_iii_pp_Runner.Services
     public class JobManager
     {
         private readonly ILogger<JobManager> _logger;
-        private readonly FireflyIIIService _fireflyIII;
+        private readonly IFireflyIIIService _fireflyIII;
         private readonly NodeRedService _nodeRed;
         private readonly RunnerStatus _status;
         private int _completedTransactions = 0;
         private CancellationTokenSource _tokenSource;
+        private JsonSerializerSettings _serializerSettings;
 
-        public JobManager(ILogger<JobManager> logger, FireflyIIIService fireflyIII, NodeRedService nodeRed)
+        public JobManager(ILogger<JobManager> logger, IFireflyIIIService fireflyIII, NodeRedService nodeRed)
         {
             _logger = logger;
             _fireflyIII = fireflyIII;
             _nodeRed = nodeRed;
             _status = new RunnerStatus();
+            _serializerSettings = new JsonSerializerSettings();
+            _serializerSettings.ConfigureFireflyppRunnerSettings();
         }
 
         public RunnerStatus GetStatus()
@@ -129,7 +134,9 @@ namespace Firefly_iii_pp_Runner.Services
                 return;
 
             var transactionData = transaction.Attributes.Transactions[0];
-            var newTransactionData = await _nodeRed.ApplyRules(transactionData, cancellationToken);
+            var transactionDataString = JsonConvert.SerializeObject(transactionData, _serializerSettings); ;
+            var newTransactionDataString = await _nodeRed.ApplyRules(transactionDataString, cancellationToken);
+            var newTransactionData = JsonConvert.DeserializeObject<TransactionPartDto>(newTransactionDataString, _serializerSettings);
             var updateDto = new TransactionUpdateDto
             {
                 Apply_rules = false,

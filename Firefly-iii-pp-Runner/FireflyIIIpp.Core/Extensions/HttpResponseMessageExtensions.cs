@@ -1,11 +1,11 @@
-﻿using Firefly_pp_Runner.Exceptions;
+﻿using FireflyIIIpp.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firefly_pp_Runner.Extensions
+namespace FireflyIIIpp.Core.Extensions
 {
     public static class HttpResponseMessageExtensions
     {

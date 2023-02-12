@@ -1,4 +1,4 @@
-﻿namespace Firefly_iii_pp_Runner.Models.FireflyIII
+﻿namespace FireflyIIIpp.FireflyIII.Abstractions.Models
 {
     public class TransactionListMetadata
     {

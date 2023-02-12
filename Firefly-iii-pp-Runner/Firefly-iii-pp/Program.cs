@@ -1,5 +1,6 @@
 using Firefly_iii_pp_Runner.Extensions;
 using Firefly_pp_Runner.Extensions;
+using FireflyIIIpp.FireflyIII.Extensions;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 var builder = WebApplication.CreateBuilder();
@@ -8,7 +9,9 @@ builder.Services.AddControllers()
     {
         options.SerializerSettings.ConfigureFireflyppRunnerSettings();
     });
-builder.Services.AddFireflyIIIPPRunnerServices(builder.Configuration);
+builder.Services
+    .AddFireflyIIIServices(builder.Configuration)
+    .AddFireflyIIIPPRunnerServices(builder.Configuration);
 
 var app = builder.Build();
 app.UseStaticFiles();

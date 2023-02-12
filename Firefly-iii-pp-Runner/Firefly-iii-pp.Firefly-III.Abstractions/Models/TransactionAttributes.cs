@@ -1,4 +1,6 @@
-﻿namespace Firefly_iii_pp_Runner.Models.FireflyIII
+﻿using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
+
+namespace FireflyIIIpp.FireflyIII.Abstractions.Models
 {
     public class TransactionAttributes
     {

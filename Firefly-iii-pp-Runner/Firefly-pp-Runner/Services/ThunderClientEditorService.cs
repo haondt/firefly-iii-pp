@@ -5,6 +5,7 @@ using Firefly_iii_pp_Runner.Models.ThunderClient.Dtos;
 using Firefly_iii_pp_Runner.Models.ThunderClient.Enums;
 using Firefly_iii_pp_Runner.Settings;
 using Firefly_pp_Runner.Extensions;
+using FireflyIIIpp.Core.Exceptions;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

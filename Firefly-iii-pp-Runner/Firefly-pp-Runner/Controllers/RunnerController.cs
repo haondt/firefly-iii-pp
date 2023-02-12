@@ -3,6 +3,7 @@ using Firefly_iii_pp_Runner.Exceptions;
 using Firefly_iii_pp_Runner.Models;
 using Firefly_iii_pp_Runner.Services;
 using Firefly_pp_Runner.Models.Runner.Dtos;
+using FireflyIIIpp.FireflyIII.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace Firefly_iii_pp_Runner.Controllers
     {
         private readonly ILogger<RunnerController> _logger;
         private readonly JobManager _jobManager;
-        private readonly FireflyIIIService _fireflyIIIService;
+        private readonly IFireflyIIIService _fireflyIIIService;
 
-        public RunnerController(ILogger<RunnerController> logger, JobManager jobManager, FireflyIIIService fireflyIIIService)
+        public RunnerController(ILogger<RunnerController> logger, JobManager jobManager, IFireflyIIIService fireflyIIIService)
         {
             _logger = logger;
             _jobManager = jobManager;

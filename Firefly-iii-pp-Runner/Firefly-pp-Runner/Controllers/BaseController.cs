@@ -1,6 +1,6 @@
 ﻿using Firefly_iii_pp_Runner.ExceptionFilters;
 using Firefly_iii_pp_Runner.Exceptions;
-using Firefly_pp_Runner.Exceptions;
+using FireflyIIIpp.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Polly.Timeout;

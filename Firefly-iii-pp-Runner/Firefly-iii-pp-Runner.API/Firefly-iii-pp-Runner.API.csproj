@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Firefly-pp-Runner\Firefly-pp-Runner.csproj" />
+    <ProjectReference Include="..\FireflyIIIpp.FireflyIII\FireflyIIIpp.FireflyIII.csproj" />
   </ItemGroup>
 
   <ItemGroup>

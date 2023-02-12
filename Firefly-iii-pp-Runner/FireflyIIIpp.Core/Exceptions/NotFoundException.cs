@@ -1,4 +1,4 @@
-﻿namespace Firefly_iii_pp_Runner.Exceptions
+﻿namespace FireflyIIIpp.Core.Exceptions
 {
     public class NotFoundException : Exception
     {

@@ -1,9 +1,9 @@
-﻿using Firefly_iii_pp_Runner.Exceptions;
-using Firefly_iii_pp_Runner.Models.FireflyIII;
-using Firefly_iii_pp_Runner.Settings;
-using Firefly_pp_Runner.Exceptions;
-using Firefly_pp_Runner.Extensions;
-using Firefly_pp_Runner.Models.Runner;
+﻿using FireflyIIIpp.Core.Exceptions;
+using FireflyIIIpp.Core.Extensions;
+using FireflyIIIpp.Core.Models;
+using FireflyIIIpp.FireflyIII.Abstractions;
+using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
+using FireflyIIIpp.FireflyIII.Settings;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
@@ -15,9 +15,9 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Web;
 
-namespace Firefly_iii_pp_Runner.Services
+namespace FireflyIIIpp.FireflyIII.Services
 {
-    public class FireflyIIIService
+    public class FireflyIIIService : IFireflyIIIService
     {
         private readonly FireflyIIISettings _settings;
         private readonly ILogger<FireflyIIIService> _logger;

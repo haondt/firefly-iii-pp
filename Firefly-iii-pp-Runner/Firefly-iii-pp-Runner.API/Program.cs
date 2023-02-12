@@ -1,6 +1,7 @@
 using Firefly_iii_pp_Runner.Converters;
 using Firefly_iii_pp_Runner.Extensions;
 using Firefly_pp_Runner.Extensions;
+using FireflyIIIpp.FireflyIII.Extensions;
 using Newtonsoft.Json.Serialization;
 using System.Text.Json;
 
@@ -24,7 +25,9 @@ builder.Services.AddCors(o =>
             policy.AllowAnyHeader();
         });
 });
-builder.Services.AddFireflyIIIPPRunnerServices(builder.Configuration);
+builder.Services
+    .AddFireflyIIIServices(builder.Configuration)
+    .AddFireflyIIIPPRunnerServices(builder.Configuration);
 
 var app = builder.Build();
 

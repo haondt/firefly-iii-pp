@@ -1,6 +1,7 @@
 ﻿using Firefly_iii_pp_Runner.ExceptionFilters;
 using Firefly_iii_pp_Runner.Exceptions;
 using Firefly_iii_pp_Runner.Services;
+using FireflyIIIpp.FireflyIII.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,9 +14,9 @@ namespace Firefly_iii_pp_Runner.Controllers
     [Route("api/v1/firefly_iii")]
     public class FireflyIIIController : BaseController
     {
-        private readonly FireflyIIIService _fireflyIII;
+        private readonly IFireflyIIIService _fireflyIII;
 
-        public FireflyIIIController(FireflyIIIService fireflyIII)
+        public FireflyIIIController(IFireflyIIIService fireflyIII)
         {
             _fireflyIII = fireflyIII;
         }

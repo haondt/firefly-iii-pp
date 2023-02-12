@@ -1,4 +1,4 @@
-﻿namespace Firefly_iii_pp_Runner.Settings
+﻿namespace FireflyIIIpp.FireflyIII.Settings
 {
     public class FireflyIIISettings
     {

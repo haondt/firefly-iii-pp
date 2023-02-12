@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firefly_pp_Runner.Models.Runner
+namespace FireflyIIIpp.Core.Models
 {
     public class RunnerQueryOperation
     {

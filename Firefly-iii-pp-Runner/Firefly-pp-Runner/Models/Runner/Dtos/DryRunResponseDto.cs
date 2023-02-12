@@ -1,4 +1,5 @@
-﻿using Firefly_iii_pp_Runner.Models.FireflyIII;
+﻿using FireflyIIIpp.Core.Models;
+using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace Firefly_pp_Runner.Models.Runner.Dtos
         public string Query { get; set; }
         public int TotalTransactions { get; set; }
         public int TotalPages { get; set; }
-        public TransactionPartDto? Sample { get; set; }
+        public object Sample { get; set; }
     }
 }

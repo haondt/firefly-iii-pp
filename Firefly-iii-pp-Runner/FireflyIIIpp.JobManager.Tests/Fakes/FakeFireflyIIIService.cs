@@ -1,4 +1,5 @@
-﻿using FireflyIIIpp.Core.Models;
+﻿using FireflyIIIpp.Core.Extensions;
+using FireflyIIIpp.Core.Models;
 using FireflyIIIpp.FireflyIII.Abstractions;
 using FireflyIIIpp.FireflyIII.Abstractions.Models;
 using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
@@ -20,14 +21,9 @@ namespace FireflyIIIpp.Tests.Fakes
 
         public Func<TransactionDto, bool> Query { get; set; } = t => true;
 
-        private IEnumerable<T> GetPage<T>(IEnumerable<T> items, int page)
-        {
-            return items.Skip((page - 1) * PageSize).Take(PageSize);
-        }
-
         public Task<TransactionDto> GetTransaction(string id)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(Transactions[id]);
         }
 
         public Task<ManyTransactionsContainerDto> GetTransactions(DateTime start, DateTime end, int page)
@@ -40,11 +36,10 @@ namespace FireflyIIIpp.Tests.Fakes
             var transactions = Transactions
                 .Select(kvp => kvp.Value)
                 .Where(Query).ToList();
-            var pages = transactions.Count == 0 ? 1
-                : (int)((transactions.Count - 1) / PageSize + 1);
+            var pages = transactions.Count == 0 ? 1 : transactions.Pages(PageSize);
             if (page < 1 || page > pages)
                 throw new ArgumentException(nameof(pages));
-            var pagedData = GetPage(transactions, page).ToList();
+            var pagedData = transactions.Page(PageSize, page).ToList();
             return Task.FromResult(new ManyTransactionsContainerDto
             {
                 Data = pagedData,

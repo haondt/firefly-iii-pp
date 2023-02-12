@@ -79,8 +79,7 @@ namespace FireflyIIIpp.Tests
 
             await _sut.StartJob(new QueryStartJobRequestDto(), async () => taskCompletionSource.TrySetResult());
 
-            await taskCompletionSource.Task;
-
+            Assert.Equal(await Task.WhenAny(taskCompletionSource.Task, Task.Delay(1000)), taskCompletionSource.Task);
             Assert.Equal(2, _fireflyIIIService.UpdatedTransactions.Count);
             Assert.Equal(2, _sut.GetStatus().TotalPages);
             Assert.Equal(10, _sut.GetStatus().TotalTransactions);

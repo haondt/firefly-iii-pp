@@ -17,7 +17,9 @@ namespace Firefly_pp_Runner.Models.Runner
     public enum RunnerState
     {
         [EnumMember(Value = "running")]
-        Running,
+        RunningTransactions,
+        [EnumMember(Value = "getting-transactions")]
+        GettingTransactions,
         [EnumMember(Value = "failed")]
         Failed,
         [EnumMember(Value = "stopped")]

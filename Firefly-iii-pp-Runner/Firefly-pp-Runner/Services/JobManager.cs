@@ -3,6 +3,7 @@ using Firefly_iii_pp_Runner.Models;
 using Firefly_pp_Runner.Extensions;
 using Firefly_pp_Runner.Models.Runner;
 using Firefly_pp_Runner.Models.Runner.Dtos;
+using FireflyIIIpp.Core.Extensions;
 using FireflyIIIpp.FireflyIII.Abstractions;
 using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
 using FireflyIIIpp.NodeRed.Abstractions;
@@ -17,7 +18,6 @@ namespace Firefly_iii_pp_Runner.Services
         private readonly IFireflyIIIService _fireflyIII;
         private readonly INodeRedService _nodeRed;
         private readonly RunnerStatus _status;
-        private int _completedTransactions = 0;
         private CancellationTokenSource _tokenSource;
         private JsonSerializerSettings _serializerSettings;
 
@@ -33,33 +33,33 @@ namespace Firefly_iii_pp_Runner.Services
 
         public RunnerStatus GetStatus()
         {
-            _status.CompletedTransactions = _completedTransactions;
             return _status;
         }
 
         public async Task<RunnerStatus> StartSingle(RunnerSingleDto dto)
         {
-            if (_status.State == RunnerState.Running)
-            {
+            if (IsJobRunning())
                 throw new RunnerBusyException();
-            }
 
             if (_tokenSource != null)
                 _tokenSource.Cancel();
             _tokenSource = new CancellationTokenSource();
             try
             {
+                _status.State = RunnerState.GettingTransactions;
+                _status.CompletedTransactions = 0;
+                _status.TotalTransactions = 0;
+                _status.CurrentPage = 1;
+                _status.TotalPages = 1;
+
                 var initialRequest = await _fireflyIII.GetTransaction(dto.Id);
 
                 if (initialRequest.Attributes.Transactions.Count != 1)
                     throw new InvalidOperationException("Multi-part transaction");
 
-                _status.State = RunnerState.Running;
-                _status.CompletedTransactions = 0;
-                _completedTransactions = 0;
+                _status.State = RunnerState.RunningTransactions;
                 _status.TotalTransactions = 1;
-                _status.CurrentPage = 1;
-                _status.TotalPages = 1;
+
                 _ = Task.Run(async () =>
                 {
                     try
@@ -67,7 +67,6 @@ namespace Firefly_iii_pp_Runner.Services
                         await UpdateTransaction(initialRequest, _tokenSource.Token);
                         _status.State = RunnerState.Completed;
                         _status.CompletedTransactions = 1;
-                        _completedTransactions = 1;
                     }
                     catch (TaskCanceledException)
                     {
@@ -102,23 +101,24 @@ namespace Firefly_iii_pp_Runner.Services
 
         private async Task<RunnerStatus> StartJob(Func<int, Task<ManyTransactionsContainerDto>> getTransactions, Func<Task>? onJobFinish = null)
         {
-            if (_status.State == RunnerState.Running)
-            {
+            if (IsJobRunning())
                 throw new RunnerBusyException();
-            }
 
             if (_tokenSource != null)
                 _tokenSource.Cancel();
             _tokenSource = new CancellationTokenSource();
             try
             {
-                var initialRequest = await getTransactions(1);
-                _status.State = RunnerState.Running;
+                _status.State = RunnerState.GettingTransactions;
                 _status.CompletedTransactions = 0;
-                _completedTransactions = 0;
-                _status.TotalTransactions = initialRequest.Meta.Pagination.Total;
+                _status.TotalTransactions = 0;
                 _status.CurrentPage = 1;
+                _status.TotalPages = 1;
+
+                var initialRequest = await getTransactions(1);
+                _status.TotalTransactions = initialRequest.Meta.Pagination.Total;
                 _status.TotalPages = initialRequest.Meta.Pagination.Total_pages;
+
                 _ = Task.Run(() => JobTask(getTransactions, initialRequest, _tokenSource.Token, onJobFinish));
             }
             catch
@@ -155,18 +155,19 @@ namespace Firefly_iii_pp_Runner.Services
         {
             try
             {
+                var transactionIds = new List<string>();
+
                 var currentSet = initialRequest;
                 while (true)
                 {
-                    await Task.WhenAll(currentSet.Data.Select(async t =>
-                    {
-                        await UpdateTransaction(t, cancellationToken);
-                        Interlocked.Increment(ref _completedTransactions);
-                    }));
+                    transactionIds.AddRange(currentSet.Data.Select(t => t.Id));
+                    _status.TotalTransactions = transactionIds.Count;
 
-                    _status.CompletedTransactions = _completedTransactions;
                     if (cancellationToken.IsCancellationRequested)
+                    {
+                        _status.State = RunnerState.Stopped;
                         break;
+                    }
                     else if (_status.CurrentPage < _status.TotalPages)
                         _status.CurrentPage++;
                     else
@@ -174,7 +175,21 @@ namespace Firefly_iii_pp_Runner.Services
 
                     currentSet = await getTransactions(_status.CurrentPage);
                 }
+
+                _status.State = RunnerState.RunningTransactions;
+
+                foreach(var page in transactionIds.Paginate(50))
+                {
+                    await Task.WhenAll(page.Select(async id =>
+                    {
+                        var transaction = await _fireflyIII.GetTransaction(id);
+                        await UpdateTransaction(transaction, cancellationToken);
+                        _status.CompletedTransactions++;
+                    }));
+                }
+
                 _status.State = RunnerState.Completed;
+
                 if (onJobFinish != null)
                     await onJobFinish();
             }
@@ -189,9 +204,16 @@ namespace Firefly_iii_pp_Runner.Services
             }
         }
 
+        private bool IsJobRunning()
+        {
+            return !(_status.State == RunnerState.Failed
+                || _status.State == RunnerState.Completed
+                || _status.State == RunnerState.Stopped);
+        }
+
         public RunnerStatus StopJob()
         {
-            if (_status.State == RunnerState.Running)
+            if (IsJobRunning())
             {
                 _tokenSource.Cancel();
                 _status.State = RunnerState.Stopped;

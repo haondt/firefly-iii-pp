@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace FireflyIIIpp.Core.Extensions
 {
-    public static class ListExtensions
+    public static class CollectionExtensions
     {
-        public static int Pages<T>(this List<T> items, int pageSize)
+        public static int Pages<T>(this ICollection<T> items, int pageSize)
         {
             return (items.Count - 1) / pageSize + 1;
         }
 
-        public static List<IEnumerable<T>> Paginate<T>(this List<T> items, int pageSize)
+        public static ICollection<IEnumerable<T>> Paginate<T>(this ICollection<T> items, int pageSize)
         {
             if (items.Count == 0)
                 return new List<IEnumerable<T>>();

@@ -178,13 +178,16 @@ namespace Firefly_iii_pp_Runner.Services
 
                 _status.State = RunnerState.RunningTransactions;
 
-                foreach(var page in transactionIds.Paginate(50))
+                foreach(var page in transactionIds.Paginate(10))
                 {
                     await Task.WhenAll(page.Select(async id =>
                     {
                         var transaction = await _fireflyIII.GetTransaction(id);
                         await UpdateTransaction(transaction, cancellationToken);
-                        _status.CompletedTransactions++;
+                        lock(_status)
+                        {
+                            _status.CompletedTransactions++;
+                        }
                     }));
                 }
 

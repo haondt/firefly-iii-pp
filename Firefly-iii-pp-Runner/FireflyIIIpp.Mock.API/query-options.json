@@ -1,0 +1,117 @@
+[
+  {
+    "operand": "source_account",
+    "viewValue": "Source account",
+    "operators": [
+      {
+        "operator": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "operator": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "operator": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "operand": "destination_account",
+    "viewValue": "Destination account",
+    "operators": [
+      {
+        "operator": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "operator": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "operator": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "operand": "account",
+    "viewValue": "Either account",
+    "operators": [
+      {
+        "operator": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "operator": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "operator": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "operand": "tag",
+    "viewValue": "Tag",
+    "operators": [
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "operator": "is_not",
+        "viewValue": "is not",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "operand": "date",
+    "viewValue": "Date",
+    "operators": [
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "date"
+      },
+      {
+        "operator": "before",
+        "viewValue": "is before",
+        "type": "date"
+      },
+      {
+        "operator": "after",
+        "viewValue": "is after",
+        "type": "date"
+      }
+    ]
+  }
+]

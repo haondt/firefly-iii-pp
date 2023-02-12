@@ -66,6 +66,7 @@ Once the rules are created and regression tested, this project also includes a t
 - Start api
     - Open up `Firefly-iii-pp-Runner` in Visual studio
     - Start `Firefly-iii-pp-Runner.API` with `Docker` launch settings. It will create a docker container. Check in docker desktop to see which port it is assigned.
+    - Optionally, you can run `FireflyIIIpp.Mock.API` instead. It will mock all the external services (except Thunder Client). Good for testing UI changes.
 - Start UI
     - Check `pp-frontend/pp-frontend/src/environments/environment.ts` to make sure the api url matches that of the api, port included.
     - Run the app. Me personally I have better luck doing this in powershell than wsl

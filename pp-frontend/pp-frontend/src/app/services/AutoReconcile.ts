@@ -4,17 +4,19 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { ServiceResponseModel } from "../models/ServiceResponse";
 import { HttpClientWrapper } from "../utils/wrappers/HttpClient";
+import { AutoReconcileRequestDto } from "../models/dtos/AutoReconcileRequest";
+import { AutoReconcileDryRunResponseDto } from "../models/dtos/AutoReconcileDryRunResponse";
 
 @Injectable({
     providedIn: 'root'
 })
-export class FireflyIIIService {
+export class AutoReconcileService {
     private client: HttpClientWrapper = new HttpClientWrapper(this.httpClient, environment.API_HOST);
     constructor(private httpClient: HttpClient) {
     }
 
-    getTransactionData(id: string): Observable<ServiceResponseModel<Object>> {
-        return this.client.get(`/firefly_iii/transactions/${id}`);
+    dryRun(requestDto: AutoReconcileRequestDto): Observable<ServiceResponseModel<AutoReconcileDryRunResponseDto>> {
+        return this.client.post('/auto-reconcile/dry-run/', requestDto);
     }
 
 }

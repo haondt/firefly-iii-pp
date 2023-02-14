@@ -9,6 +9,7 @@ import { ServiceResponseModel } from '../models/ServiceResponse';
 import { FireflyIIIService } from '../services/FireflyIII';
 import { RunnerService } from '../services/Runner';
 import queryOptionsJson from '../../assets/queryOptions.json';
+import { checkResult } from '../utils/ObservableUtils';
 
 @Component({
   selector: 'app-firefly-iii-pp',
@@ -41,21 +42,19 @@ export class FireflyIIIPPComponent {
 
   initData() {
     this.busy = true;
-    this.runnerService.getStatus().subscribe(res => {
-      try {
-        if (res.success) {
-          this.status = res.body!;
+    this.runnerService.getStatus().subscribe(checkResult<RunnerStateDto>({
+      success: s => {
+          this.status = s;
           if (this.status.state === "running" || this.status.state === "getting-transactions") {
             this.startRefreshTimer();
           }
-        } else {
-          this.status = undefined;
-          this.showSnackError(res.error);
-        }
-      } finally {
-        this.busy = false;
-      }
-    });
+      },
+      fail: e => {
+        this.status = undefined;
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
   }
 
   showSnackError(error?: string) {
@@ -74,18 +73,14 @@ export class FireflyIIIPPComponent {
       return;
     }
     this.busy = true;
-    this.runnerService.stopJob().subscribe(res => {
-      try {
-        if (res.success) {
-          this.status = res.body;
-        } else {
-          this.status = undefined;
-          this.showSnackError(res.error);
-        }
-      } finally {
-        this.busy = false;
-      }
-    });
+    this.runnerService.stopJob().subscribe(checkResult<RunnerStateDto>({
+      success: s => this.status = s,
+      fail: e => {
+        this.status = undefined;
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
   }
 
   _refreshStatus() {
@@ -93,18 +88,14 @@ export class FireflyIIIPPComponent {
       return;
     }
     this.busy = true;
-    this.runnerService.getStatus().subscribe(res => {
-      try {
-        if (res.success) {
-          this.status = res.body!;
-        } else {
-          this.status = undefined;
-          this.showSnackError(res.error);
-        }
-      } finally {
-        this.busy = false;
-      }
-    });
+    this.runnerService.getStatus().subscribe(checkResult<RunnerStateDto>({
+      success: s => this.status = s,
+      fail: e => {
+        this.status = undefined;
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
   }
 
   startRefreshTimer() {
@@ -196,18 +187,14 @@ export class FireflyIIIPPComponent {
     this.busy = true;
     this.runnerService.dryRunJob({
       operations: this.queryOperations.map(op => op.queryOperation)
-    }).subscribe(res => {
-      try {
-        if (res.success) {
-          this.dryRunResponse = res.body!;
-        } else {
-          this.status = undefined;
-          this.showSnackError(res.error);
-        }
-      } finally {
-        this.busy = false;
-      }
-    });
+    }).subscribe(checkResult<DryRunResponseDto>({
+      success: r => this.dryRunResponse = r,
+      fail: e => {
+        this.status = undefined;
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
   }
 
   formatDryRunSample(sample: Object) {

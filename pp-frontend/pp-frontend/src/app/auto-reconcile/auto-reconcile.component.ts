@@ -13,6 +13,7 @@ import { FireflyIIIService } from '../services/FireflyIII';
 import { RunnerService } from '../services/Runner';
 
 import requestOptions from '../../assets/autoReconcileRequestOptions.json';
+import { AutoReconcileService } from '../services/AutoReconcile';
 
 interface QueryOperatorModel {
   viewValue: string,
@@ -54,7 +55,7 @@ export class AutoReconcileComponent {
 
   dryRunResponseDto: AutoReconcileDryRunResponseDto|null = null;
 
-  constructor(private fireflyIIIService: FireflyIIIService,
+  constructor(private autoReconcileService: AutoReconcileService,
         private snackBar: MatSnackBar) {
     this.initData();
   }

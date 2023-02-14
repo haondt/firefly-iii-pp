@@ -9,6 +9,8 @@ const routes: Routes = [
     import('./firefly-iii-pp/firefly-iii-pp.module').then(m => m.FireflyIIIPPModule)},
   { path: 'node-red', loadChildren: () =>
     import('./node-red/node-red.module').then(m => m.NodeRedModule)},
+  { path: 'auto-reconcile', loadChildren: () =>
+    import('./auto-reconcile/auto-reconcile.module').then(m => m.AutoReconcileModule)},
 ];
 
 @NgModule({

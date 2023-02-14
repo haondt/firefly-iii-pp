@@ -1,0 +1,84 @@
+<div class="content-container">
+    <div class="content">
+        <mat-card class="content-card">
+            <div class="content-row">
+                <h3>Filter Source Transactions</h3>
+            </div>
+            <div class="content-row">
+                <app-query-builder [queryOperations]="sourceQueryOperations"></app-query-builder>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-row">
+                <h3>Filter Destination Transactions</h3>
+            </div>
+            <div class="content-row">
+                <app-query-builder [queryOperations]="destinationQueryOperations"></app-query-builder>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-row">
+                <h3>Configure Pairing Strategy</h3>
+            </div>
+            <div class="content-row">
+                <mat-checkbox [(ngModel)]="requestDto.pairingStrategy.requireMatchingDescriptions">Require matching descriptions</mat-checkbox>
+                <mat-checkbox [(ngModel)]="requestDto.pairingStrategy.requireMatchingDates">Require matching dates</mat-checkbox>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-row">
+                <h3>Configure Joining Strategy</h3>
+            </div>
+            <div class="content-row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Description</mat-label>
+                    <mat-select [(value)]="requestDto.joiningStrategy.descriptionJoinStrategy">
+                        <mat-option *ngFor="let option of requestOptions.joiningStrategyOptions.descriptionJoinStrategyOptions" [value]="option.option">{{ option.viewValue }}</mat-option>
+                    </mat-select>
+                    <mat-hint>Description joining strategy</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Date</mat-label>
+                    <mat-select [(value)]="requestDto.joiningStrategy.dateJoinStrategy">
+                        <mat-option *ngFor="let option of requestOptions.joiningStrategyOptions.dateJoinStrategyOptions" [value]="option.option">{{ option.viewValue }}</mat-option>
+                    </mat-select>
+                    <mat-hint>Date joining strategy</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Category</mat-label>
+                    <mat-select [(value)]="requestDto.joiningStrategy.categoryJoinStrategy">
+                        <mat-option *ngFor="let option of requestOptions.joiningStrategyOptions.categoryJoinStrategyOptions" [value]="option.option">{{ option.viewValue }}</mat-option>
+                    </mat-select>
+                    <mat-hint>Category joining strategy</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Notes</mat-label>
+                    <mat-select [(value)]="requestDto.joiningStrategy.notesJoinStrategy">
+                        <mat-option *ngFor="let option of requestOptions.joiningStrategyOptions.notesJoinStrategyOptions" [value]="option.option">{{ option.viewValue }}</mat-option>
+                    </mat-select>
+                    <mat-hint>Notes joining strategy</mat-hint>
+                </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-row">
+                <button color="primary" (click)="dryRun()" mat-raised-button>Dry Run</button>
+                <button color="accent" mat-raised-button>Start Job</button>
+            </div>
+            <table class="pair-table" *ngIf="dryRunResponseDto">
+                <tr>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                </tr>
+                <tr *ngFor="let transfer of dryRunResponseDto.transfers">
+                    <td>{{ transfer.source }}</td>
+                    <td>{{ transfer.destination }}</td>
+                    <td>{{ transfer.description }}</td>
+                    <td>{{ formatAmount(transfer.amount) }}</td>
+                    <td>{{ formatDate(transfer.date) }}</td>
+                    <td>{{ transfer.category }}</td>
+                </tr>
+            </table>
+        </mat-card>
+    </div>
+</div>

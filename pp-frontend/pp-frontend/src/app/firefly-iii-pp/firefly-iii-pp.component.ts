@@ -6,6 +6,7 @@ import { QueryOptionDto } from '../models/dtos/QueryOption';
 import { RunnerStateDto } from '../models/dtos/RunnerState';
 import { QueryOperationModel } from '../models/QueryOperation';
 import { ServiceResponseModel } from '../models/ServiceResponse';
+import { FireflyIIIService } from '../services/FireflyIII';
 import { RunnerService } from '../services/Runner';
 
 interface QueryOperatorModel {
@@ -42,6 +43,7 @@ export class FireflyIIIPPComponent {
   dryRunResponse: DryRunResponseDto | null = null;
 
   constructor(private runnerService: RunnerService,
+      private fireflyIIIService: FireflyIIIService,
         private snackBar: MatSnackBar) {
     this.initData();
   }
@@ -50,7 +52,7 @@ export class FireflyIIIPPComponent {
     this.busy = true;
     let gettingQueryOptions = true;
     let gettingStatus = true;
-    this.runnerService.getQueryOptions().subscribe(res => {
+    this.fireflyIIIService.getQueryOptions().subscribe(res => {
       try {
         if (res.success) {
           this.queryOptions = res.body!;

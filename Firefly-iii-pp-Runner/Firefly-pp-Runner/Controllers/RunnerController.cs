@@ -58,26 +58,6 @@ namespace Firefly_iii_pp_Runner.Controllers
             });
         }
 
-        [HttpGet]
-        [Route("query-options")]
-        public async Task<IActionResult> GetQueryOptions()
-        {
-            var path = "query-options.json";
-
-            if (!System.IO.File.Exists(path))
-                throw new Exception($"File does not exist: {path}");
-            using var reader = new StreamReader(path, new FileStreamOptions
-            {
-                Access = FileAccess.Read,
-                BufferSize = 4096, 
-                Mode = FileMode.Open,
-                Options = FileOptions.Asynchronous | FileOptions.SequentialScan
-            });
-
-            var text = await reader.ReadToEndAsync();
-            return Content(text, MediaTypeNames.Application.Json);
-        }
-
         [HttpPost]
         [Route("single")]
         public async Task<IActionResult> StartSingleJob([FromBody] RunnerSingleDto dto)

@@ -10,12 +10,6 @@ import { FireflyIIIService } from '../services/FireflyIII';
 import { RunnerService } from '../services/Runner';
 import queryOptionsJson from '../../assets/queryOptions.json';
 
-interface QueryOperatorModel {
-  viewValue: string,
-  operator: string,
-  type: string
-}
-
 @Component({
   selector: 'app-firefly-iii-pp',
   templateUrl: './firefly-iii-pp.component.html',
@@ -35,10 +29,6 @@ export class FireflyIIIPPComponent {
   startDate: Date | null = null;
   endDate: Date | null = null;
 
-  queryOperand: QueryOptionDto | null = null;
-  queryOperatorOptions: QueryOperatorModel[] = [];
-  queryOperator: QueryOperatorModel | null = null;
-  queryResult: any;
   queryOperations: { viewValue: string, queryOperation: QueryOperationModel }[] = [];
 
   dryRunResponse: DryRunResponseDto | null = null;
@@ -154,54 +144,6 @@ export class FireflyIIIPPComponent {
     this.startDate = null;
     this.endDate = null;
     this.queryOperations = [];
-    this.queryOperand = null;
-    this.queryOperatorOptions = [];
-    this.queryOperator = null;
-    this.queryResult = undefined;
-  }
-
-  changeQueryOperand() {
-    this.queryOperatorOptions = this.queryOperand?.operators ?? [];
-
-    // reset
-    this.queryOperator = null;
-    this.queryResult = undefined;
-  }
-
-  changeQueryOperator() {
-    this.queryResult = null;
-  }
-
-  addQueryOperation() {
-    if (this.queryOperand && this.queryOperator && this.queryResult) {
-      let operation = {
-        viewValue: `${this.queryOperand.viewValue} ${this.queryOperator.viewValue}`,
-        queryOperation: {
-          operand: this.queryOperand.operand,
-          operator: this.queryOperator.operator,
-          result: ""
-        }
-      };
-
-      if (this.queryOperator.type === "string") {
-        operation.queryOperation.result = <string>this.queryResult;
-        operation.viewValue += " " + operation.queryOperation.result;
-        this.queryOperations.push(operation);
-      } else if (this.queryOperator.type === "date") {
-        operation.queryOperation.result = (<Date>this.queryResult).toISOString();
-        operation.viewValue += " " + (<Date>this.queryResult).toLocaleDateString('en-CA');
-        this.queryOperations.push(operation);
-      } else {
-        this.showSnackError(`Unable to add query operator type ${this.queryOperator.type}`);
-      }
-    }
-  }
-
-  removeQueryOperation(event: { viewValue: string, queryOperation: QueryOperationModel }) {
-    const i = this.queryOperations.indexOf(event);
-    if (i >= 0) {
-      this.queryOperations.splice(i, 1);
-    }
   }
 
   startJob() {

@@ -1,5 +1,6 @@
 ﻿using Firefly_iii_pp_Runner.Services;
 using Firefly_iii_pp_Runner.Settings;
+using Firefly_pp_Runner.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,7 @@ namespace Firefly_iii_pp_Runner.Extensions
 
             services.AddSingleton<JobManager>();
             services.AddSingleton<ThunderClientEditorService>();
+            services.AddSingleton<AutoReconcileService>();
 
             return services;
         }

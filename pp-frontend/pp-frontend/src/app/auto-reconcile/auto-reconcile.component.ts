@@ -39,7 +39,8 @@ export class AutoReconcileComponent {
     destinationQueryOperations: [],
     pairingStrategy: {
       requireMatchingDescriptions: false,
-      requireMatchingDates: false
+      requireMatchingDates: false,
+      dateMatchToleranceInDays: 0
     },
     joiningStrategy: {
       descriptionJoinStrategy: null,
@@ -90,6 +91,7 @@ export class AutoReconcileComponent {
   }
 
   dryRun() {
+    console.log(this.requestDto);
   }
 
   formatAmount(amount: number) {
@@ -98,6 +100,14 @@ export class AutoReconcileComponent {
 
   formatDate(date: string) {
     return "TODO";
+  }
+
+  fixDateMatchTolerance() {
+    let v = this.requestDto.pairingStrategy.dateMatchToleranceInDays;
+    v = Math.max(0, v);
+    v = Math.min(14, v);
+    v = Math.floor(v);
+    this.requestDto.pairingStrategy.dateMatchToleranceInDays = v;
   }
 
 }

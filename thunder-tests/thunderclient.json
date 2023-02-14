@@ -371,5 +371,24 @@
         "custom": "json.description"
       }
     ]
+  },
+  {
+    "_id": "99a963c5-decf-4a44-91ce-e9fe55daf333",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "7be0ddc2-c7cf-4811-8626-a1d1ab95f9a0",
+    "name": "Dry Run",
+    "url": "{{base_url}}/auto-reconcile/dry-run",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-02-14T13:49:18.338Z",
+    "modified": "2023-02-14T13:57:27.834Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"sourceQueryOperations\": [\n    {\n      \"operand\": \"destination_account\",\n      \"operator\": \"is\",\n      \"result\": \"(no name)\"\n    }\n  ],\n  \"destinationQueryOperations\": [\n    {\n      \"operand\": \"source_account\",\n      \"operator\": \"is\",\n      \"result\": \"(no name)\"\n    }\n  ],\n  \"pairingStrategy\": {\n    \"requireMatchingDescriptions\": false,\n    \"requireMatchingDates\": true,\n    \"dateMatchToleranceInDays\": 7\n  },\n  \"joiningStrategy\": {\n    \"descriptionJoinStrategy\": \"concatenate\",\n    \"dateJoinStrategy\": \"average\",\n    \"categoryJoinStrategy\": \"clear\",\n    \"notesJoinStrategy\": \"concatenate\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

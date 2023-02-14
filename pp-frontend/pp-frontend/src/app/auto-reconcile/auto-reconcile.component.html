@@ -20,7 +20,14 @@
             </div>
             <div class="content-row">
                 <mat-checkbox [(ngModel)]="requestDto.pairingStrategy.requireMatchingDescriptions">Require matching descriptions</mat-checkbox>
+            </div>
+            <div class="content-row">
                 <mat-checkbox [(ngModel)]="requestDto.pairingStrategy.requireMatchingDates">Require matching dates</mat-checkbox>
+                <mat-form-field appearance="fill" *ngIf="requestDto.pairingStrategy.requireMatchingDates">
+                    <mat-label>Date Match Tolerance</mat-label>
+                    <input matInput type="number" [(ngModel)]="requestDto.pairingStrategy.dateMatchToleranceInDays" (blur)="fixDateMatchTolerance()">
+                    <mat-hint>Value in days</mat-hint>
+                </mat-form-field>
             </div>
             <mat-divider></mat-divider>
             <div class="content-row">

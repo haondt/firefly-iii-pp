@@ -2,7 +2,8 @@ import { QueryOperationModel } from "../QueryOperation";
 
 export interface AutoReconcilePairingStrategyDto {
     requireMatchingDescriptions: boolean,
-    requireMatchingDates: boolean
+    requireMatchingDates: boolean,
+    dateMatchToleranceInDays: number
 };
 
 export interface AutoReconcileJoiningStrategyDto {

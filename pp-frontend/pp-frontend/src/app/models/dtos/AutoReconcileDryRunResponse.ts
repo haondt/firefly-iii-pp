@@ -5,6 +5,7 @@ export interface AutoReconcileDryRunTransferDto {
     amount: number,
     date: string,
     category: string,
+    notes: string,
     warning: string|null
 };
 

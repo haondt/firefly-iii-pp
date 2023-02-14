@@ -1,0 +1,64 @@
+{
+    "joiningStrategyOptions": {
+        "descriptionJoinStrategyOptions": [
+            {
+                "viewValue": "Use Source",
+                "option": "source"
+            },
+            {
+                "viewValue": "Use Destination",
+                "option": "destination"
+            },
+            {
+                "viewValue": "Concatenate",
+                "option": "concatenate"
+            }
+        ],
+        "dateJoinStrategyOptions": [
+            {
+                "viewValue": "Use Source",
+                "option": "source"
+            },
+            {
+                "viewValue": "Use Destination",
+                "option": "destination"
+            },
+            {
+                "viewValue": "Take Average",
+                "option": "average"
+            }
+        ],
+        "categoryJoinStrategyOptions": [
+            {
+                "viewValue": "Use Source",
+                "option": "source"
+            },
+            {
+                "viewValue": "Use Destination",
+                "option": "destination"
+            },
+            {
+                "viewValue": "Clear category",
+                "option": "clear"
+            }
+        ],
+        "notesJoinStrategyOptions": [
+            {
+                "viewValue": "Use Source",
+                "option": "source"
+            },
+            {
+                "viewValue": "Use Destination",
+                "option": "destination"
+            },
+            {
+                "viewValue": "Concatenate",
+                "option": "concatenate"
+            },
+            {
+                "viewValue": "Clear notes",
+                "option": "clear"
+            }
+        ]
+    }
+}

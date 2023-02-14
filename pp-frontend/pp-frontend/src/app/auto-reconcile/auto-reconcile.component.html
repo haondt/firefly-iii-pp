@@ -69,6 +69,7 @@
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Category</th>
+                    <th>Warnings</th>
                 </tr>
                 <tr *ngFor="let transfer of dryRunResponseDto.transfers">
                     <td>{{ transfer.source }}</td>
@@ -77,6 +78,7 @@
                     <td>{{ formatAmount(transfer.amount) }}</td>
                     <td>{{ formatDate(transfer.date) }}</td>
                     <td>{{ transfer.category }}</td>
+                    <td *ngIf="transfer.warning">{{ transfer.warning }}</td>
                 </tr>
             </table>
         </mat-card>

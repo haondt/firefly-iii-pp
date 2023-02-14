@@ -4,7 +4,8 @@ export interface AutoReconcileDryRunTransferDto {
     description: string,
     amount: number,
     date: string,
-    category: string
+    category: string,
+    warning: string|null
 };
 
 export interface AutoReconcileDryRunResponseDto {

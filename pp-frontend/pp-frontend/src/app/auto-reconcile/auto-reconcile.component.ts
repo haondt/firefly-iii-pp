@@ -12,6 +12,8 @@ import { ServiceResponseModel } from '../models/ServiceResponse';
 import { FireflyIIIService } from '../services/FireflyIII';
 import { RunnerService } from '../services/Runner';
 
+import requestOptions from '../../assets/autoReconcileRequestOptions.json';
+
 interface QueryOperatorModel {
   viewValue: string,
   operator: string,
@@ -47,19 +49,16 @@ export class AutoReconcileComponent {
     }
   };
 
-  requestOptions: AutoReconcileRequestOptionsModel = {
-    joiningStrategyOptions: {
-      descriptionJoinStrategyOptions: [],
-      dateJoinStrategyOptions: [],
-      categoryJoinStrategyOptions: [],
-      notesJoinStrategyOptions: []
-    }
-  };
+  requestOptions: AutoReconcileRequestOptionsModel = Object.assign({}, requestOptions);
 
   dryRunResponseDto: AutoReconcileDryRunResponseDto|null = null;
 
   constructor(private fireflyIIIService: FireflyIIIService,
         private snackBar: MatSnackBar) {
+    this.initData();
+  }
+
+  initData() {
     this.destinationQueryOperations = [{
       viewValue: "Source account is (no name)",
       queryOperation: {
@@ -77,9 +76,11 @@ export class AutoReconcileComponent {
         result: "(no name)"
       }
     }];
-  }
 
-  initData() {
+    this.requestDto.joiningStrategy.descriptionJoinStrategy = "concatenate";
+    this.requestDto.joiningStrategy.dateJoinStrategy = "average";
+    this.requestDto.joiningStrategy.categoryJoinStrategy = "clear";
+    this.requestDto.joiningStrategy.notesJoinStrategy = "concatenate";
   }
 
   showSnackError(error?: string) {

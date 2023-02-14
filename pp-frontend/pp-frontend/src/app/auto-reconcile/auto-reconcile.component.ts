@@ -16,6 +16,7 @@ import requestOptions from '../../assets/autoReconcileRequestOptions.json';
 import { AutoReconcileService } from '../services/AutoReconcile';
 import { checkResult } from '../utils/ObservableUtils';
 import { CurrencyPipe } from '@angular/common';
+import { AutoReconcileStateDto } from '../models/dtos/AutoReconcileState';
 
 interface QueryOperatorModel {
   viewValue: string,
@@ -56,6 +57,10 @@ export class AutoReconcileComponent {
   requestOptions: AutoReconcileRequestOptionsModel = Object.assign({}, requestOptions);
 
   dryRunResponseDto: AutoReconcileDryRunResponseDto|null = null;
+
+  busy: boolean = false;
+  running: boolean = false;
+  status: AutoReconcileStateDto|undefined;
 
   constructor(private autoReconcileService: AutoReconcileService,
         private snackBar: MatSnackBar,
@@ -101,11 +106,14 @@ export class AutoReconcileComponent {
 
   dryRun() {
     this.prepareRequestDto();
+    if (!this.busy) {
+      this.busy = true;
+    }
     this.autoReconcileService.dryRun(this.requestDto)
       .subscribe(checkResult<AutoReconcileDryRunResponseDto>({
         success: r => this.dryRunResponseDto = r,
         fail: e => this.showSnackError(e),
-        finally: () => {}
+        finally: () => this.busy = false
       }));
   }
 

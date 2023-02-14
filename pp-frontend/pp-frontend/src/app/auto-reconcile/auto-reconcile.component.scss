@@ -12,13 +12,12 @@
     gap: 10px;
 }
 
-.content-card {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-right: 20px;
-    padding-left: 20px;
-    gap: 15px;
+.accordion-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
+
 
 .content-row {
     display: flex;
@@ -70,4 +69,11 @@ table.pair-table > tr {
 }
 table.pair-table > tr:last-child {
     border-bottom: none;
+}
+
+.busy-progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #303030;
 }

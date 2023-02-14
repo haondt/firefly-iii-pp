@@ -1,4 +1,4 @@
-<mat-progress-bar class="busy-progress-bar" color="accent" *ngIf="busy" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar class="busy-progress-bar" color="primary" *ngIf="busy" mode="indeterminate"></mat-progress-bar>
     <div class="progress-bar-gap" *ngIf="!busy"></div>
     <div class="content-container">
         <div class="content">
@@ -6,7 +6,8 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title class="accordion-panel-title">
-                            <mat-spinner *ngIf="status && (status.state === 'running' || status.state === 'getting-transactions')" diameter="25" color="accent" class="test-spinner"></mat-spinner>
+                            <mat-spinner *ngIf="status && status.state === 'getting-transactions'" diameter="25" color="accent" class="test-spinner"></mat-spinner>
+                            <mat-spinner *ngIf="status && status.state === 'running'" diameter="25" color="accent" class="test-spinner" mode="determinate" [value]="getProgress()"></mat-spinner>
                             Status
                         </mat-panel-title>
                         <mat-panel-description>
@@ -15,12 +16,14 @@
                     </mat-expansion-panel-header>
                     <div class="pp-accordion-content">
                         <div class="pp-accordion-content-row">
-                            <mat-progress-bar *ngIf="status?.state === 'running' || status?.state === 'getting-transactions'" mode="determinate" [value]="getProgress()"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="status?.state === 'running' || status?.state === 'getting-transactions'" color="accent" mode="determinate" [value]="getProgress()"></mat-progress-bar>
                         </div>
                         <div class="pp-accordion-content-row">
+                            <button color="accent" (click)="startJob()" mat-raised-button>Start Job</button>
                             <button color="primary" (click)="refreshStatus()" mat-raised-button>Refresh Status</button>
                             <button color="warn" (click)="stopJob()" mat-raised-button>Stop Job</button>
                         </div>
+                        <mat-divider *ngIf="status"></mat-divider>
                         <div *ngIf="status" class="pp-accordion-content-row">
                             <table class="status-table">
                                 <tr><td>State:</td><td class="state-attribute"
@@ -31,17 +34,57 @@
                                     [class.state-running]="status.state === 'running'">
                                     <span>{{ status.state }}</span>
                                 </td></tr>
+                                <tr><td>Total transactions:</td><td class="state-attribute">
+                                    <span>{{ status.totalTransactions }}</span>
+                                </td></tr>
+                                <tr><td>Queued transactions:</td><td class="state-attribute">
+                                    <span>{{ status.queuedTransactions }}</span>
+                                </td></tr>
+                                <tr><td>Completed transactions:</td><td class="state-attribute">
+                                    <span>{{ status.completedTransactions }}</span>
+                                </td></tr>
                                 <tr><td>Current page:</td><td class="state-attribute">
                                     <span>{{ status.currentPage }}</span>
                                 </td></tr>
                                 <tr><td>Total pages:</td><td class="state-attribute">
                                     <span>{{ status.totalPages }}</span>
                                 </td></tr>
-                                <tr><td>Completed transactions:</td><td class="state-attribute">
-                                    <span>{{ status.completedTransactions }}</span>
+                            </table>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Dry Run
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Dry run a new job
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="pp-accordion-content">
+                        <div class="pp-accordion-content-row">
+                            <button color="primary" (click)="dryRunJob()" mat-raised-button>Dry Run Query</button>
+                        </div>
+                        <mat-divider *ngIf="dryRunResponse"></mat-divider>
+                        <div *ngIf="dryRunResponse" class="pp-accordion-content-row">
+                            <table class="dry-run-response-table">
+                                <tr><td>Operations:</td><td class="dry-run-attribute">
+                                    <span *ngFor="let op of dryRunResponse.operations">
+                                        {{ op.operand }}_{{ op.operator }}:{{ op.result }}
+                                    </span>
                                 </td></tr>
-                                <tr><td>Total transactions:</td><td class="state-attribute">
-                                    <span>{{ status.totalTransactions }}</span>
+                                <tr><td>Query:</td><td class="dry-run-attribute">
+                                    <span *ngIf="dryRunResponse?.query">{{ dryRunResponse.query }}</span>
+                                </td></tr>
+                                <tr><td>Total transactions:</td><td class="dry-run-attribute">
+                                    <span>{{ dryRunResponse.totalTransactions }}</span>
+                                </td></tr>
+                                <tr><td>Total pages:</td><td class="dry-run-attribute">
+                                    <span>{{ dryRunResponse.totalPages }}</span>
+                                </td></tr>
+                                <tr><td>Sample:</td><td class="dry-run-attribute">
+                                    <div *ngIf="dryRunResponse?.sample" class="dry-run-sample">{{ formatDryRunSample(dryRunResponse.sample) }}</div>
                                 </td></tr>
                             </table>
                         </div>
@@ -87,44 +130,6 @@
                         </div>
                         <div *ngIf="jobType === 'query'" class="pp-accordion-content-row">
                             <app-query-builder [queryOperations]="queryOperations"></app-query-builder>
-                        </div>
-                    </div>
-                </mat-expansion-panel>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Run
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            Start or dry run a new job
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <div class="pp-accordion-content">
-                        <div class="pp-accordion-content-row">
-                            <button color="primary" (click)="dryRunJob()" mat-raised-button>Dry Run Query</button>
-                            <button color="accent" (click)="startJob()" mat-raised-button>Start Job</button>
-                        </div>
-                        <mat-divider *ngIf="dryRunResponse"></mat-divider>
-                        <div *ngIf="dryRunResponse" class="pp-accordion-content-row">
-                            <table class="dry-run-response-table">
-                                <tr><td>Operations:</td><td class="dry-run-attribute">
-                                    <span *ngFor="let op of dryRunResponse.operations">
-                                        {{ op.operand }}_{{ op.operator }}:{{ op.result }}
-                                    </span>
-                                </td></tr>
-                                <tr><td>Query:</td><td class="dry-run-attribute">
-                                    <span *ngIf="dryRunResponse?.query">{{ dryRunResponse.query }}</span>
-                                </td></tr>
-                                <tr><td>Total transactions:</td><td class="dry-run-attribute">
-                                    <span>{{ dryRunResponse.totalTransactions }}</span>
-                                </td></tr>
-                                <tr><td>Total pages:</td><td class="dry-run-attribute">
-                                    <span>{{ dryRunResponse.totalPages }}</span>
-                                </td></tr>
-                                <tr><td>Sample:</td><td class="dry-run-attribute">
-                                    <div *ngIf="dryRunResponse?.sample" class="dry-run-sample">{{ formatDryRunSample(dryRunResponse.sample) }}</div>
-                                </td></tr>
-                            </table>
                         </div>
                     </div>
                 </mat-expansion-panel>

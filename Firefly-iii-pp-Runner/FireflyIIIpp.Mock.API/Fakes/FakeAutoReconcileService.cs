@@ -7,12 +7,13 @@ namespace FireflyIIIpp.Mock.API.Fakes
 {
     public class FakeAutoReconcileService : IAutoReconcileService
     {
-        public Task<AutoReconcileDryRunResponseDto> DryRun(AutoReconcileRequestDto dto)
+        public async Task<AutoReconcileDryRunResponseDto> DryRun(AutoReconcileRequestDto dto)
         {
-            return Task.FromResult(new AutoReconcileDryRunResponseDto
+            await Task.Delay(1000);
+            return new AutoReconcileDryRunResponseDto
             {
                 Transfers = GenerateTransferData()
-            });
+            };
         }
 
         private List<AutoReconcileTransfer> GenerateTransferData()

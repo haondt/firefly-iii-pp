@@ -7,9 +7,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,15 +33,16 @@ import { QueryBuilderModule } from '../utils/Modules/QueryBuilder/query-builder.
         MatNativeDateModule,
         MatDatepickerModule,
         MatCheckboxModule,
-        MatCardModule,
         MatIconModule,
-        MatSliderModule,
         FormsModule,
         MatSelectModule,
         MatTooltipModule,
         MatFormFieldModule,
         ReactiveFormsModule,
-        QueryBuilderModule
+        MatExpansionModule,
+        QueryBuilderModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
     ],
     declarations: [
         AutoReconcileComponent

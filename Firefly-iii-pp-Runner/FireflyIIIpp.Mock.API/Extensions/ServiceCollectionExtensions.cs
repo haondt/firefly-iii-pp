@@ -2,6 +2,7 @@
 using FireflyIIIpp.Mock.API.Fakes;
 using FireflyIIIpp.Mock.API.Settings;
 using FireflyIIIpp.NodeRed.Abstractions;
+using FireflyIIIppRunner.Abstractions;
 
 namespace FireflyIIIpp.Mock.API.Extensions
 {
@@ -11,6 +12,7 @@ namespace FireflyIIIpp.Mock.API.Extensions
         {
             services.AddSingleton<INodeRedService, FakeNodeRedService>();
             services.AddSingleton<IFireflyIIIService, FakeFireflyIIIService>();
+            services.AddSingleton<IAutoReconcileService, FakeAutoReconcileService>();
 
             services.Configure<FakeFireflyIIIServiceSettings>(configuration.GetSection(nameof(FakeFireflyIIIServiceSettings)));
 

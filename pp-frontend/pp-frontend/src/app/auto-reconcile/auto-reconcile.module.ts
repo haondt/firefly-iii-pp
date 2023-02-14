@@ -9,6 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,6 +37,7 @@ import { QueryBuilderModule } from '../utils/Modules/QueryBuilder/query-builder.
         MatSliderModule,
         FormsModule,
         MatSelectModule,
+        MatTooltipModule,
         MatFormFieldModule,
         ReactiveFormsModule,
         QueryBuilderModule

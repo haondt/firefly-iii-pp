@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firefly_pp_Runner.Models.AutoReconcile
+namespace FireflyIIIppRunner.Abstractions.Models
 {
     public class AutoReconcileTransfer
     {

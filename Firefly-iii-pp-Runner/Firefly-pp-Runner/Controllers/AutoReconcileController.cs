@@ -1,7 +1,8 @@
 ﻿using Firefly_iii_pp_Runner.Controllers;
-using Firefly_pp_Runner.Models.AutoReconcile.Dtos;
 using Firefly_pp_Runner.Services;
 using FireflyIIIpp.FireflyIII.Abstractions;
+using FireflyIIIppRunner.Abstractions;
+using FireflyIIIppRunner.Abstractions.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace Firefly_pp_Runner.Controllers
     [Route("api/v1/auto-reconcile")]
     public class AutoReconcileController : BaseController
     {
-        private readonly AutoReconcileService _reconcileService;
+        private readonly IAutoReconcileService _reconcileService;
 
-        public AutoReconcileController(AutoReconcileService reconcileService)
+        public AutoReconcileController(IAutoReconcileService reconcileService)
         {
             _reconcileService = reconcileService;
         }

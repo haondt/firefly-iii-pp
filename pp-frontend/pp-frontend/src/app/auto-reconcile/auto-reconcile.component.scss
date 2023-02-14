@@ -30,3 +30,44 @@
 h3 {
     margin: 0;
 }
+
+.pair-table-container {
+    background: #242424;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 4px;
+}
+
+table.pair-table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.pair-table > tr > th {
+    font-weight: normal;
+}
+
+table.pair-table > tr > td {
+    text-align: center;
+}
+
+table.pair-table > tr > td > .mat-icon {
+    display: block;
+    margin: auto;
+}
+
+table.pair-table > tr > td, table.pair-table > tr > th {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+
+table.pair-table > tr {
+    border-bottom: 1px solid grey;
+}
+table.pair-table > tr:last-child {
+    border-bottom: none;
+}

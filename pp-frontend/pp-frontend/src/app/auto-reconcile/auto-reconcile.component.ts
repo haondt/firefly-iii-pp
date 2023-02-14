@@ -14,6 +14,8 @@ import { RunnerService } from '../services/Runner';
 
 import requestOptions from '../../assets/autoReconcileRequestOptions.json';
 import { AutoReconcileService } from '../services/AutoReconcile';
+import { checkResult } from '../utils/ObservableUtils';
+import { CurrencyPipe } from '@angular/common';
 
 interface QueryOperatorModel {
   viewValue: string,
@@ -56,7 +58,8 @@ export class AutoReconcileComponent {
   dryRunResponseDto: AutoReconcileDryRunResponseDto|null = null;
 
   constructor(private autoReconcileService: AutoReconcileService,
-        private snackBar: MatSnackBar) {
+        private snackBar: MatSnackBar,
+        private currencyPipe: CurrencyPipe) {
     this.initData();
   }
 
@@ -91,16 +94,27 @@ export class AutoReconcileComponent {
     });
   }
 
+  prepareRequestDto() {
+    this.requestDto.sourceQueryOperations = this.sourceQueryOperations.map(o => o.queryOperation);
+    this.requestDto.destinationQueryOperations = this.destinationQueryOperations.map(o => o.queryOperation);
+  }
+
   dryRun() {
-    console.log(this.requestDto);
+    this.prepareRequestDto();
+    this.autoReconcileService.dryRun(this.requestDto)
+      .subscribe(checkResult<AutoReconcileDryRunResponseDto>({
+        success: r => this.dryRunResponseDto = r,
+        fail: e => this.showSnackError(e),
+        finally: () => {}
+      }));
   }
 
   formatAmount(amount: number) {
-    return "TODO";
+    return this.currencyPipe.transform(amount, "$");
   }
 
   formatDate(date: string) {
-    return "TODO";
+    return new Date(date).toLocaleDateString('en-CA');
   }
 
   fixDateMatchTolerance() {

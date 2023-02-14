@@ -1,9 +1,10 @@
-﻿using Firefly_pp_Runner.Models.AutoReconcile;
-using Firefly_pp_Runner.Models.AutoReconcile.Dtos;
-using Firefly_pp_Runner.Models.AutoReconcile.Enums;
-using FireflyIIIpp.Core.Models;
+﻿using FireflyIIIpp.Core.Models;
 using FireflyIIIpp.FireflyIII.Abstractions;
 using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
+using FireflyIIIppRunner.Abstractions;
+using FireflyIIIppRunner.Abstractions.Models;
+using FireflyIIIppRunner.Abstractions.Models.Dtos;
+using FireflyIIIppRunner.Abstractions.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Firefly_pp_Runner.Services
 {
-    public class AutoReconcileService
+    public class AutoReconcileService : IAutoReconcileService
     {
         private readonly IFireflyIIIService _fireflyIIIService;
 
@@ -152,7 +153,7 @@ namespace Firefly_pp_Runner.Services
             };
         }
 
-        public async Task<List<TransactionPartDto>> GetTransactions(List<RunnerQueryOperation> query)
+        private async Task<List<TransactionPartDto>> GetTransactions(List<RunnerQueryOperation> query)
         {
             var currentSet = await _fireflyIIIService.GetTransactions(query, 1);
             if (currentSet.Data.Count == 0)

@@ -14,6 +14,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,7 +41,8 @@ import { MatSelectModule } from '@angular/material/select';
         MatSnackBarModule,
         MatButtonModule,
         MatInputModule,
-        MatDividerModule
+        MatDividerModule,
+        MatTooltipModule
     ],
     declarations: [
         ThunderComponent,

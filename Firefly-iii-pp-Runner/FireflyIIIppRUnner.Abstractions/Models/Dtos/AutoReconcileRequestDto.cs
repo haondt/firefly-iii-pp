@@ -1,12 +1,12 @@
-﻿using Firefly_pp_Runner.Models.AutoReconcile.Enums;
-using FireflyIIIpp.Core.Models;
+﻿using FireflyIIIpp.Core.Models;
+using FireflyIIIppRunner.Abstractions.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firefly_pp_Runner.Models.AutoReconcile.Dtos
+namespace FireflyIIIppRunner.Abstractions.Models.Dtos
 {
     public class AutoReconcileRequestDto
     {

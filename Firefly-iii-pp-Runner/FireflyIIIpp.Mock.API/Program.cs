@@ -23,8 +23,8 @@ builder.Services.AddCors(o =>
         });
 });
 builder.Services
-    .AddMockFireflyIIIPPServices(builder.Configuration)
-    .AddFireflyIIIPPRunnerServices(builder.Configuration);
+    .AddFireflyIIIPPRunnerServices(builder.Configuration)
+    .AddMockFireflyIIIPPServices(builder.Configuration);
 
 var app = builder.Build();
 

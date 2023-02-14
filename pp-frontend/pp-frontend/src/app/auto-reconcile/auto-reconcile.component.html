@@ -68,26 +68,29 @@
                 <button color="primary" (click)="dryRun()" mat-raised-button>Dry Run</button>
                 <button color="accent" mat-raised-button>Start Job</button>
             </div>
-            <table class="pair-table" *ngIf="dryRunResponseDto">
-                <tr>
-                    <th>Source</th>
-                    <th>Destination</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Warnings</th>
-                </tr>
-                <tr *ngFor="let transfer of dryRunResponseDto.transfers">
-                    <td>{{ transfer.source }}</td>
-                    <td>{{ transfer.destination }}</td>
-                    <td>{{ transfer.description }}</td>
-                    <td>{{ formatAmount(transfer.amount) }}</td>
-                    <td>{{ formatDate(transfer.date) }}</td>
-                    <td>{{ transfer.category }}</td>
-                    <td *ngIf="transfer.warning">{{ transfer.warning }}</td>
-                </tr>
-            </table>
+            <div class="pair-table-container" *ngIf="dryRunResponseDto">
+                <table class="pair-table">
+                    <tr>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Warnings</th>
+                    </tr>
+                    <tr *ngFor="let transfer of dryRunResponseDto.transfers">
+                        <td>{{ transfer.source }}</td>
+                        <td>{{ transfer.destination }}</td>
+                        <td>{{ transfer.description }}</td>
+                        <td>{{ formatAmount(transfer.amount) }}</td>
+                        <td>{{ formatDate(transfer.date) }}</td>
+                        <td>{{ transfer.category }}</td>
+                        <td *ngIf="transfer.warning"><mat-icon [matTooltip]="transfer.warning">info</mat-icon></td>
+                        <td *ngIf="!transfer.warning"></td>
+                    </tr>
+                </table>
+            </div>
         </mat-card>
     </div>
 </div>

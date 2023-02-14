@@ -38,7 +38,7 @@
                         <mat-option *ngFor="let option of filteredFolderNameOptions" [value]="option">{{ option }}</mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <mat-icon matTooltip="Seperate nested directories with a forward slash. Example: Foo/Bar">info</mat-icon>
+                <mat-icon matTooltip="Separate nested directories with a forward slash. Example: Foo/Bar">info</mat-icon>
                 <mat-radio-group [disabled]="working" class="folder-options-radio-group" [(ngModel)]="folderCreationOption">
                     <mat-radio-button value="use-existing-or-create" selected="true">Use Existing Folder If Exists</mat-radio-button>
                     <mat-radio-button value="force-create-new">Create New Folder</mat-radio-button>

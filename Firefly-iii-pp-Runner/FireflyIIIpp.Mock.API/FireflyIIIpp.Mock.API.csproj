@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileRunArguments>-v $(SolutionDir)/../thunder-tests:/thunder</DockerfileRunArguments>
   </PropertyGroup>
 
   <ItemGroup>

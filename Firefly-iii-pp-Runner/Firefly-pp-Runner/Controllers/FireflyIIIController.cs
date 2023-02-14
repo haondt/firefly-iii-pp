@@ -32,26 +32,5 @@ namespace Firefly_iii_pp_Runner.Controllers
             var transactionData = transaction.Attributes.Transactions[0];
             return new OkObjectResult(transactionData);
         }
-
-        [HttpGet]
-        [Route("query-options")]
-        public async Task<IActionResult> GetQueryOptions()
-        {
-            var path = "query-options.json";
-
-            if (!System.IO.File.Exists(path))
-                throw new Exception($"File does not exist: {path}");
-            using var reader = new StreamReader(path, new FileStreamOptions
-            {
-                Access = FileAccess.Read,
-                BufferSize = 4096, 
-                Mode = FileMode.Open,
-                Options = FileOptions.Asynchronous | FileOptions.SequentialScan
-            });
-
-            var text = await reader.ReadToEndAsync();
-            return Content(text, MediaTypeNames.Application.Json);
-        }
-
     }
 }

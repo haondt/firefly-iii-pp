@@ -3,6 +3,7 @@ import { QueryOptionDto } from 'src/app/models/dtos/QueryOption';
 import { QueryOperationModel } from 'src/app/models/QueryOperation';
 import { FireflyIIIService } from 'src/app/services/FireflyIII';
 import { Input, EventEmitter } from '@angular/core';
+import queryOptionsJson from '../../../../assets/queryOptions.json';
 
 interface QueryOperatorModel {
   viewValue: string,
@@ -21,7 +22,7 @@ interface QueryOperationWrapper {
   styleUrls: ['./query-builder.component.scss'],
 })
 export class QueryBuilderComponent {
-  queryOptions: QueryOptionDto[] = [];
+  queryOptions: QueryOptionDto[] = Object.assign([], queryOptionsJson);
 
   queryOperand: QueryOptionDto | null = null;
   queryOperatorOptions: QueryOperatorModel[] = [];
@@ -30,14 +31,6 @@ export class QueryBuilderComponent {
   @Input() queryOperations: QueryOperationWrapper[] = [];
 
   constructor(private fireflyIIIService: FireflyIIIService) {
-    this.fireflyIIIService.getQueryOptions().subscribe(res => {
-        if (res.success) {
-          this.queryOptions = res.body!;
-        } else {
-          this.queryOptions = [];
-          throw new Error(res.error);
-        }
-    });
   }
 
   changeQueryOperand() {

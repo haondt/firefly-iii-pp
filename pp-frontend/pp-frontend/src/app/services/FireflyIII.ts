@@ -40,25 +40,4 @@ export class FireflyIIIService {
         );
     }
 
-    getQueryOptions(): Observable<ServiceResponseModel<QueryOptionDto[]>> {
-        return this.client.get<QueryOptionDto[]>(`${environment.API_HOST}/runner/query-options`, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: r.body!
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                return of({
-                    success: false,
-                    error: e.message
-                });
-            })
-        );
-    }
-
 }

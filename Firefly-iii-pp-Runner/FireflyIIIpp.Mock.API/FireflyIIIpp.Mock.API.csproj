@@ -19,10 +19,4 @@
     <ProjectReference Include="..\FireflyIIIpp.NodeRed.Abstractions\FireflyIIIpp.NodeRed.Abstractions.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="query-options.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>

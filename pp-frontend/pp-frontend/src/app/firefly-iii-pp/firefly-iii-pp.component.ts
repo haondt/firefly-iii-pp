@@ -8,6 +8,7 @@ import { QueryOperationModel } from '../models/QueryOperation';
 import { ServiceResponseModel } from '../models/ServiceResponse';
 import { FireflyIIIService } from '../services/FireflyIII';
 import { RunnerService } from '../services/Runner';
+import queryOptionsJson from '../../assets/queryOptions.json';
 
 interface QueryOperatorModel {
   viewValue: string,
@@ -27,7 +28,7 @@ export class FireflyIIIPPComponent {
   timer: NodeJS.Timer | undefined;
 
   jobType: string = "single";
-  queryOptions: QueryOptionDto[] = [];
+  queryOptions: QueryOptionDto[] = Object.assign([], queryOptionsJson);
 
   singleId: string | null = null;
 
@@ -50,22 +51,6 @@ export class FireflyIIIPPComponent {
 
   initData() {
     this.busy = true;
-    let gettingQueryOptions = true;
-    let gettingStatus = true;
-    this.fireflyIIIService.getQueryOptions().subscribe(res => {
-      try {
-        if (res.success) {
-          this.queryOptions = res.body!;
-        } else {
-          this.queryOptions = [];
-          this.showSnackError(res.error);
-        }
-      } finally {
-        gettingQueryOptions = false;
-        this.busy = gettingStatus;
-      }
-    });
-
     this.runnerService.getStatus().subscribe(res => {
       try {
         if (res.success) {
@@ -78,8 +63,7 @@ export class FireflyIIIPPComponent {
           this.showSnackError(res.error);
         }
       } finally {
-        gettingStatus = false;
-        this.busy = gettingQueryOptions;
+        this.busy = false;
       }
     });
   }

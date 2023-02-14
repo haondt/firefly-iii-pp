@@ -300,20 +300,6 @@
     "tests": []
   },
   {
-    "_id": "88a39134-a9ed-4e33-b921-6aca9cd6dd45",
-    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
-    "containerId": "bc210543-647f-4bb9-83aa-3b7a3fc0cea2",
-    "name": "Get Query Options",
-    "url": "{{base_url}}/runner/query-options",
-    "method": "GET",
-    "sortNum": 210,
-    "created": "2023-02-04T23:05:45.892Z",
-    "modified": "2023-02-04T23:06:07.788Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
     "_id": "5ab6fc60-d0f8-4d20-85f4-a80208d971b7",
     "colId": "ad2c2845-67d0-43b1-8673-6f2dadc0b896",
     "containerId": "47fd1d03-a5f4-4b98-b130-51d35e09f00e",

@@ -4,40 +4,18 @@ import { HttpClient } from "@angular/common/http";
 import { catchError, iif, map, mergeMap, Observable, of, throwError } from "rxjs";
 import { ServiceResponseModel } from "../models/ServiceResponse";
 import { QueryOptionDto } from "../models/dtos/QueryOption";
+import { HttpClientWrapper } from "../utils/wrappers/HttpClient";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FireflyIIIService {
-    constructor(private client: HttpClient) {
+    private client: HttpClientWrapper = new HttpClientWrapper(this.httpClient, environment.API_HOST);
+    constructor(private httpClient: HttpClient) {
     }
 
     getTransactionData(id: string): Observable<ServiceResponseModel<Object>> {
-        return this.client.get(`${environment.API_HOST}/firefly_iii/transactions/${id}`, {
-            responseType: 'json',
-            observe: 'response',
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: <Object>r.body
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                if (e.status === 404){
-                    return of({
-                        success: false,
-                        error: "Transaction not found"
-                    });
-                } else {
-                    return of({
-                        success: false,
-                        error: e.message
-                    });
-                }
-            })
-        );
+        return this.client.get(`/firefly_iii/transactions/${id}`);
     }
 
 }

@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
     imports: [
@@ -25,6 +26,9 @@ import { MatButtonModule } from '@angular/material/button';
         MatChipsModule,
         MatInputModule,
         MatButtonModule
+    ],
+    providers: [
+        CurrencyPipe
     ],
     declarations: [
         QueryBuilderComponent

@@ -86,45 +86,7 @@
                             </mat-form-field>
                         </div>
                         <div *ngIf="jobType === 'query'" class="pp-accordion-content-row">
-                            <mat-form-field class="query-field-select" appearance="fill" class="remove-padding">
-                                <mat-label>Operand</mat-label>
-                                <mat-select [(value)]="queryOperand" (selectionChange)="changeQueryOperand()">
-                                    <mat-option *ngFor="let option of queryOptions" [value]="option">{{ option.viewValue }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field class="query-field-select" appearance="fill" class="remove-padding">
-                                <mat-label>Operator</mat-label>
-                                <mat-select [(value)]="queryOperator" (selectionChange)="changeQueryOperator()">
-                                    <mat-option *ngFor="let option of queryOperatorOptions" [value]="option">{{ option.viewValue }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field *ngIf="queryOperator?.type === 'date'" appearance="fill" class="remove-padding">
-                                <mat-label>Choose a date</mat-label>
-                                <input matInput [(ngModel)]="queryResult" [matDatepicker]="datepicker">
-                                <mat-hint>YYYY-MM-DD</mat-hint>
-                                <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-                                <mat-datepicker #datepicker>
-                                    <mat-datepicker-actions>
-                                        <button mat-button matDatepickerCancel>Cancel</button>
-                                        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                                    </mat-datepicker-actions>
-                                </mat-datepicker>
-                            </mat-form-field>
-                            <mat-form-field *ngIf="queryOperator?.type === 'string'" class="remove-padding">
-                                <mat-label>Result</mat-label>
-                                <input matInput class="query-result-string-input" type="text" [(ngModel)]="queryResult">
-                            </mat-form-field>
-                            <button (click)="addQueryOperation()" mat-stroked-button>Add operation</button>
-                        </div>
-                        <div class="pp-accordion-content-row">
-                            <mat-chip-listbox>
-                                <mat-chip *ngFor="let operation of queryOperations">
-                                    {{ operation.viewValue }}
-                                    <button matChipRemove (click)="removeQueryOperation(operation)">
-                                        <mat-icon>cancel</mat-icon>
-                                    </button>
-                                </mat-chip>
-                            </mat-chip-listbox>
+                            <app-query-builder [queryOperations]="queryOperations"></app-query-builder>
                         </div>
                     </div>
                 </mat-expansion-panel>

@@ -113,5 +113,26 @@
         "type": "date"
       }
     ]
+  },
+  {
+    "operand": "amount",
+    "viewValue": "Amount",
+    "operators": [
+      {
+        "operator": "exactly",
+        "viewValue": "is exactly",
+        "type": "currency"
+      },
+      {
+        "operator": "less",
+        "viewValue": "is less than",
+        "type": "currency"
+      },
+      {
+        "operator": "more",
+        "viewValue": "is more than",
+        "type": "currency"
+      }
+    ]
   }
 ]

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { QueryOptionDto } from 'src/app/models/dtos/QueryOption';
 import { QueryOperationModel } from 'src/app/models/QueryOperation';
 import { FireflyIIIService } from 'src/app/services/FireflyIII';
-import { Input, EventEmitter } from '@angular/core';
 import queryOptionsJson from '../../../../assets/queryOptions.json';
+import { CurrencyPipe } from '@angular/common';
 
 interface QueryOperatorModel {
   viewValue: string,
@@ -30,7 +30,10 @@ export class QueryBuilderComponent {
   queryResult: any;
   @Input() queryOperations: QueryOperationWrapper[] = [];
 
-  constructor(private fireflyIIIService: FireflyIIIService) {
+  formattedAmount: any;
+
+  constructor(private fireflyIIIService: FireflyIIIService,
+    private currencyPipe: CurrencyPipe) {
   }
 
   changeQueryOperand() {
@@ -64,6 +67,10 @@ export class QueryBuilderComponent {
         operation.queryOperation.result = (<Date>this.queryResult).toISOString();
         operation.viewValue += " " + (<Date>this.queryResult).toLocaleDateString('en-CA');
         this.queryOperations.push(operation);
+      } else if (this.queryOperator.type === "currency") {
+        operation.queryOperation.result = (<string>this.queryResult).replace(/[^0-9.]/g, '');
+        operation.viewValue += " " + (<string>this.queryResult);
+        this.queryOperations.push(operation);
       } else {
         throw new Error(`Unable to add query operator type ${this.queryOperator.type}`);
       }
@@ -76,6 +83,16 @@ export class QueryBuilderComponent {
     if (i >= 0) {
       this.queryOperations.splice(i, 1);
     }
+  }
+
+  transformAmount(element: any) {
+    try {
+      this.queryResult = (<string>this.queryResult).replace(/[^0-9.]/g, '');
+      this.queryResult = this.currencyPipe.transform(this.queryResult, "$");
+    } catch {
+      this.queryResult = null;
+    }
+    element.target.value = this.queryResult;
   }
 
 }

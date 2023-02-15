@@ -1,4 +1,4 @@
-export interface AutoReconcileStateDto {
+export interface AutoReconcileStatusDto {
     state: string,
     totalTransfers: number,
     totalSourceTransactions: number,

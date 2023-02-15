@@ -9,6 +9,6 @@ export interface AutoReconcileDryRunTransferDto {
     warning: string|null
 };
 
-export interface AutoReconcileDryRunResponseDto {
+export interface AutoReconcileDryRunResultResponseDto {
     transfers: AutoReconcileDryRunTransferDto[];
 };

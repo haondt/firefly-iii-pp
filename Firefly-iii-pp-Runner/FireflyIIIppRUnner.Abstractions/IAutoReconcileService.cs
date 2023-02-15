@@ -9,6 +9,10 @@ namespace FireflyIIIppRunner.Abstractions
 {
     public interface IAutoReconcileService
     {
-        public Task<AutoReconcileDryRunResponseDto> DryRun(AutoReconcileRequestDto dto);
+        public Task<AutoReconcileStatus> DryRun(AutoReconcileRequestDto dto);
+        public Task<AutoReconcileDryRunResponseDto> GetDryRunResult();
+        public Task<AutoReconcileStatus> Run(AutoReconcileRequestDto dto);
+        public AutoReconcileStatus GetStatus();
+        public AutoReconcileStatus Stop();
     }
 }

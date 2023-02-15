@@ -180,5 +180,28 @@ namespace Firefly_pp_Runner.Services
             return transactions;
         }
 
+        Task<AutoReconcileStatus> IAutoReconcileService.DryRun(AutoReconcileRequestDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AutoReconcileDryRunResponseDto> GetDryRunResult()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AutoReconcileStatus> Run(AutoReconcileRequestDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AutoReconcileStatus GetStatus()
+        {
+            throw new NotImplementedException();
+        }
+        public AutoReconcileStatus Stop()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

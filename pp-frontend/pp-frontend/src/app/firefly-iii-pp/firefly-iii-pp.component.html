@@ -16,7 +16,8 @@
                     </mat-expansion-panel-header>
                     <div class="pp-accordion-content">
                         <div class="pp-accordion-content-row">
-                            <mat-progress-bar *ngIf="status?.state === 'running' || status?.state === 'getting-transactions'" color="accent" mode="determinate" [value]="getProgress()"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="status?.state === 'getting-transactions'" color="accent" mode="query"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="status?.state === 'running'" color="accent" mode="determinate" [value]="getProgress()"></mat-progress-bar>
                         </div>
                         <div class="pp-accordion-content-row">
                             <button color="accent" (click)="startJob()" mat-raised-button>Start Job</button>

@@ -1,10 +1,13 @@
 <mat-progress-bar class="busy-progress-bar" color="primary" *ngIf="busy" mode="indeterminate"></mat-progress-bar>
+<div class="progress-bar-gap" *ngIf="!busy"></div>
 <div class="content-container">
     <div class="content">
         <mat-accordion class="accordion" multi>
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
-                    <mat-panel-title class="accordion-panel-title">
+                    <mat-panel-title class="panel-title">
+                        <mat-spinner *ngIf="status?.state === 'getting-transactions' || status?.state === 'pairing'" diameter="25" color="accent" class="test-spinner"></mat-spinner>
+                        <mat-spinner *ngIf="status?.state === 'running'" diameter="25" mode="determinate" color="accent" class="test-spinner" [value]="getProgress()"></mat-spinner>
                         Status
                     </mat-panel-title>
                     <mat-panel-description>
@@ -13,7 +16,13 @@
                 </mat-expansion-panel-header>
                 <div class="accordion-content">
                     <div class="content-row">
-                        <button color="accent" mat-raised-button>Start Job</button>
+                        <mat-progress-bar *ngIf="status?.state === 'getting-transactions' || status?.state === 'pairing'" mode="query" color="accent"></mat-progress-bar>
+                        <mat-progress-bar *ngIf="status?.state === 'running'" color="accent" mode="determinate" [value]="getProgress()"></mat-progress-bar>
+                    </div>
+                    <div class="content-row">
+                        <button color="accent" (click)="startJob()" mat-raised-button>Start Job</button>
+                        <button color="primary" (click)="refreshStatus()" mat-raised-button>Refresh Status</button>
+                        <button color="warn" (click)="stopJob()" mat-raised-button>Stop Job</button>
                     </div>
                     <mat-divider *ngIf="status"></mat-divider>
                     <div class="content-row" *ngIf="status">

@@ -24,9 +24,37 @@ namespace Firefly_pp_Runner.Controllers
 
         [HttpPost]
         [Route("dry-run")]
-        public async Task<IActionResult> DryRunJob([FromBody] AutoReconcileRequestDto dto)
+        public async Task<IActionResult> StartDryRunJob([FromBody] AutoReconcileRequestDto dto)
         {
             return new OkObjectResult(await _reconcileService.DryRun(dto));
+        }
+
+        [HttpPost]
+        [Route("run")]
+        public async Task<IActionResult> StartJob([FromBody] AutoReconcileRequestDto dto)
+        {
+            return new OkObjectResult(await _reconcileService.Run(dto));
+        }
+
+        [HttpGet]
+        [Route("status")]
+        public IActionResult GetStatus()
+        {
+            return new OkObjectResult(_reconcileService.GetStatus());
+        }
+
+        [HttpGet]
+        [Route("dry-run")]
+        public async Task<IActionResult> GetDryRunResult()
+        {
+            return new OkObjectResult(await _reconcileService.GetDryRunResult());
+        }
+
+        [HttpPost]
+        [Route("stop")]
+        public IActionResult StopJob()
+        {
+            return new OkObjectResult(_reconcileService.Stop());
         }
 
     }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { AutoReconcileJoiningStrategyOptionsModel, AutoReconcileRequestOptionsModel } from '../models/AutoReconcileRequestOptions';
-import { AutoReconcileDryRunResponseDto } from '../models/dtos/AutoReconcileDryRunResponse';
+import { AutoReconcileDryRunResultResponseDto } from '../models/dtos/AutoReconcileDryRunResultResponse';
 import { AutoReconcileRequestDto } from '../models/dtos/AutoReconcileRequest';
 import { DryRunResponseDto } from '../models/dtos/DryRunResponse';
 import { QueryOptionDto } from '../models/dtos/QueryOption';
@@ -16,7 +16,7 @@ import requestOptions from '../../assets/autoReconcileRequestOptions.json';
 import { AutoReconcileService } from '../services/AutoReconcile';
 import { checkResult } from '../utils/ObservableUtils';
 import { CurrencyPipe } from '@angular/common';
-import { AutoReconcileStateDto } from '../models/dtos/AutoReconcileState';
+import { AutoReconcileStatusDto } from '../models/dtos/AutoReconcileStatus';
 
 interface QueryOperatorModel {
   viewValue: string,
@@ -56,11 +56,13 @@ export class AutoReconcileComponent {
 
   requestOptions: AutoReconcileRequestOptionsModel = Object.assign({}, requestOptions);
 
-  dryRunResponseDto: AutoReconcileDryRunResponseDto|null = null;
+  dryRunResponseDto: AutoReconcileDryRunResultResponseDto|null = null;
 
   busy: boolean = false;
   running: boolean = false;
-  status: AutoReconcileStateDto|undefined;
+  status: AutoReconcileStatusDto|undefined;
+  timer: NodeJS.Timer | undefined;
+  waitingForDryRunResult: boolean = false;
 
   constructor(private autoReconcileService: AutoReconcileService,
         private snackBar: MatSnackBar,
@@ -91,6 +93,8 @@ export class AutoReconcileComponent {
     this.requestDto.joiningStrategy.dateJoinStrategy = "average";
     this.requestDto.joiningStrategy.categoryJoinStrategy = "clear";
     this.requestDto.joiningStrategy.notesJoinStrategy = "concatenate";
+
+    this.refreshStatus();
   }
 
   showSnackError(error?: string) {
@@ -99,23 +103,69 @@ export class AutoReconcileComponent {
     });
   }
 
+  isRunning() {
+    return this.status
+      && this.status.state !== "failed"
+      && this.status.state !== "completed"
+      && this.status.state !== "stopped";
+  }
+
+  refreshStatus() {
+    this._refreshStatus();
+    this.startRefreshTimer();
+  }
+
+  _refreshStatus() {
+    if (this.busy){
+      return;
+    }
+    this.busy = true;
+    this.autoReconcileService.getStatus().subscribe(checkResult<AutoReconcileStatusDto>({
+      success: s => {
+        this.status = s
+        if (!this.isRunning() && this.waitingForDryRunResult) {
+          this.waitingForDryRunResult = false;
+          this.autoReconcileService.getDryRunResult().subscribe(checkResult<AutoReconcileDryRunResultResponseDto>({
+            success: s => this.dryRunResponseDto = s,
+            fail: e => {
+              this.dryRunResponseDto = null;
+              this.showSnackError(e);
+            },
+            finally: () => {}
+          }));
+        }
+      },
+      fail: e => {
+        this.status = undefined;
+        if (this.waitingForDryRunResult) {
+          this.waitingForDryRunResult = false;
+          this.dryRunResponseDto = null;
+        }
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
+  }
+
+  startRefreshTimer() {
+    if (this.timer !== undefined) {
+      clearInterval(this.timer);
+    }
+
+    this.timer = setInterval(() => {
+      if (this.isRunning()) {
+        this._refreshStatus();
+      } else {
+        clearInterval(this.timer);
+      }
+    }, 250);
+  }
+
   prepareRequestDto() {
     this.requestDto.sourceQueryOperations = this.sourceQueryOperations.map(o => o.queryOperation);
     this.requestDto.destinationQueryOperations = this.destinationQueryOperations.map(o => o.queryOperation);
   }
 
-  dryRun() {
-    this.prepareRequestDto();
-    if (!this.busy) {
-      this.busy = true;
-    }
-    this.autoReconcileService.dryRun(this.requestDto)
-      .subscribe(checkResult<AutoReconcileDryRunResponseDto>({
-        success: r => this.dryRunResponseDto = r,
-        fail: e => this.showSnackError(e),
-        finally: () => this.busy = false
-      }));
-  }
 
   formatAmount(amount: number) {
     return this.currencyPipe.transform(amount, "$");
@@ -133,4 +183,66 @@ export class AutoReconcileComponent {
     this.requestDto.pairingStrategy.dateMatchToleranceInDays = v;
   }
 
+  dryRun() {
+    this.prepareRequestDto();
+    if (this.busy) {
+      return;
+    }
+    this.busy = true;
+    this.dryRunResponseDto = null;
+    this.autoReconcileService.dryRun(this.requestDto)
+      .subscribe(checkResult<AutoReconcileStatusDto>({
+        success: r => {
+          this.status = r;
+          this.waitingForDryRunResult = true;
+          this.startRefreshTimer();
+        },
+        fail: e => this.showSnackError(e),
+        finally: () => this.busy = false
+      }));
+  }
+
+  startJob() {
+    this.prepareRequestDto();
+    if (this.busy) {
+      return;
+    }
+    this.busy = true;
+    this.autoReconcileService.run(this.requestDto)
+      .subscribe(checkResult<AutoReconcileStatusDto>({
+        success: r => {
+          this.status = r;
+          this.startRefreshTimer();
+        },
+        fail: e => this.showSnackError(e),
+        finally: () => this.busy = false
+      }));
+  }
+
+  stopJob() {
+    if (this.busy) {
+      return;
+    }
+    this.busy = true;
+    this.waitingForDryRunResult = false;
+    this.autoReconcileService.stop()
+      .subscribe(checkResult<AutoReconcileStatusDto>({
+        success: r => {
+          this.status = r;
+        },
+        fail: e => this.showSnackError(e),
+        finally: () => this.busy = false
+      }));
+  }
+
+  getProgress() {
+    console.log(this.status);
+    if (this.status
+      && this.status.state === "running"
+      && this.status.totalTransfers > 0
+      && this.status.completedTransfers <= this.status.totalTransfers) {
+        return (this.status.completedTransfers / this.status.totalTransfers) * 100;
+    }
+    return 0;
+  }
 }

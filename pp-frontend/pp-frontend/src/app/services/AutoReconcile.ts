@@ -5,7 +5,8 @@ import { Observable } from "rxjs";
 import { ServiceResponseModel } from "../models/ServiceResponse";
 import { HttpClientWrapper } from "../utils/wrappers/HttpClient";
 import { AutoReconcileRequestDto } from "../models/dtos/AutoReconcileRequest";
-import { AutoReconcileDryRunResponseDto } from "../models/dtos/AutoReconcileDryRunResponse";
+import { AutoReconcileDryRunResultResponseDto } from "../models/dtos/AutoReconcileDryRunResultResponse";
+import { AutoReconcileStatusDto } from "../models/dtos/AutoReconcileStatus";
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +16,23 @@ export class AutoReconcileService {
     constructor(private httpClient: HttpClient) {
     }
 
-    dryRun(requestDto: AutoReconcileRequestDto): Observable<ServiceResponseModel<AutoReconcileDryRunResponseDto>> {
-        return this.client.post('/auto-reconcile/dry-run/', requestDto);
+    dryRun(requestDto: AutoReconcileRequestDto): Observable<ServiceResponseModel<AutoReconcileStatusDto>> {
+        return this.client.post('/auto-reconcile/dry-run', requestDto);
     }
 
+    run(requestDto: AutoReconcileRequestDto): Observable<ServiceResponseModel<AutoReconcileStatusDto>> {
+        return this.client.post('/auto-reconcile/run', requestDto);
+    }
+
+    stop(): Observable<ServiceResponseModel<AutoReconcileStatusDto>> {
+        return this.client.postWithoutPayload('/auto-reconcile/stop');
+    }
+
+    getDryRunResult(): Observable<ServiceResponseModel<AutoReconcileDryRunResultResponseDto>> {
+        return this.client.get('/auto-reconcile/dry-run');
+    }
+
+    getStatus(): Observable<ServiceResponseModel<AutoReconcileStatusDto>> {
+        return this.client.get('/auto-reconcile/status');
+    }
 }

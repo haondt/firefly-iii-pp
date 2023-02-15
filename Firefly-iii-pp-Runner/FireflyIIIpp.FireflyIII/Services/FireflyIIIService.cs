@@ -117,15 +117,29 @@ namespace FireflyIIIpp.FireflyIII.Services
 
         public async Task UpdateTransaction(string transactionId, TransactionUpdateDto transaction, CancellationToken cancellationToken)
         {
-                var response = await _httpClient.PutAsJsonAsync($"/api/v1/transactions/{transactionId}", transaction, cancellationToken);
-                if (!response.IsSuccessStatusCode)
-                {
-                    _logger.LogError("Got non-200 response when updating transaction" +
-                        $"\nstatus: {response.StatusCode}" +
-                        $"\nrequest: {await response.RequestMessage.Content.ReadFromJsonAsync<object>()}" +
-                        $"\nresponse: {await response.Content.ReadFromJsonAsync<object>()}");
-                }
-                response.EnsureSuccessStatusCode();
+            var response = await _httpClient.PutAsJsonAsync($"/api/v1/transactions/{transactionId}", transaction, cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError("Got non-200 response when updating transaction" +
+                    $"\nstatus: {response.StatusCode}" +
+                    $"\nrequest: {await response.RequestMessage.Content.ReadFromJsonAsync<object>()}" +
+                    $"\nresponse: {await response.Content.ReadFromJsonAsync<object>()}");
+            }
+            await response.EnsureDownstreamSuccessStatusCode("Firefly-iii");
+        }
+
+        public async Task DeleteTransaction(string id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/v1/transactions/{id}");
+            await response.EnsureDownstreamSuccessStatusCode("Firefly-iii");
+        }
+
+        public async Task<TransactionDto> CreateTransaction(CreateTransactionDto transaction)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"/api/v1/transactions", transaction);
+            await response.EnsureDownstreamSuccessStatusCode("Firefly-iii");
+            var container = await response.Content.ReadFromJsonAsync<SingleTransactionContainerDto>();
+            return container.Data;
         }
     }
 }

@@ -193,7 +193,6 @@ export class AddCaseDialog {
                 try {
                     if (r.success) {
                         this.caseCreated = true;
-                        console.log(r);
                         this.createdCase = r.body.client.name;
                     } else {
                         this.createCaseError = r.error ?? "Error while creating case";

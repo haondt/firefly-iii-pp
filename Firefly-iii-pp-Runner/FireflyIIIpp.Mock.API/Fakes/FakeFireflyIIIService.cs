@@ -134,5 +134,18 @@ namespace FireflyIIIpp.Mock.API.Fakes
             await Task.Delay(_settings.HttpDelayInMilliseconds, cancellationToken);
             _transactions[transactionId].Attributes.Transactions = transaction.Transactions;
         }
+
+        public Task DeleteTransaction(string id)
+        {
+            _transactions.Remove(id);
+            return Task.CompletedTask;
+        }
+
+        public Task<TransactionDto> CreateTransaction(CreateTransactionDto transaction)
+        {
+            var t = GenerateTransactionData();
+            _transactions[t.Id] = t;
+            return Task.FromResult(t);
+        }
     }
 }

@@ -78,7 +78,6 @@ namespace FireflyIIIpp.Mock.API.Fakes
         {
             try
             {
-
                 for (int i = 0; i < 100; i++)
                 {
                     await Task.Delay(20, token);

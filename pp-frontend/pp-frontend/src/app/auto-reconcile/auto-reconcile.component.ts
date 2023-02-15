@@ -89,10 +89,12 @@ export class AutoReconcileComponent {
       }
     }];
 
-    this.requestDto.joiningStrategy.descriptionJoinStrategy = "concatenate";
+    this.requestDto.joiningStrategy.descriptionJoinStrategy = "source";
     this.requestDto.joiningStrategy.dateJoinStrategy = "average";
     this.requestDto.joiningStrategy.categoryJoinStrategy = "clear";
     this.requestDto.joiningStrategy.notesJoinStrategy = "concatenate";
+    this.requestDto.pairingStrategy.requireMatchingDates = true;
+    this.requestDto.pairingStrategy.dateMatchToleranceInDays = 5;
 
     this.refreshStatus();
   }
@@ -236,7 +238,6 @@ export class AutoReconcileComponent {
   }
 
   getProgress() {
-    console.log(this.status);
     if (this.status
       && this.status.state === "running"
       && this.status.totalTransfers > 0

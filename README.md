@@ -21,6 +21,22 @@ Once the rules are created and regression tested, this project also includes a t
 
 ![](./assets/ff3.png)
 
+## Bonus Features
+
+### Auto Reconciliation
+
+Due to the way my banks export transactions to csv, sometimes I end up in situations where a transfer is imported as two seperate transactions on each account. Numerically it adds up, but I would like them to be reconciled into a single transaction.
+
+![](./assets/rec1.png)
+
+That is exactly what this feature can do. This tool will find pairs of transactions with the same amount, and reconcile them into a transfer. There are many configuration options to determine which transactions are eligible for reconciliation, how to pair them up, and how to merge them into a single transfer. There is also a dry run option that will show you what the new transfers will look like before actually running the job.
+
+![](./assets/rec2.png)
+
+The final result is a single transfer between accounts.
+
+![](./assets/rec3.png)
+
 
 ## Deployment
 

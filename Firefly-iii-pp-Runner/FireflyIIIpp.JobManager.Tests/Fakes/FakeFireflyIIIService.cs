@@ -21,6 +21,16 @@ namespace FireflyIIIpp.Tests.Fakes
 
         public Func<TransactionDto, bool> Query { get; set; } = t => true;
 
+        public Task<TransactionDto> CreateTransaction(CreateTransactionDto transaction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteTransaction(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<TransactionDto> GetTransaction(string id)
         {
             return Task.FromResult(Transactions[id]);

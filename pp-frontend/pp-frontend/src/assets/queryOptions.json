@@ -113,5 +113,52 @@
         "type": "date"
       }
     ]
+  },
+  {
+    "operand": "amount",
+    "viewValue": "Amount",
+    "operators": [
+      {
+        "operator": "exactly",
+        "viewValue": "is exactly",
+        "type": "currency"
+      },
+      {
+        "operator": "less",
+        "viewValue": "is less than",
+        "type": "currency"
+      },
+      {
+        "operator": "more",
+        "viewValue": "is more than",
+        "type": "currency"
+      }
+    ]
+  },
+  {
+    "operand": "description",
+    "viewValue": "Description",
+    "operators": [
+      {
+        "operator": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "operator": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "operator": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
   }
 ]

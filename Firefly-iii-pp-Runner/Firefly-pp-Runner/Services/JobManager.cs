@@ -1,8 +1,8 @@
-﻿using Firefly_iii_pp_Runner.Exceptions;
-using Firefly_iii_pp_Runner.Models;
+﻿using Firefly_iii_pp_Runner.Models;
 using Firefly_pp_Runner.Extensions;
 using Firefly_pp_Runner.Models.Runner;
 using Firefly_pp_Runner.Models.Runner.Dtos;
+using FireflyIIIpp.Core.Exceptions;
 using FireflyIIIpp.Core.Extensions;
 using FireflyIIIpp.FireflyIII.Abstractions;
 using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
@@ -39,7 +39,7 @@ namespace Firefly_iii_pp_Runner.Services
         public async Task<RunnerStatus> StartSingle(RunnerSingleDto dto)
         {
             if (IsJobRunning())
-                throw new RunnerBusyException();
+                throw new BusyException();
 
             if (_tokenSource != null)
                 _tokenSource.Cancel();
@@ -104,7 +104,7 @@ namespace Firefly_iii_pp_Runner.Services
         private async Task<RunnerStatus> StartJob(Func<int, Task<ManyTransactionsContainerDto>> getTransactions, Func<Task>? onJobFinish = null)
         {
             if (IsJobRunning())
-                throw new RunnerBusyException();
+                throw new BusyException();
 
             if (_tokenSource != null)
                 _tokenSource.Cancel();

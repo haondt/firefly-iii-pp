@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileRunArguments>-v $(SolutionDir)/../thunder-tests:/thunder</DockerfileRunArguments>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,12 +18,6 @@
     <ProjectReference Include="..\Firefly-iii-pp.Firefly-III.Abstractions\FireflyIIIpp.FireflyIII.Abstractions.csproj" />
     <ProjectReference Include="..\Firefly-pp-Runner\Firefly-pp-Runner.csproj" />
     <ProjectReference Include="..\FireflyIIIpp.NodeRed.Abstractions\FireflyIIIpp.NodeRed.Abstractions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="query-options.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

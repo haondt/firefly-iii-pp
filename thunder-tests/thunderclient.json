@@ -255,11 +255,11 @@
     "colId": "6c78395b-4152-4d23-a01a-64ca932e9272",
     "containerId": "",
     "name": "Search transactions",
-    "url": "{{base_url}}/api/v1/search/transactions?page=1&query=source_account_is%3a%22(no+name)%22+date_after%3a2022-12-04",
+    "url": "{{base_url}}/api/v1/search/transactions?page=1&query=amount_more%3A%222790.47%22",
     "method": "GET",
     "sortNum": 270,
     "created": "2023-02-04T04:33:13.786Z",
-    "modified": "2023-02-05T04:52:18.248Z",
+    "modified": "2023-02-14T10:39:51.761Z",
     "headers": [
       {
         "name": "Accept",
@@ -274,7 +274,7 @@
       },
       {
         "name": "query",
-        "value": "source_account_is%3a%22(no+name)%22+date_after%3a2022-12-04",
+        "value": "amount_more%3A%222790.47%22",
         "isPath": false
       }
     ],
@@ -297,20 +297,6 @@
       "raw": "{\n    \"operations\": [\n      {\n        \"operand\": \"source_account\",\n        \"operator\": \"is\",\n        \"result\": \"(no name)\"\n      },\n      {\n        \"operand\": \"date\",\n        \"operator\": \"after\",\n        \"result\": \"2022-12-04T00:00:00-07:00\"\n      }\n    ]\n}",
       "form": []
     },
-    "tests": []
-  },
-  {
-    "_id": "88a39134-a9ed-4e33-b921-6aca9cd6dd45",
-    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
-    "containerId": "bc210543-647f-4bb9-83aa-3b7a3fc0cea2",
-    "name": "Get Query Options",
-    "url": "{{base_url}}/runner/query-options",
-    "method": "GET",
-    "sortNum": 210,
-    "created": "2023-02-04T23:05:45.892Z",
-    "modified": "2023-02-04T23:06:07.788Z",
-    "headers": [],
-    "params": [],
     "tests": []
   },
   {
@@ -385,5 +371,85 @@
         "custom": "json.description"
       }
     ]
+  },
+  {
+    "_id": "99a963c5-decf-4a44-91ce-e9fe55daf333",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "7be0ddc2-c7cf-4811-8626-a1d1ab95f9a0",
+    "name": "Dry Run",
+    "url": "{{base_url}}/auto-reconcile/dry-run",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-02-14T13:49:18.338Z",
+    "modified": "2023-02-14T13:57:27.834Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"sourceQueryOperations\": [\n    {\n      \"operand\": \"destination_account\",\n      \"operator\": \"is\",\n      \"result\": \"(no name)\"\n    }\n  ],\n  \"destinationQueryOperations\": [\n    {\n      \"operand\": \"source_account\",\n      \"operator\": \"is\",\n      \"result\": \"(no name)\"\n    }\n  ],\n  \"pairingStrategy\": {\n    \"requireMatchingDescriptions\": false,\n    \"requireMatchingDates\": true,\n    \"dateMatchToleranceInDays\": 7\n  },\n  \"joiningStrategy\": {\n    \"descriptionJoinStrategy\": \"concatenate\",\n    \"dateJoinStrategy\": \"average\",\n    \"categoryJoinStrategy\": \"clear\",\n    \"notesJoinStrategy\": \"concatenate\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "e4e9f944-57c2-44e1-ae3d-fbb844bad8d7",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "7be0ddc2-c7cf-4811-8626-a1d1ab95f9a0",
+    "name": "Dry Run Result",
+    "url": "{{base_url}}/auto-reconcile/dry-run",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-02-15T01:02:28.329Z",
+    "modified": "2023-02-15T01:02:54.026Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "f0f56055-01f1-4657-a411-491b4c76e154",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "7be0ddc2-c7cf-4811-8626-a1d1ab95f9a0",
+    "name": "Run",
+    "url": "{{base_url}}/auto-reconcile/run",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-02-15T01:02:29.793Z",
+    "modified": "2023-02-15T01:03:20.209Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"sourceQueryOperations\": [\n    {\n      \"operand\": \"destination_account\",\n      \"operator\": \"is\",\n      \"result\": \"(no name)\"\n    }\n  ],\n  \"destinationQueryOperations\": [\n    {\n      \"operand\": \"source_account\",\n      \"operator\": \"is\",\n      \"result\": \"(no name)\"\n    }\n  ],\n  \"pairingStrategy\": {\n    \"requireMatchingDescriptions\": false,\n    \"requireMatchingDates\": true,\n    \"dateMatchToleranceInDays\": 7\n  },\n  \"joiningStrategy\": {\n    \"descriptionJoinStrategy\": \"concatenate\",\n    \"dateJoinStrategy\": \"average\",\n    \"categoryJoinStrategy\": \"clear\",\n    \"notesJoinStrategy\": \"concatenate\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "c34d77a3-a072-40b0-8214-6e6c963042b9",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "7be0ddc2-c7cf-4811-8626-a1d1ab95f9a0",
+    "name": "Get Status",
+    "url": "{{base_url}}/auto-reconcile/status",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-02-15T01:02:31.354Z",
+    "modified": "2023-02-15T01:03:56.870Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "1990531e-625f-44f5-a9fd-201aa379c707",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "7be0ddc2-c7cf-4811-8626-a1d1ab95f9a0",
+    "name": "Stop job",
+    "url": "{{base_url}}/auto-reconcile/stop",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2023-02-15T01:59:35.819Z",
+    "modified": "2023-02-15T01:59:53.046Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

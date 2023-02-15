@@ -1,0 +1,119 @@
+.content-container {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    max-width: 1370px;
+    flex-direction: column;
+    flex: 1 1 auto;
+    margin: 25px;
+    gap: 10px;
+}
+
+.accordion-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.content-row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+h3 {
+    margin: 0;
+}
+
+.pair-table-container {
+    background: #242424;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 4px;
+}
+
+table.pair-table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.pair-table > tr > th {
+    font-weight: normal;
+}
+
+table.pair-table > tr > td {
+    text-align: center;
+}
+
+table.pair-table > tr > td > .mat-icon {
+    display: block;
+    margin: auto;
+}
+
+table.pair-table > tr > td, table.pair-table > tr > th {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+
+table.pair-table > tr {
+    border-bottom: 1px solid grey;
+}
+table.pair-table > tr:last-child {
+    border-bottom: none;
+}
+
+.busy-progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #303030;
+}
+
+.progress-bar-gap {
+    height: 4px;
+}
+
+.panel-title {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.state-attribute {
+    color: white;
+}
+.state-attribute.state-completed {
+    color: rgb(132, 224, 46);
+}
+.state-attribute.state-failed {
+    color: rgb(207, 81, 81);
+}
+.state-attribute.state-stopped {
+    color: rgb(224, 162, 46);
+}
+.state-attribute.state-running, .state-attribute.state-getting-transactions, .state-attribute.state-pairing {
+    color: rgb(46, 168, 224);
+}
+
+.state-attribute > span {
+    background: #242424;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 4px;
+}
+
+table.status-table > tr > td {
+    padding-left: 10px;
+    padding-right: 10px;
+}

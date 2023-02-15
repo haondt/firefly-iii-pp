@@ -1,0 +1,170 @@
+<mat-progress-bar class="busy-progress-bar" color="primary" *ngIf="busy" mode="indeterminate"></mat-progress-bar>
+<div class="progress-bar-gap" *ngIf="!busy"></div>
+<div class="content-container">
+    <div class="content">
+        <mat-accordion class="accordion" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="panel-title">
+                        <mat-spinner *ngIf="status?.state === 'getting-transactions' || status?.state === 'pairing'" diameter="25" color="accent" class="test-spinner"></mat-spinner>
+                        <mat-spinner *ngIf="status?.state === 'running'" diameter="25" mode="determinate" color="accent" class="test-spinner" [value]="getProgress()"></mat-spinner>
+                        Status
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Manage running job
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="accordion-content">
+                    <div class="content-row">
+                        <mat-progress-bar *ngIf="status?.state === 'getting-transactions' || status?.state === 'pairing'" mode="query" color="accent"></mat-progress-bar>
+                        <mat-progress-bar *ngIf="status?.state === 'running'" color="accent" mode="determinate" [value]="getProgress()"></mat-progress-bar>
+                    </div>
+                    <div class="content-row">
+                        <button color="accent" (click)="startJob()" mat-raised-button>Start Job</button>
+                        <button color="primary" (click)="refreshStatus()" mat-raised-button>Refresh Status</button>
+                        <button color="warn" (click)="stopJob()" mat-raised-button>Stop Job</button>
+                    </div>
+                    <mat-divider *ngIf="status"></mat-divider>
+                    <div class="content-row" *ngIf="status">
+                        <table class="status-table">
+                            <tr><td>State:</td><td class="state-attribute"
+                                [class.state-completed]="status.state === 'completed'"
+                                [class.state-failed]="status.state === 'failed'"
+                                [class.state-stopped]="status.state === 'stopped'"
+                                [class.state-getting-transactions]="status.state === 'getting-transactions'"
+                                [class.state-pairing]="status.state === 'pairing'"
+                                [class.state-running]="status.state === 'running'">
+                                <span>{{ status.state }}</span>
+                            </td></tr>
+                            <tr><td>Total transfers:</td><td class="state-attribute">
+                                <span>{{ status.totalTransfers }}</span>
+                            </td></tr>
+                            <tr><td>Completed transfers:</td><td class="state-attribute">
+                                <span>{{ status.completedTransfers }}</span>
+                            </td></tr>
+                            <tr><td>Source transactions:</td><td class="state-attribute">
+                                <span>{{ status.totalSourceTransactions }}</span>
+                            </td></tr>
+                            <tr><td>Destination transactions:</td><td class="state-attribute">
+                                <span>{{ status.totalDestinationTransactions }}</span>
+                            </td></tr>
+                        </table>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="accordion-panel-title">
+                        Dry Run
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Dry run a new job
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="accordion-content">
+                    <div class="content-row">
+                        <button color="primary" (click)="dryRun()" mat-raised-button>Dry Run</button>
+                    </div>
+                    <mat-divider *ngIf="dryRunResponseDto"></mat-divider>
+                    <div class="pair-table-container" *ngIf="dryRunResponseDto">
+                        <table class="pair-table">
+                            <tr>
+                                <th>Source</th>
+                                <th>Destination</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Warnings</th>
+                            </tr>
+                            <tr *ngFor="let transfer of dryRunResponseDto.transfers">
+                                <td>{{ transfer.source }}</td>
+                                <td>{{ transfer.destination }}</td>
+                                <td>{{ transfer.description }}</td>
+                                <td>{{ formatAmount(transfer.amount) }}</td>
+                                <td>{{ formatDate(transfer.date) }}</td>
+                                <td>{{ transfer.category }}</td>
+                                <td *ngIf="transfer.warning"><mat-icon [matTooltip]="transfer.warning">info</mat-icon></td>
+                                <td *ngIf="!transfer.warning"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="accordion-panel-title">
+                        Configure
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Set options for next job
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="accordion-content">
+                    <div class="content-row">
+                        <h3>Filter Source Transactions</h3>
+                    </div>
+                    <div class="content-row">
+                        <app-query-builder [queryOperations]="sourceQueryOperations"></app-query-builder>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="content-row">
+                        <h3>Filter Destination Transactions</h3>
+                    </div>
+                    <div class="content-row">
+                        <app-query-builder [queryOperations]="destinationQueryOperations"></app-query-builder>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="content-row">
+                        <h3>Configure Pairing Strategy</h3>
+                    </div>
+                    <div class="content-row">
+                        <mat-checkbox [(ngModel)]="requestDto.pairingStrategy.requireMatchingDescriptions">Require matching descriptions</mat-checkbox>
+                    </div>
+                    <div class="content-row">
+                        <mat-checkbox [(ngModel)]="requestDto.pairingStrategy.requireMatchingDates">Require matching dates</mat-checkbox>
+                        <mat-form-field appearance="fill" *ngIf="requestDto.pairingStrategy.requireMatchingDates">
+                            <mat-label>Date Match Tolerance</mat-label>
+                            <input matInput type="number" [(ngModel)]="requestDto.pairingStrategy.dateMatchToleranceInDays" (blur)="fixDateMatchTolerance()">
+                            <mat-hint>Value in days</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="content-row">
+                        <h3>Configure Joining Strategy</h3>
+                    </div>
+                    <div class="content-row">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Description</mat-label>
+                            <mat-select [(value)]="requestDto.joiningStrategy.descriptionJoinStrategy">
+                                <mat-option *ngFor="let option of requestOptions.joiningStrategyOptions.descriptionJoinStrategyOptions" [value]="option.option">{{ option.viewValue }}</mat-option>
+                            </mat-select>
+                            <mat-hint>Description joining strategy</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Date</mat-label>
+                            <mat-select [(value)]="requestDto.joiningStrategy.dateJoinStrategy">
+                                <mat-option *ngFor="let option of requestOptions.joiningStrategyOptions.dateJoinStrategyOptions" [value]="option.option">{{ option.viewValue }}</mat-option>
+                            </mat-select>
+                            <mat-hint>Date joining strategy</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Category</mat-label>
+                            <mat-select [(value)]="requestDto.joiningStrategy.categoryJoinStrategy">
+                                <mat-option *ngFor="let option of requestOptions.joiningStrategyOptions.categoryJoinStrategyOptions" [value]="option.option">{{ option.viewValue }}</mat-option>
+                            </mat-select>
+                            <mat-hint>Category joining strategy</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Notes</mat-label>
+                            <mat-select [(value)]="requestDto.joiningStrategy.notesJoinStrategy">
+                                <mat-option *ngFor="let option of requestOptions.joiningStrategyOptions.notesJoinStrategyOptions" [value]="option.option">{{ option.viewValue }}</mat-option>
+                            </mat-select>
+                            <mat-hint>Notes joining strategy</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

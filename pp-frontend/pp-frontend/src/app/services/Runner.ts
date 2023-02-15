@@ -7,195 +7,37 @@ import { RunnerStateDto } from "../models/dtos/RunnerState";
 import { QueryOptionDto } from "../models/dtos/QueryOption";
 import { DryRunResponseDto } from "../models/dtos/DryRunResponse";
 import { QueryStartJobRequestDto } from "../models/dtos/QueryStartJobRequest";
+import { HttpClientWrapper } from "../utils/wrappers/HttpClient";
 
 @Injectable({
     providedIn: 'root'
 })
 export class RunnerService {
-    constructor(private client: HttpClient) {
+    private client: HttpClientWrapper = new HttpClientWrapper(this.httpClient, environment.API_HOST);
+    constructor(private httpClient: HttpClient) {
     }
 
     getStatus(): Observable<ServiceResponseModel<RunnerStateDto>> {
-        return this.client.get<RunnerStateDto>(`${environment.API_HOST}/runner/status`, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: r.body!
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                return of({
-                    success: false,
-                    error: e.message
-                });
-            })
-        );
+        return this.client.get('/runner/status');
     }
 
     stopJob(): Observable<ServiceResponseModel<RunnerStateDto>> {
-        return this.client.post<RunnerStateDto>(`${environment.API_HOST}/runner/stop`, null, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: r.body!
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                return of({
-                    success: false,
-                    error: e.message
-                });
-            })
-        );
-    }
-
-    getQueryOptions(): Observable<ServiceResponseModel<QueryOptionDto[]>> {
-        return this.client.get<QueryOptionDto[]>(`${environment.API_HOST}/runner/query-options`, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: r.body!
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                return of({
-                    success: false,
-                    error: e.message
-                });
-            })
-        );
+        return this.client.postWithoutPayload('/runner/stop');
     }
 
     dryRunJob(requestDto: QueryStartJobRequestDto): Observable<ServiceResponseModel<DryRunResponseDto>> {
-        return this.client.post<DryRunResponseDto>(`${environment.API_HOST}/runner/query/dry-run`, requestDto, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: r.body!
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                if (e.error
-                    && e.error.exception
-                    && e.error.statusCode) {
-                        return of({
-                            success: false,
-                            error: `${e.error.exception}: ${e.error.details ?? e.error.statusCode}`
-                        });
-                } else {
-                    return of({
-                        success: false,
-                        error: e.message
-                    });
-                }
-            })
-        );
+        return this.client.post('/runner/query/dry-run', requestDto);
     }
 
     startQueryJob(requestDto: QueryStartJobRequestDto): Observable<ServiceResponseModel<RunnerStateDto>> {
-        return this.client.post<RunnerStateDto>(`${environment.API_HOST}/runner/query/start`, requestDto, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: r.body!
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                if (e.error
-                    && e.error.exception
-                    && e.error.statusCode) {
-                        return of({
-                            success: false,
-                            error: `${e.error.exception}: ${e.error.details ?? e.error.statusCode}`
-                        });
-                } else {
-                    return of({
-                        success: false,
-                        error: e.message
-                    });
-                }
-            })
-        );
+        return this.client.post('/runner/query/start', requestDto);
     }
 
     startJob(requestDto: {start: string, end: string}): Observable<ServiceResponseModel<RunnerStateDto>> {
-        return this.client.post<RunnerStateDto>(`${environment.API_HOST}/runner/start`, requestDto, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: r.body!
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                if (e.error
-                    && e.error.exception
-                    && e.error.statusCode) {
-                        return of({
-                            success: false,
-                            error: `${e.error.exception}: ${e.error.details ?? e.error.statusCode}`
-                        });
-                } else {
-                    return of({
-                        success: false,
-                        error: e.message
-                    });
-                }
-            })
-        );
+        return this.client.post('/runner/query/start', requestDto);
     }
 
     startSingleJob(requestDto: {id: string}): Observable<ServiceResponseModel<RunnerStateDto>> {
-        return this.client.post<RunnerStateDto>(`${environment.API_HOST}/runner/single`, requestDto, {
-            responseType: 'json',
-            observe: 'response'
-        }).pipe(
-            map(r => r ? {
-                success: true,
-                body: r.body!
-            } : {
-                success: false,
-                error: "Received empty response from backend"
-            }),
-            catchError(e => {
-                if (e.error
-                    && e.error.exception
-                    && e.error.statusCode) {
-                        return of({
-                            success: false,
-                            error: `${e.error.exception}: ${e.error.details ?? e.error.statusCode}`
-                        });
-                } else {
-                    return of({
-                        success: false,
-                        error: e.message
-                    });
-                }
-            })
-        );
+        return this.client.post('/runner/single', requestDto);
     }
-
 }

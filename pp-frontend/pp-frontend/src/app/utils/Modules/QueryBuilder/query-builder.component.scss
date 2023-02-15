@@ -1,0 +1,15 @@
+
+.content {
+    display: flex;
+    max-width: 1370px;
+    flex-direction: column;
+    flex: 1 1 auto;
+    gap: 10px;
+}
+
+.content-row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}

@@ -6,13 +6,10 @@ import { QueryOptionDto } from '../models/dtos/QueryOption';
 import { RunnerStateDto } from '../models/dtos/RunnerState';
 import { QueryOperationModel } from '../models/QueryOperation';
 import { ServiceResponseModel } from '../models/ServiceResponse';
+import { FireflyIIIService } from '../services/FireflyIII';
 import { RunnerService } from '../services/Runner';
-
-interface QueryOperatorModel {
-  viewValue: string,
-  operator: string,
-  type: string
-}
+import queryOptionsJson from '../../assets/queryOptions.json';
+import { checkResult } from '../utils/ObservableUtils';
 
 @Component({
   selector: 'app-firefly-iii-pp',
@@ -26,60 +23,38 @@ export class FireflyIIIPPComponent {
   timer: NodeJS.Timer | undefined;
 
   jobType: string = "single";
-  queryOptions: QueryOptionDto[] = [];
+  queryOptions: QueryOptionDto[] = Object.assign([], queryOptionsJson);
 
   singleId: string | null = null;
 
   startDate: Date | null = null;
   endDate: Date | null = null;
 
-  queryOperand: QueryOptionDto | null = null;
-  queryOperatorOptions: QueryOperatorModel[] = [];
-  queryOperator: QueryOperatorModel | null = null;
-  queryResult: any;
   queryOperations: { viewValue: string, queryOperation: QueryOperationModel }[] = [];
 
   dryRunResponse: DryRunResponseDto | null = null;
 
   constructor(private runnerService: RunnerService,
+      private fireflyIIIService: FireflyIIIService,
         private snackBar: MatSnackBar) {
     this.initData();
   }
 
   initData() {
     this.busy = true;
-    let gettingQueryOptions = true;
-    let gettingStatus = true;
-    this.runnerService.getQueryOptions().subscribe(res => {
-      try {
-        if (res.success) {
-          this.queryOptions = res.body!;
-        } else {
-          this.queryOptions = [];
-          this.showSnackError(res.error);
-        }
-      } finally {
-        gettingQueryOptions = false;
-        this.busy = gettingStatus;
-      }
-    });
-
-    this.runnerService.getStatus().subscribe(res => {
-      try {
-        if (res.success) {
-          this.status = res.body!;
+    this.runnerService.getStatus().subscribe(checkResult<RunnerStateDto>({
+      success: s => {
+          this.status = s;
           if (this.status.state === "running" || this.status.state === "getting-transactions") {
             this.startRefreshTimer();
           }
-        } else {
-          this.status = undefined;
-          this.showSnackError(res.error);
-        }
-      } finally {
-        gettingStatus = false;
-        this.busy = gettingQueryOptions;
-      }
-    });
+      },
+      fail: e => {
+        this.status = undefined;
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
   }
 
   showSnackError(error?: string) {
@@ -98,18 +73,14 @@ export class FireflyIIIPPComponent {
       return;
     }
     this.busy = true;
-    this.runnerService.stopJob().subscribe(res => {
-      try {
-        if (res.success) {
-          this.status = res.body;
-        } else {
-          this.status = undefined;
-          this.showSnackError(res.error);
-        }
-      } finally {
-        this.busy = false;
-      }
-    });
+    this.runnerService.stopJob().subscribe(checkResult<RunnerStateDto>({
+      success: s => this.status = s,
+      fail: e => {
+        this.status = undefined;
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
   }
 
   _refreshStatus() {
@@ -117,18 +88,14 @@ export class FireflyIIIPPComponent {
       return;
     }
     this.busy = true;
-    this.runnerService.getStatus().subscribe(res => {
-      try {
-        if (res.success) {
-          this.status = res.body!;
-        } else {
-          this.status = undefined;
-          this.showSnackError(res.error);
-        }
-      } finally {
-        this.busy = false;
-      }
-    });
+    this.runnerService.getStatus().subscribe(checkResult<RunnerStateDto>({
+      success: s => this.status = s,
+      fail: e => {
+        this.status = undefined;
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
   }
 
   startRefreshTimer() {
@@ -168,54 +135,6 @@ export class FireflyIIIPPComponent {
     this.startDate = null;
     this.endDate = null;
     this.queryOperations = [];
-    this.queryOperand = null;
-    this.queryOperatorOptions = [];
-    this.queryOperator = null;
-    this.queryResult = undefined;
-  }
-
-  changeQueryOperand() {
-    this.queryOperatorOptions = this.queryOperand?.operators ?? [];
-
-    // reset
-    this.queryOperator = null;
-    this.queryResult = undefined;
-  }
-
-  changeQueryOperator() {
-    this.queryResult = null;
-  }
-
-  addQueryOperation() {
-    if (this.queryOperand && this.queryOperator && this.queryResult) {
-      let operation = {
-        viewValue: `${this.queryOperand.viewValue} ${this.queryOperator.viewValue}`,
-        queryOperation: {
-          operand: this.queryOperand.operand,
-          operator: this.queryOperator.operator,
-          result: ""
-        }
-      };
-
-      if (this.queryOperator.type === "string") {
-        operation.queryOperation.result = <string>this.queryResult;
-        operation.viewValue += " " + operation.queryOperation.result;
-        this.queryOperations.push(operation);
-      } else if (this.queryOperator.type === "date") {
-        operation.queryOperation.result = (<Date>this.queryResult).toISOString();
-        operation.viewValue += " " + (<Date>this.queryResult).toLocaleDateString('en-CA');
-        this.queryOperations.push(operation);
-      } else {
-        this.showSnackError(`Unable to add query operator type ${this.queryOperator.type}`);
-      }
-    }
-  }
-
-  removeQueryOperation(event: { viewValue: string, queryOperation: QueryOperationModel }) {
-    const i = this.queryOperations.indexOf(event);
-    if (i >= 0) {
-      this.queryOperations.splice(i, 1);
-    }
   }
 
   startJob() {
@@ -268,18 +187,14 @@ export class FireflyIIIPPComponent {
     this.busy = true;
     this.runnerService.dryRunJob({
       operations: this.queryOperations.map(op => op.queryOperation)
-    }).subscribe(res => {
-      try {
-        if (res.success) {
-          this.dryRunResponse = res.body!;
-        } else {
-          this.status = undefined;
-          this.showSnackError(res.error);
-        }
-      } finally {
-        this.busy = false;
-      }
-    });
+    }).subscribe(checkResult<DryRunResponseDto>({
+      success: r => this.dryRunResponse = r,
+      fail: e => {
+        this.status = undefined;
+        this.showSnackError(e);
+      },
+      finally: () => this.busy = false
+    }));
   }
 
   formatDryRunSample(sample: Object) {

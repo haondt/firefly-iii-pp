@@ -13,6 +13,8 @@ namespace FireflyIIIpp.FireflyIII.Abstractions
 
         public string PrepareQuery(List<RunnerQueryOperation> queryOperators);
         public Task<TransactionDto> GetTransaction(string id);
+        public Task DeleteTransaction(string id);
+        public Task<TransactionDto> CreateTransaction(CreateTransactionDto transaction);
         public Task<ManyTransactionsContainerDto> GetTransactions(DateTime start, DateTime end, int page);
         public Task<ManyTransactionsContainerDto> GetTransactions(List<RunnerQueryOperation> queryOperators, int page);
         public Task UpdateTransaction(string transactionId, TransactionUpdateDto transaction, CancellationToken cancellationToken);

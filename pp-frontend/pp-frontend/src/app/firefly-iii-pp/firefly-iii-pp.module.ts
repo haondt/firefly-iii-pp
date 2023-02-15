@@ -21,6 +21,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
+import { QueryBuilderModule } from '../utils/Modules/QueryBuilder/query-builder.module';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -42,6 +44,7 @@ import { MatSelectModule } from '@angular/material/select';
         MatSelectModule,
         MatFormFieldModule,
         ReactiveFormsModule,
+        QueryBuilderModule
     ],
     declarations: [
         FireflyIIIPPComponent,

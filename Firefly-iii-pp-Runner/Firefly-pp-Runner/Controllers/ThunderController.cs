@@ -1,5 +1,4 @@
 ﻿using Firefly_iii_pp_Runner.ExceptionFilters;
-using Firefly_iii_pp_Runner.Exceptions;
 using Firefly_iii_pp_Runner.Models.ThunderClient.Dtos;
 using Firefly_iii_pp_Runner.Services;
 using Microsoft.AspNetCore.Mvc;

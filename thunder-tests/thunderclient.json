@@ -495,11 +495,11 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Add key",
-    "url": "{{base_url}}/lookup/values/Final/keys/FINALE2",
+    "url": "{{base_url}}/lookup/values/Final/keys/%2F%2F",
     "method": "POST",
     "sortNum": 90000,
     "created": "2023-02-17T02:19:56.481Z",
-    "modified": "2023-02-17T03:52:37.534Z",
+    "modified": "2023-02-17T04:47:29.283Z",
     "headers": [],
     "params": [],
     "tests": []

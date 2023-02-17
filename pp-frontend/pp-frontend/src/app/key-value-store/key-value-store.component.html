@@ -1,0 +1,58 @@
+<div class="content-container">
+    <div class="content">
+        <mat-card class="content-card">
+            <div class="content-row">
+                <span>Map</span>
+                <mat-form-field appearance="fill" class="remove-padding">
+                    <mat-label>Key</mat-label>
+                    <input matInput type="text" [(ngModel)]="key0">
+                </mat-form-field>
+                <span>to</span>
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Value</mat-label>
+                    <input type="text" matInput [ngModel]="autoCompleteValues['0']" [matAutocomplete]="auto0" (ngModelChange)="autoCompleteValueChanged('0', $event)">
+                    <mat-autocomplete #auto0="matAutocomplete">
+                        <mat-option *ngFor="let option of autoCompleteOptions['0']" [value]="option">{{ option }}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <button color="accent" mat-raised-button>Add Map</button>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-row">
+                <span>Get keys mapped to</span>
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Value</mat-label>
+                    <input type="text" matInput [ngModel]="autoCompleteValues['1']" [matAutocomplete]="auto1" (ngModelChange)="autoCompleteValueChanged('1', $event)">
+                    <mat-autocomplete #auto1="matAutocomplete">
+                        <mat-option *ngFor="let option of autoCompleteOptions['1']" [value]="option">{{ option }}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <button color="primary" mat-raised-button>Get Keys</button>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-row">
+                <span>Edit Value</span>
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Value</mat-label>
+                    <input type="text" matInput [ngModel]="autoCompleteValues['2']" [matAutocomplete]="auto2" (ngModelChange)="autoCompleteValueChanged('2', $event)">
+                    <mat-autocomplete #auto2="matAutocomplete">
+                        <mat-option *ngFor="let option of autoCompleteOptions['2']" [value]="option">{{ option }}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="content-row">
+                <button color="primary" mat-raised-button>Get Value</button>
+                <button color="accent" mat-raised-button>Update Value</button>
+                <button color="warn" mat-raised-button>Delete Value</button>
+                <button mat-stroked-button>Prettify Value</button>
+            </div>
+
+            <div class="content-row request-row">
+                <div class="request-block">
+                    <span></span>
+                    <textarea></textarea>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

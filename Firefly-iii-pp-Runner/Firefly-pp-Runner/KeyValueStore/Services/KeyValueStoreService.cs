@@ -94,7 +94,7 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             {
                 var valueKey = store.Keys[key];
                 if (store.Values.ContainsKey(valueKey))
-                    throw new ConflictException($"Key \"{key}\" already mapped to value \"{store.Values[valueKey]}\"");
+                    throw new ConflictException($"Key \"{key}\" already mapped to value \"{valueKey}\"");
                 throw new Exception("KeyValueStore data is corrupted");
             }
             store.Keys[key] = value;
@@ -125,9 +125,11 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             return store.Values[value];
         }
 
-        public async Task UpsertValue(string value, string valueValue)
+        public async Task UpdateValue(string value, string valueValue)
         {
             var store = await GetStore();
+            if (!store.Values.ContainsKey(value))
+                throw new NotFoundException(value);
             store.Values[value] = valueValue;
             await WriteToStorage();
         }

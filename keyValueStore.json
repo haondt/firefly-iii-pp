@@ -1,0 +1,54 @@
+{
+  "keys": [
+    {
+      "key": "Bar2",
+      "value": "Bar"
+    },
+    {
+      "key": "Bar",
+      "value": "Bar"
+    },
+    {
+      "key": "FINALE",
+      "value": "Final"
+    },
+    {
+      "key": "FOOOOOOOO",
+      "value": "Foo"
+    },
+    {
+      "key": "FOOOO",
+      "value": "Foo"
+    },
+    {
+      "key": "FOOD",
+      "value": "Food"
+    },
+    {
+      "key": "FOOT",
+      "value": "Foot"
+    }
+  ],
+  "values": [
+    {
+      "key": "Bar",
+      "value": "[\n    \"beans\n\"]"
+    },
+    {
+      "key": "Final",
+      "value": "{}"
+    },
+    {
+      "key": "Foo",
+      "value": "[\n    \"beans\n\"]"
+    },
+    {
+      "key": "Food",
+      "value": "{}"
+    },
+    {
+      "key": "Foot",
+      "value": "{}"
+    }
+  ]
+}

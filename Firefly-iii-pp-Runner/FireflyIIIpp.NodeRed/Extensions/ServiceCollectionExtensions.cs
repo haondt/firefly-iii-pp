@@ -38,6 +38,5 @@ namespace FireflyIIIpp.NodeRed.Extensions
                 });
             return timeoutPolicy;
         }
-
     }
 }

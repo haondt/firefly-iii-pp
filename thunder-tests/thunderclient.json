@@ -88,13 +88,9 @@
     "method": "GET",
     "sortNum": 190,
     "created": "2023-02-01T22:31:18.632Z",
-    "modified": "2023-02-02T23:14:09.568Z",
+    "modified": "2023-02-17T02:44:01.935Z",
     "headers": [],
     "params": [],
-    "body": {
-      "type": "binary",
-      "form": []
-    },
     "tests": []
   },
   {
@@ -450,6 +446,142 @@
     "modified": "2023-02-15T01:59:53.046Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ddd3d256-81bf-49fe-ae11-5a955a8e7960",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Read",
+    "url": "{{base_url}}/lookup/read",
+    "method": "POST",
+    "sortNum": 60000,
+    "created": "2023-02-17T02:14:52.691Z",
+    "modified": "2023-02-17T02:15:20.793Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "22d919c5-fd4f-499f-bf17-96ddfdeec4d8",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Write",
+    "url": "{{base_url}}/lookup/write",
+    "method": "POST",
+    "sortNum": 70000,
+    "created": "2023-02-17T02:14:59.331Z",
+    "modified": "2023-02-17T02:16:46.898Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ecb2b3df-ce29-4209-8d8d-9c37b19e22b5",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get keys",
+    "url": "{{base_url}}/lookup/values/Bar/keys",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-02-17T02:19:32.227Z",
+    "modified": "2023-02-17T02:38:12.081Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ae3358f1-45ff-4586-8f17-7534834aaffc",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Add key",
+    "url": "{{base_url}}/lookup/values/Final/keys/FINALE",
+    "method": "POST",
+    "sortNum": 90000,
+    "created": "2023-02-17T02:19:56.481Z",
+    "modified": "2023-02-17T02:42:41.965Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "7396846a-14a7-4fe4-9027-1156b195a3fb",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Delete key",
+    "url": "{{base_url}}/lookup/keys/Bar",
+    "method": "DELETE",
+    "sortNum": 100000,
+    "created": "2023-02-17T02:33:01.035Z",
+    "modified": "2023-02-17T02:38:17.040Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "facfb10b-3dd9-48ca-ada5-eeb179bd4880",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get value",
+    "url": "{{base_url}}/lookup/values/Bar",
+    "method": "GET",
+    "sortNum": 110000,
+    "created": "2023-02-17T02:33:41.516Z",
+    "modified": "2023-02-17T02:37:56.941Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "9c364361-a407-4db8-af5e-ecf9fddcbf64",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Update value",
+    "url": "{{base_url}}/lookup/values/Foo",
+    "method": "PUT",
+    "sortNum": 120000,
+    "created": "2023-02-17T02:34:32.691Z",
+    "modified": "2023-02-17T02:40:11.099Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "\"[\\n    \\\"beans\\n\\\"]\"",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "c7e2e966-ffea-4f99-9b09-1dfe6fe2583a",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Delete value",
+    "url": "{{base_url}}/lookup/values/Bar",
+    "method": "DELETE",
+    "sortNum": 130000,
+    "created": "2023-02-17T02:37:15.423Z",
+    "modified": "2023-02-17T02:38:53.341Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "522b3185-5d54-45ce-96ed-d76ac3a7c59f",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Autocomplete",
+    "url": "{{base_url}}/lookup/values/autocomplete",
+    "method": "POST",
+    "sortNum": 140000,
+    "created": "2023-02-17T02:39:35.292Z",
+    "modified": "2023-02-17T02:43:02.152Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "\"B\"",
+      "form": []
+    },
     "tests": []
   }
 ]

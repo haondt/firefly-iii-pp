@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FireflyIIIppRunner.Abstractions.Models.Enums
+namespace FireflyIIIppRunner.Abstractions.AutoReconcile.Models.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum JoiningStrategyEnum

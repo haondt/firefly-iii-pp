@@ -5,6 +5,7 @@ using Firefly_iii_pp_Runner.Models.ThunderClient.Enums;
 using Firefly_iii_pp_Runner.Settings;
 using Firefly_pp_Runner.Extensions;
 using FireflyIIIpp.Core.Exceptions;
+using FireflyIIIppRunner.Abstractions;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -15,16 +16,16 @@ namespace Firefly_iii_pp_Runner.Services
     public class ThunderClientEditorService
     {
         private readonly ThunderClientEditorSettings _settings;
+        private readonly IPersistenceService _persistenceService;
         private JsonSerializerSettings _serializerSettings;
 
-        public ThunderClientEditorService(IOptions<ThunderClientEditorSettings> options)
+        public ThunderClientEditorService(IOptions<ThunderClientEditorSettings> options, IPersistenceService persistenceService)
         {
             _settings = options.Value;
-            if (!Directory.Exists(_settings.Path))
-                throw new Exception($"Path does not exist: {_settings.Path}");
-
             _serializerSettings = new JsonSerializerSettings();
             _serializerSettings.ConfigureFireflyppRunnerSettings();
+            _persistenceService = persistenceService;
+            _persistenceService.AssertCollectionExists(_settings.Path);
         }
 
         public async Task<List<string>> GetFolderNames()
@@ -83,11 +84,9 @@ namespace Firefly_iii_pp_Runner.Services
             var collection = collections.FirstOrDefault(c => c.ColName == _settings.CollectionName, null);
             if (collection == null) throw new NotFoundException($"Unable to find collection with name {_settings.CollectionName}");
             var clients = await LoadClients();
-
             Sort(collection, clients);
-
-            SaveCollections(collections);
-            SaveClients(clients);
+            await SaveCollections(collections);
+            await SaveClients(clients);
         }
 
         private void Sort(Collection collection, List<Client> clients)
@@ -194,8 +193,8 @@ namespace Firefly_iii_pp_Runner.Services
 
             Sort(collection, clients);
 
-            SaveCollections(collections);
-            SaveClients(clients);
+            await SaveCollections(collections);
+            await SaveClients(clients);
 
             return (folder, client);
         }
@@ -212,8 +211,8 @@ namespace Firefly_iii_pp_Runner.Services
             foreach (var item in postmanCollection.Item)
                 TransferPostmanItemToThunderClient(item, collection, clients);
 
-            SaveCollections(existingCollections);
-            SaveClients(clients.Select(kvp => kvp.Value).ToList());
+            await SaveCollections(existingCollections);
+            await SaveClients(clients.Select(kvp => kvp.Value).ToList());
         }
 
         private void TransferPostmanItemToThunderClient(Models.Postman.Item item, Collection collection, Dictionary<string, Client> clients)
@@ -344,53 +343,23 @@ namespace Firefly_iii_pp_Runner.Services
 
         private  Task<List<Client>> LoadClients()
         {
-            return ReadFromFileAsync<List<Client>>(Path.Combine(_settings.Path, _settings.ClientFile));
+            return _persistenceService.ReadAsync<List<Client>>(_settings.Path, _settings.ClientFile);
         }
-        private void SaveClients(List<Client> clients)
+
+        private Task SaveClients(List<Client> clients)
         {
-            WriteToFile(Path.Combine(_settings.Path, _settings.ClientFile), clients);
+            return _persistenceService.WriteAsync(_settings.Path, _settings.ClientFile, clients);
         }
 
         private Task<List<Collection>> LoadCollections()
         {
-            return ReadFromFileAsync<List<Collection>>(Path.Combine(_settings.Path, _settings.CollectionFile));
+            return _persistenceService.ReadAsync<List<Collection>>(_settings.Path, _settings.CollectionFile);
         }
 
-        private void SaveCollections(List<Collection> collections)
+        private Task SaveCollections(List<Collection> collections)
         {
-            WriteToFile(Path.Combine(_settings.Path, _settings.CollectionFile), collections);
+            return _persistenceService.WriteAsync(_settings.Path, _settings.CollectionFile, collections);
         }
 
-        private async Task<T> ReadFromFileAsync<T>(string path)
-        {
-            if (!File.Exists(path))
-                throw new Exception($"File does not exist: {path}");
-            using var reader = new StreamReader(path, new FileStreamOptions
-            {
-                Access = FileAccess.Read,
-                BufferSize = 4096, 
-                Mode = FileMode.Open,
-                Options = FileOptions.Asynchronous | FileOptions.SequentialScan
-            });
-
-            var text = await reader.ReadToEndAsync();
-
-            return JsonConvert.DeserializeObject<T>(text, _serializerSettings);
-        }
-        private void WriteToFile<T>(string path, T obj)
-        {
-            if (!File.Exists(path))
-                throw new Exception($"File does not exist: {path}");
-            using var writer = new StreamWriter(path, new FileStreamOptions
-            {
-                Access = FileAccess.Write,
-                BufferSize = 4096, 
-                Mode = FileMode.Create,
-                Options = FileOptions.Asynchronous | FileOptions.SequentialScan
-            });
-
-            var serializer = JsonSerializer.CreateDefault(_serializerSettings);
-            serializer.Serialize(writer, obj);
-        }
     }
 }

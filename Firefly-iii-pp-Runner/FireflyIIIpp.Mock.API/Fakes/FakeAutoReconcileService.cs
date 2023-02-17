@@ -1,8 +1,9 @@
 ﻿using Bogus;
 using FireflyIIIpp.Core.Exceptions;
 using FireflyIIIppRunner.Abstractions;
-using FireflyIIIppRunner.Abstractions.Models;
-using FireflyIIIppRunner.Abstractions.Models.Dtos;
+using FireflyIIIppRunner.Abstractions.AutoReconcile;
+using FireflyIIIppRunner.Abstractions.AutoReconcile.Models;
+using FireflyIIIppRunner.Abstractions.AutoReconcile.Models.Dtos;
 
 namespace FireflyIIIpp.Mock.API.Fakes
 {

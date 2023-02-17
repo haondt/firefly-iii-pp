@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Firefly-pp-Runner\Firefly-pp-Runner.csproj" />
+    <ProjectReference Include="..\FireflyIIIpp.Core.Tests.Utilities\FireflyIIIpp.Core.Tests.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

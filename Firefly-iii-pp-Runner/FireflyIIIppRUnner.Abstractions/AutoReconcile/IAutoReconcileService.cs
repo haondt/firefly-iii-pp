@@ -1,11 +1,11 @@
-﻿using FireflyIIIppRunner.Abstractions.Models.Dtos;
+﻿using FireflyIIIppRunner.Abstractions.AutoReconcile.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FireflyIIIppRunner.Abstractions
+namespace FireflyIIIppRunner.Abstractions.AutoReconcile
 {
     public interface IAutoReconcileService
     {

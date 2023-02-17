@@ -1,18 +1,6 @@
 {
   "keys": [
     {
-      "key": "Bar2",
-      "value": "Bar"
-    },
-    {
-      "key": "Bar",
-      "value": "Bar"
-    },
-    {
-      "key": "FINALE",
-      "value": "Final"
-    },
-    {
       "key": "FOOOOOOOO",
       "value": "Foo"
     },
@@ -30,14 +18,6 @@
     }
   ],
   "values": [
-    {
-      "key": "Bar",
-      "value": "[\n    \"beans\n\"]"
-    },
-    {
-      "key": "Final",
-      "value": "{}"
-    },
     {
       "key": "Foo",
       "value": "[\n    \"beans\n\"]"

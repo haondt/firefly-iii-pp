@@ -68,3 +68,45 @@
 .request-row {
     height: 350px;
 }
+
+.key-table-container {
+    background: #242424;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+table.key-table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.key-table > tr > th {
+    font-weight: normal;
+}
+
+table.key-table > tr > td {
+    text-align: left;
+}
+
+table.key-table > tr > td > .mat-icon {
+    display: block;
+    margin: auto;
+}
+
+table.key-table > tr > td, table.key-table > tr > th {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+
+table.key-table > tr {
+    border-bottom: 1px solid grey;
+}
+table.key-table > tr:last-child {
+    border-bottom: none;
+}

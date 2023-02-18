@@ -39,6 +39,8 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
 
         public async Task<(bool Success, IKeyValueStoreService KeyValueStoreService)> TryGetKeyValueStoreService(string store)
         {
+            if (string.IsNullOrWhiteSpace(store))
+                return (false, null);
             if(!_keyValueStores.ContainsKey(store))
             {
                 if (!_settings.Stores.ContainsKey(store))

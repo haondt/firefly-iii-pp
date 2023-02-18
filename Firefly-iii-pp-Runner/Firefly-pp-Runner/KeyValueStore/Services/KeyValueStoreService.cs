@@ -220,8 +220,6 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
 
         public async Task<List<string>> AutocompleteValue(string partialValue)
         {
-            if (string.IsNullOrWhiteSpace(partialValue))
-                return new List<string>();
             var store = await SafeGetStore();
             return store.Values.Keys
                 .Where(s => s.Contains(partialValue, StringComparison.InvariantCultureIgnoreCase))

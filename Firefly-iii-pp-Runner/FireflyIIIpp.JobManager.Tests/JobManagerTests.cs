@@ -34,8 +34,7 @@ namespace FireflyIIIpp.Tests
                 new FakeLogger<JobManager>(),
                 _fireflyIIIService,
                 _nodeRedService);
-            _serializerSettings = new JsonSerializerSettings();
-            _serializerSettings.ConfigureFireflyppRunnerSettings();
+            _serializerSettings = new JsonSerializerSettings().ConfigureFireflyppRunnerSettings();
         }
 
         [Fact]

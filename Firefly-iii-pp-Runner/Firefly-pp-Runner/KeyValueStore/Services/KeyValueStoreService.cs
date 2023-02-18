@@ -87,6 +87,9 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
 
         private async Task InternalReadFromStorage()
         {
+            if (_settings.CreatePaths && _persistenceService.CollectionExists(_collection) && !_persistenceService.PathExists(_collection, _settings.Path))
+                await _persistenceService.CreatePathAndWriteAsync(_collection, _settings.Path, new KeyValueStoreStorage());
+
             _persistenceService.AssertPathExists(_collection, _settings.Path);
              var storage = await _persistenceService.ReadAsync<KeyValueStoreStorage>(_collection, _settings.Path);
             _store = new KeyValueStoreStore
@@ -98,12 +101,14 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
 
         private async Task InternalWriteToStorage()
         {
-            await _persistenceService.WriteAsync(_collection, _settings.Path, new KeyValueStoreStorage
+            Func<string, string, KeyValueStoreStorage, Task> writeFunc = _persistenceService.WriteAsync;
+            if (_settings.CreatePaths && _persistenceService.CollectionExists(_collection) && !_persistenceService.PathExists(_collection, _settings.Path))
+                writeFunc = _persistenceService.CreatePathAndWriteAsync;
+
+            await writeFunc(_collection, _settings.Path, new KeyValueStoreStorage
             {
-                Keys = _store.Keys.OrderBy(i => i.Value)
-                    .ToList(),
-                Values = _store.Values.OrderBy(i => i.Key)
-                    .ToList()
+                Keys = _store.Keys.OrderBy(i => i.Value).ToList(),
+                Values = _store.Values.OrderBy(i => i.Key).ToList()
             });
         }
 
@@ -111,27 +116,15 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
         {
             if (!await _semaphoreSlim.WaitAsync(1000))
                 throw new Exception("Unable to acquire semaphore within the time limit");
-            try
-            {
-                await func();
-            }
-            finally
-            {
-                _semaphoreSlim.Release();
-            }
+            try { await func(); }
+            finally { _semaphoreSlim.Release(); }
         }
         private async Task<T> TryAcquireSemaphoreAnd<T>(Func<Task<T>> func)
         {
             if (!await _semaphoreSlim.WaitAsync(1000))
                 throw new Exception("Unable to acquire semaphore within the time limit");
-            try
-            {
-                return await func();
-            }
-            finally
-            {
-                _semaphoreSlim.Release();
-            }
+            try { return await func(); }
+            finally { _semaphoreSlim.Release(); }
         }
 
         public Task ReadFromStorage()
@@ -261,15 +254,15 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             return (true, store.Values[value]);
         }
 
-        public async Task<(bool Success, string Reason, string ValueValue)> GetKeyValueValue(string key)
+        public async Task<(bool Success, string Reason, string Value, string ValueValue)> GetKeyValueValue(string key)
         {
             var store = await SafeGetStore();
             if (store.Keys.TryGetValue(key, out var value))
                 if (store.Values.TryGetValue(value, out var valueValue))
-                    return (true, null, valueValue);
+                    return (true, null, value, valueValue);
                 else
                     throw new Exception("KeyValueStore data is corrupted");
-            return (false, $"Key not found", null);
+            return (false, $"Key not found", null, null);
         }
     }
 }

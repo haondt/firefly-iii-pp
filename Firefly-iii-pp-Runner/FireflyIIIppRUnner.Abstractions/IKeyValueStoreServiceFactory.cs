@@ -10,7 +10,7 @@ namespace FireflyIIIppRunner.Abstractions
     public interface IKeyValueStoreServiceFactory
     {
         public List<string> GetAvailableStores();
-        public IKeyValueStoreService GetKeyValueStoreService(string store);
-        public bool TryGetKeyValueStoreService(string store, out IKeyValueStoreService keyValueStoreService);
+        public Task<IKeyValueStoreService> GetKeyValueStoreService(string store);
+        public Task<(bool Success, IKeyValueStoreService KeyValueStoreService)> TryGetKeyValueStoreService(string store);
     }
 }

@@ -56,7 +56,7 @@ namespace FireflyIIIppRunner.Abstractions.KeyValueStore
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public Task<(bool Success, string Reason, string ValueValue)> GetKeyValueValue(string key);
+        public Task<(bool Success, string Reason, string Value, string ValueValue)> GetKeyValueValue(string key);
 
         /// <summary>
         /// Get the valueValue that <paramref name="value"/> maps to.

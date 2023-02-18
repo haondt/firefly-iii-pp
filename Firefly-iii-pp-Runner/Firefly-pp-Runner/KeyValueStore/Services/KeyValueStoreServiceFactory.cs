@@ -15,7 +15,8 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
     {
         private readonly KeyValueStoreSettings _settings;
         private readonly IPersistenceService _persistenceService;
-        private readonly Dictionary<string, IKeyValueStoreService> _keyValueStores = new Dictionary<string,IKeyValueStoreService>();
+        private readonly Dictionary<string, KeyValueStoreService> _keyValueStores = new Dictionary<string,KeyValueStoreService>();
+        private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
         public KeyValueStoreServiceFactory(IPersistenceService persistenceService,
             IOptions<KeyValueStoreSettings> options)
@@ -29,31 +30,34 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             return _settings.Stores.Keys.ToList();
         }
 
-        public IKeyValueStoreService GetKeyValueStoreService(string store)
+        public async Task<IKeyValueStoreService> GetKeyValueStoreService(string store)
         {
-            if (TryGetKeyValueStoreService(store, out var storeService))
-                return storeService;
-            throw new NotFoundException(store);
+            var (s, kvss) = await TryGetKeyValueStoreService(store);
+            return s ? kvss : throw new NotFoundException(store);
         }
 
 
-        public bool TryGetKeyValueStoreService(string store, out IKeyValueStoreService storeService)
+        public async Task<(bool Success, IKeyValueStoreService KeyValueStoreService)> TryGetKeyValueStoreService(string store)
         {
             if(!_keyValueStores.ContainsKey(store))
             {
                 if (!_settings.Stores.ContainsKey(store))
-                {
-                    storeService = null;
-                    return false;
-                }
+                    return (false, null);
                 _keyValueStores[store] = new KeyValueStoreService(
                     _settings.Collection,
                     _settings.AutocompleteMaxResults,
                     _settings.Stores[store],
                     _persistenceService);
+
+                if (_settings.CreateCollections && !_persistenceService.CollectionExists(_settings.Collection))
+                {
+                    if (!await _semaphoreSlim.WaitAsync(1000))
+                        throw new Exception("Unable to acquire semaphore within the time limit");
+                    try { await _persistenceService.CreateCollectionAsync(_settings.Collection); }
+                    finally { _semaphoreSlim.Release(); }
+                }
             }
-            storeService = _keyValueStores[store];
-            return true;
+            return (true, _keyValueStores[store]);
         }
     }
 }

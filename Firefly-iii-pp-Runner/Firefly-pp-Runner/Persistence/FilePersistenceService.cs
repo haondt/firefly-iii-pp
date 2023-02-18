@@ -15,13 +15,16 @@ namespace Firefly_pp_Runner.Persistence
 
         public FilePersistenceService()
         {
-            _serializerSettings = new JsonSerializerSettings();
-            _serializerSettings.ConfigureFireflyppRunnerSettings();
+            _serializerSettings = new JsonSerializerSettings().ConfigureFireflyppRunnerSettings();
+        }
+        public bool CollectionExists(string collection)
+        {
+            return Directory.Exists(collection);
         }
 
         public void AssertCollectionExists(string collection)
         {
-            if (!Directory.Exists(collection))
+            if (!CollectionExists(collection))
                 throw new Exception($"Directory does not exist: {collection}");
         }
 
@@ -68,5 +71,21 @@ namespace Firefly_pp_Runner.Persistence
             return Task.CompletedTask;
         }
 
+        public Task CreateCollectionAsync(string collection)
+        {
+            if (Directory.Exists(collection))
+                throw new ArgumentException($"Collection already exists: {collection}");
+            Directory.CreateDirectory(collection);
+            return Task.CompletedTask;
+        }
+
+        public Task CreatePathAndWriteAsync<T>(string collection, string path, T obj)
+        {
+            AssertCollectionExists(collection);
+            if (PathExists(collection, path))
+                throw new ArgumentException($"Path already exists: {path}");
+            File.Create(Path.Combine(collection, path));
+            return WriteAsync(collection, path, obj);
+        }
     }
 }

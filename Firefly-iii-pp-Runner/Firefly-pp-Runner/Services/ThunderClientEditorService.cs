@@ -22,8 +22,7 @@ namespace Firefly_iii_pp_Runner.Services
         public ThunderClientEditorService(IOptions<ThunderClientEditorSettings> options, IPersistenceService persistenceService)
         {
             _settings = options.Value;
-            _serializerSettings = new JsonSerializerSettings();
-            _serializerSettings.ConfigureFireflyppRunnerSettings();
+            _serializerSettings = new JsonSerializerSettings().ConfigureFireflyppRunnerSettings();
             _persistenceService = persistenceService;
             _persistenceService.AssertCollectionExists(_settings.Path);
         }

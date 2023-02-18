@@ -27,8 +27,7 @@ namespace Firefly_iii_pp_Runner.Services
             _fireflyIII = fireflyIII;
             _nodeRed = nodeRed;
             _status = new RunnerStatus();
-            _serializerSettings = new JsonSerializerSettings();
-            _serializerSettings.ConfigureFireflyppRunnerSettings();
+            _serializerSettings = new JsonSerializerSettings().ConfigureFireflyppRunnerSettings();
         }
 
         public RunnerStatus GetStatus()

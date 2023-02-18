@@ -504,7 +504,7 @@
     "method": "POST",
     "sortNum": 89218.8,
     "created": "2023-02-17T02:19:56.481Z",
-    "modified": "2023-02-18T03:20:09.721Z",
+    "modified": "2023-02-18T18:31:23.782Z",
     "headers": [],
     "params": [],
     "body": {
@@ -633,11 +633,11 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Get Key -> ValueValue",
-    "url": "{{base_url}}/lookup/action/storeTwo/get-key-value-value",
+    "url": "{{base_url}}/lookup/action/store/get-key-value-value",
     "method": "POST",
     "sortNum": 88750,
     "created": "2023-02-18T01:32:47.743Z",
-    "modified": "2023-02-18T03:20:28.102Z",
+    "modified": "2023-02-18T18:32:18.917Z",
     "headers": [],
     "params": [],
     "body": {

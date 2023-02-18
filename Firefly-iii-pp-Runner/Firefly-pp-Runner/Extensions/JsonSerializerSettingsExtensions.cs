@@ -12,13 +12,14 @@ namespace Firefly_pp_Runner.Extensions
 {
     public static class JsonSerializerSettingsExtensions
     {
-        public static void ConfigureFireflyppRunnerSettings(this JsonSerializerSettings settings)
+        public static JsonSerializerSettings ConfigureFireflyppRunnerSettings(this JsonSerializerSettings settings)
         {
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             settings.Converters.Add(new ItemConverter());
             settings.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Error;
             settings.Formatting = Newtonsoft.Json.Formatting.Indented;
             settings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            return settings;
         }
 
     }

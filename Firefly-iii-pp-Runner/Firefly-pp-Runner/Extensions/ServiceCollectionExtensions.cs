@@ -38,7 +38,7 @@ namespace Firefly_iii_pp_Runner.Extensions
             services.AddSingleton<IPersistenceService, FilePersistenceService>();
             return services;
         }
-        public static IServiceCollection AddMemoryPersistenceServices(this IServiceCollection services)
+        public static IServiceCollection AddMemoryPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IPersistenceService, MemoryPersistenceService>();
             return services;

@@ -24,6 +24,21 @@ namespace FireflyIIIpp.Core.Tests.Utilities.Services
                 throw new KeyNotFoundException();
         }
 
+        public bool CollectionExists(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreateCollectionAsync(string collection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreatePathAndWriteAsync<T>(string collection, string path, T obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool PathExists(string collection, string path)
         {
             return Store.TryGetValue(collection, out var result) && result.ContainsKey(path);

@@ -33,7 +33,7 @@ namespace Firefly_pp_Runner.Controllers
         [Route("read/{store}")]
         public async Task<IActionResult> ReadFromStorage(string store)
         {
-            await _kvsFactory.GetKeyValueStoreService(store).ReadFromStorage();
+            await(await _kvsFactory.GetKeyValueStoreService(store)).ReadFromStorage();
             return new OkResult();
         }
 
@@ -41,7 +41,7 @@ namespace Firefly_pp_Runner.Controllers
         [Route("write/{store}")]
         public async Task<IActionResult> WriteToStorage(string store)
         {
-            await _kvsFactory.GetKeyValueStoreService(store).WriteToStorage();
+            await (await _kvsFactory.GetKeyValueStoreService(store)).WriteToStorage();
             return new OkResult();
         }
 
@@ -64,7 +64,8 @@ namespace Firefly_pp_Runner.Controllers
         [Route("action/{store}/{lookupAction}")]
         public async Task<IActionResult> TakeAction(string store, [ModelBinder(BinderType =typeof(LookupActionEnumModelBinder<LookupActionEnum>))] LookupActionEnum lookupAction, [FromBody] LookupActionRequestDto dto)
         {
-            if(!_kvsFactory.TryGetKeyValueStoreService(store, out var kvService))
+            var (gotKvs, kvService) = await _kvsFactory.TryGetKeyValueStoreService(store);
+            if(!gotKvs)
                 return new NotFoundObjectResult(new ExceptionDto
                 {
                     StatusCode = (int)HttpStatusCode.NotFound,
@@ -92,8 +93,12 @@ namespace Firefly_pp_Runner.Controllers
                     }
                 case LookupActionEnum.GetKeyValueValue:
                     {
-                        var (s, re, r) = await kvService.GetKeyValueValue(dto.Key);
-                        return s ? new OkObjectResult(r) : BuildNotFoundExceptionResultDto(re, dto.Key);
+                        var (s, re, v, vv) = await kvService.GetKeyValueValue(dto.Key);
+                        return s ? new OkObjectResult(new ValueValueValueDto
+                        {
+                            Value = v,
+                            ValueValue = vv
+                        }) : BuildNotFoundExceptionResultDto(re, dto.Key);
                     }
                 case LookupActionEnum.DeleteValue:
                     await kvService.DeleteValue(dto.Value);

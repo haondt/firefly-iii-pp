@@ -16,8 +16,7 @@ namespace Firefly_pp_Runner.ModelBinders
             {
                 if (_jsonSerializerSettingsInstance == null)
                 {
-                    _jsonSerializerSettingsInstance = new JsonSerializerSettings();
-                    _jsonSerializerSettingsInstance.ConfigureFireflyppRunnerSettings();
+                    _jsonSerializerSettingsInstance = new JsonSerializerSettings().ConfigureFireflyppRunnerSettings();
                 }
                 return _jsonSerializerSettingsInstance;
             } }

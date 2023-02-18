@@ -1,9 +1,17 @@
 ﻿using Firefly_iii_pp_Runner.Controllers;
+using Firefly_pp_Runner.Extensions;
+using Firefly_pp_Runner.ModelBinders;
+using Firefly_pp_Runner.Models.Lookup.Dtos;
+using Firefly_pp_Runner.Models.Lookup.Enums;
+using FireflyIIIpp.Core.Exceptions;
+using FireflyIIIpp.Core.Models.Dtos;
+using FireflyIIIppRunner.Abstractions;
 using FireflyIIIppRunner.Abstractions.KeyValueStore;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,80 +20,114 @@ namespace Firefly_pp_Runner.Controllers
     [Route("api/v1/lookup")]
     public class LookupController : BaseController
     {
-        private readonly IKeyValueStoreService _kvService;
+        private readonly IKeyValueStoreServiceFactory _kvsFactory;
 
-        public LookupController(IKeyValueStoreService kvService)
+        public LookupController(IKeyValueStoreServiceFactory kvsFactory)
         {
-            _kvService = kvService;
+            _kvsFactory = kvsFactory;
         }
 
-        [HttpPost]
-        [Route("read")]
-        public async Task<IActionResult> ReadFromStorage()
-        {
-            await _kvService.ReadFromStorage();
-            return new OkResult();
-        }
+        // Todo: maybe just a couple endpoints with a payload that decides what exactly is to be done. THen just only post to itt was 
 
         [HttpPost]
-        [Route("write")]
-        public async Task<IActionResult> WriteToStorage()
+        [Route("read/{store}")]
+        public async Task<IActionResult> ReadFromStorage(string store)
         {
-            await _kvService.WriteToStorage();
-            return new OkResult();
-        }
-
-        [HttpGet]
-        [Route("values/{value}/keys")]
-        public async Task<IActionResult> GetKeys(string value)
-        {
-            return new OkObjectResult(await _kvService.GetKeys(value));
-        }
-
-        [HttpPost]
-        [Route("values/{value}/keys/{key}")]
-        public async Task<IActionResult> AddKey(string key, string value)
-        {
-            await _kvService.AddKey(key, value);
-            return new OkResult();
-        }
-
-        [HttpDelete]
-        [Route("keys/{key}")]
-        public async Task<IActionResult> DeleteKey(string key)
-        {
-            await _kvService.DeleteKey(key);
-            return new NoContentResult();
-        }
-
-        [HttpGet]
-        [Route("values/{value}")]
-        public async Task<IActionResult> GetValue(string value)
-        {
-            return new OkObjectResult(await _kvService.GetValue(value));
-        }
-
-        [HttpPut]
-        [Route("values/{value}")]
-        public async Task<IActionResult> UpdateValue(string value, [FromBody] string valueValue)
-        {
-            await _kvService.UpdateValue(value, valueValue);
-            return new OkResult();
-        }
-        
-        [HttpDelete]
-        [Route("values/{value}")]
-        public async Task<IActionResult> DeleteValue(string value)
-        {
-            await _kvService.DeleteValue(value);
+            await _kvsFactory.GetKeyValueStoreService(store).ReadFromStorage();
             return new OkResult();
         }
 
         [HttpPost]
-        [Route("values/autocomplete")]
-        public async Task<IActionResult> AutocompleteValue([FromBody] string partialValue)
+        [Route("write/{store}")]
+        public async Task<IActionResult> WriteToStorage(string store)
         {
-            return new OkObjectResult(await _kvService.AutocompleteValue(partialValue));
+            await _kvsFactory.GetKeyValueStoreService(store).WriteToStorage();
+            return new OkResult();
+        }
+
+        /// <summary>
+        /// Workaround needed because json string escaping seems much more robust than url encoding.
+        /// See: https://github.com/dotnet/aspnetcore/issues/23633 and https://github.com/dotnet/aspnetcore/issues/11544.
+        /// Also because you can't (read: shouldn't) provide a json payload in a GET request.
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="lookupAction"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("action/{store}/{lookupAction}")]
+        public async Task<IActionResult> TakeAction(string store, [ModelBinder(BinderType =typeof(LookupActionEnumModelBinder<LookupActionEnum>))] LookupActionEnum lookupAction, [FromBody] LookupActionRequestDto dto)
+        {
+            if(!_kvsFactory.TryGetKeyValueStoreService(store, out var kvService))
+                return new NotFoundObjectResult(new ExceptionDto
+                {
+                    StatusCode = (int)HttpStatusCode.NotFound,
+                    Message = "The requested store was not found",
+                    Details = store
+                });
+
+            dto.AssertVerifyContentsForAction(lookupAction);
+            switch (lookupAction)
+            {
+                case LookupActionEnum.GetKeys:
+                    {
+                        var (s, r) = await kvService.GetKeys(dto.Value);
+                        return s ? new OkObjectResult(r) : BuildNotFoundExceptionResultDto(dto.Value);
+                    }
+                case LookupActionEnum.GetKeyValue:
+                    {
+                        var (s, re, r) = await kvService.GetKeyValue(dto.Key);
+                        return s ? new OkObjectResult(r) : BuildNotFoundExceptionResultDto(re, dto.Key);
+                    }
+                case LookupActionEnum.GetValueValue:
+                    {
+                        var (s, r) = await kvService.GetValueValue(dto.Value);
+                        return s ? new OkObjectResult(r) : BuildNotFoundExceptionResultDto(dto.Value);
+                    }
+                case LookupActionEnum.GetKeyValueValue:
+                    {
+                        var (s, re, r) = await kvService.GetKeyValueValue(dto.Key);
+                        return s ? new OkObjectResult(r) : BuildNotFoundExceptionResultDto(re, dto.Key);
+                    }
+                case LookupActionEnum.DeleteValue:
+                    await kvService.DeleteValue(dto.Value);
+                    return new OkResult();
+                case LookupActionEnum.AddKey:
+                    await kvService.AddKey(dto.Key, dto.Value);
+                    return new OkResult();
+                case LookupActionEnum.DeleteKey:
+                    await kvService.DeleteKey(dto.Key);
+                    return new NoContentResult();
+                case LookupActionEnum.PutValue:
+                    await kvService.UpdateValue(dto.Value, dto.ValueValue);
+                    return new OkResult();
+                case LookupActionEnum.AutoCompleteValue:
+                    return new OkObjectResult(await kvService.AutocompleteValue(dto.PartialValue));
+                case LookupActionEnum.None:
+                    throw new ArgumentException(nameof(lookupAction));
+                default:
+                    throw new Exception($"Unexpeceted action: {lookupAction}.");
+            }
+        }
+
+        private IActionResult BuildNotFoundExceptionResultDto(string details)
+        {
+            return new NotFoundObjectResult(new ExceptionDto
+            {
+                StatusCode = (int)HttpStatusCode.NotFound,
+                Message = "The requested resource was not found",
+                Details = details,
+                Exception = nameof(NotFoundException)
+            });
+        }
+        private IActionResult BuildNotFoundExceptionResultDto(string message, string details)
+        {
+            return new NotFoundObjectResult(new ExceptionDto
+            {
+                StatusCode = (int)HttpStatusCode.NotFound,
+                Message = message,
+                Details = details,
+                Exception = nameof(NotFoundException)
+            });
         }
     }
 }

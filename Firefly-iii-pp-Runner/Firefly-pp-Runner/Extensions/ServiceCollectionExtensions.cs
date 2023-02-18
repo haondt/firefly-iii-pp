@@ -27,7 +27,7 @@ namespace Firefly_iii_pp_Runner.Extensions
             services.AddSingleton<JobManager>();
             services.AddSingleton<ThunderClientEditorService>();
             services.AddSingleton<IAutoReconcileService, AutoReconcileService>();
-            services.AddSingleton<IKeyValueStoreService, KeyValueStoreService>();
+            services.AddSingleton<IKeyValueStoreServiceFactory, KeyValueStoreServiceFactory>();
 
 
             return services;

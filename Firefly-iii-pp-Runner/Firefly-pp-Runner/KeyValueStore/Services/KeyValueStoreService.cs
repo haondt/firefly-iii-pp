@@ -26,15 +26,22 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
 
     public class KeyValueStoreService : IKeyValueStoreService, IDisposable
     {
-        private readonly KeyValueStoreSettings _settings;
         private KeyValueStoreStore _store;
+        private readonly string _collection;
+        private readonly int _autoCompleteMaxResults;
+        private readonly KeyValueStoreStoreSettings _settings;
         private readonly IPersistenceService _persistenceService;
         private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
-        private Guid? _executionThread;
 
-        public KeyValueStoreService(IOptions<KeyValueStoreSettings> options, IPersistenceService persistenceService)
+        public KeyValueStoreService(
+            string collection,
+            int autoCompleteMaxResults,
+            KeyValueStoreStoreSettings settings,
+            IPersistenceService persistenceService)
         {
-            _settings = options.Value;
+            _collection = collection;
+            _autoCompleteMaxResults = autoCompleteMaxResults;
+            _settings = settings;
             _persistenceService = persistenceService;
         }
 
@@ -43,7 +50,7 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             if (_store != null)
                 return _store;
 
-            if (_persistenceService.PathExists(_settings.Collection, _settings.Path))
+            if (_persistenceService.PathExists(_collection, _settings.Path))
             {
                 await InternalReadFromStorage();
             }
@@ -54,11 +61,34 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             }
             return _store;
         }
+        private async Task<KeyValueStoreStore> SafeGetStore()
+        {
+            if (_store != null)
+                return _store;
+
+            return await TryAcquireSemaphoreAnd(async () =>
+            {
+                if (_store != null)
+                    return _store;
+
+                if (_persistenceService.PathExists(_collection, _settings.Path))
+                {
+                    await InternalReadFromStorage();
+                }
+                else
+                {
+                    _store = new KeyValueStoreStore();
+                    await InternalWriteToStorage();
+                }
+
+                return _store;
+            });
+        }
 
         private async Task InternalReadFromStorage()
         {
-            _persistenceService.AssertPathExists(_settings.Collection, _settings.Path);
-             var storage = await _persistenceService.ReadAsync<KeyValueStoreStorage>(_settings.Collection, _settings.Path);
+            _persistenceService.AssertPathExists(_collection, _settings.Path);
+             var storage = await _persistenceService.ReadAsync<KeyValueStoreStorage>(_collection, _settings.Path);
             _store = new KeyValueStoreStore
             {
                 Keys = storage.Keys.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
@@ -68,7 +98,7 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
 
         private async Task InternalWriteToStorage()
         {
-            await _persistenceService.WriteAsync(_settings.Collection, _settings.Path, new KeyValueStoreStorage
+            await _persistenceService.WriteAsync(_collection, _settings.Path, new KeyValueStoreStorage
             {
                 Keys = _store.Keys.OrderBy(i => i.Value)
                     .ToList(),
@@ -115,20 +145,20 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
         }
 
 
-        private async Task<List<string>> InternalGetKeys(string value)
+        private async Task<(bool Success, List<string> Keys)> InternalGetKeys(string value, KeyValueStoreStore store)
         {
-            var store = await GetStore();
             if (!store.Values.ContainsKey(value))
-                throw new NotFoundException(value);
+                return (false, null);
             var keys = store.Keys.Where(kvp => kvp.Value == value).Select(kvp => kvp.Key).ToList();
             if (keys.Count == 0)
                 throw new Exception("KeyValueStore data is corrupted");
-            return keys;
+            return (true, keys);
         }
 
-        public Task<List<string>> GetKeys(string value)
+        public async Task<(bool Success, List<string> Keys)> GetKeys(string value)
         {
-            return TryAcquireSemaphoreAnd(() => InternalGetKeys(value));
+            var store = await SafeGetStore();
+            return await InternalGetKeys(value, store);
         }
 
         public  Task AddKey(string key, string value)
@@ -167,16 +197,6 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             });
         }
 
-        public Task<string> GetValue(string value)
-        {
-            return TryAcquireSemaphoreAnd(async () =>
-            {
-                var store = await GetStore();
-                if (!store.Values.ContainsKey(value))
-                    throw new NotFoundException(value);
-                return store.Values[value];
-            });
-        }
 
         public Task UpdateValue(string value, string valueValue)
         {
@@ -195,7 +215,9 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             return TryAcquireSemaphoreAnd(async () =>
             {
                 var store = await GetStore();
-                var keys = await InternalGetKeys(value);
+                var (success, keys) = await InternalGetKeys(value, store);
+                if (!success)
+                    throw new NotFoundException(value);
                 foreach (var key in keys)
                     store.Keys.Remove(key);
                 store.Values.Remove(value);
@@ -203,20 +225,51 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             });
         }
 
-        public Task<List<string>> AutocompleteValue(string partialValue)
+        public async Task<List<string>> AutocompleteValue(string partialValue)
         {
-            return TryAcquireSemaphoreAnd(async () =>
-            {
-                var store = await GetStore();
-                return store.Values.Keys
-                    .Where(s => s.Contains(partialValue, StringComparison.InvariantCultureIgnoreCase))
-                    .Take(_settings.AutocompleteMaxResults).ToList();
-            });
+            if (string.IsNullOrWhiteSpace(partialValue))
+                return new List<string>();
+            var store = await SafeGetStore();
+            return store.Values.Keys
+                .Where(s => s.Contains(partialValue, StringComparison.InvariantCultureIgnoreCase))
+                .Take(_autoCompleteMaxResults).ToList();
         }
 
         public void Dispose()
         {
             _semaphoreSlim.Dispose();
+        }
+
+        public Task<string> GetDefaultValueValue()
+        {
+            return Task.FromResult(_settings.DefaultValueValue);
+        }
+
+        public async Task<(bool Success, string Reason, string Value)> GetKeyValue(string key)
+        {
+            var store = await SafeGetStore();
+            if (store.Keys.TryGetValue(key, out var value))
+                return (true, null, value);
+            return (false, $"Key not found", null);
+        }
+
+        public async Task<(bool Success, string ValueValue)> GetValueValue(string value)
+        {
+            var store = await SafeGetStore();
+            if (!store.Values.ContainsKey(value))
+                return (false, null);
+            return (true, store.Values[value]);
+        }
+
+        public async Task<(bool Success, string Reason, string ValueValue)> GetKeyValueValue(string key)
+        {
+            var store = await SafeGetStore();
+            if (store.Keys.TryGetValue(key, out var value))
+                if (store.Values.TryGetValue(value, out var valueValue))
+                    return (true, null, valueValue);
+                else
+                    throw new Exception("KeyValueStore data is corrupted");
+            return (false, $"Key not found", null);
         }
     }
 }

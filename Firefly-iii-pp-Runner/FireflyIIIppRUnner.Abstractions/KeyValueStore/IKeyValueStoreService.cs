@@ -15,11 +15,17 @@ namespace FireflyIIIppRunner.Abstractions.KeyValueStore
         public Task WriteToStorage();
 
         /// <summary>
+        /// Return the default valueValue used when initializing a new value
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> GetDefaultValueValue();
+
+        /// <summary>
         /// Return all keys that are mapped to <paramref name="value"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<List<string>> GetKeys(string value);
+        public Task<(bool Success, List<string> Keys)> GetKeys(string value);
 
         /// <summary>
         /// Add a new entry for <paramref name="key"/>, mapping it to <paramref name="value"/>.
@@ -39,11 +45,26 @@ namespace FireflyIIIppRunner.Abstractions.KeyValueStore
         public Task DeleteKey(string key);
 
         /// <summary>
+        /// Get the value that <paramref name="key"/> maps to.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Task<(bool Success, string Reason, string Value)> GetKeyValue(string key);
+
+        /// <summary>
+        /// <paramref name="key"/> -> value -> valueValue.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Task<(bool Success, string Reason, string ValueValue)> GetKeyValueValue(string key);
+
+        /// <summary>
         /// Get the valueValue that <paramref name="value"/> maps to.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<string> GetValue(string value);
+        public Task<(bool Success, string ValueValue)> GetValueValue(string value);
+
 
         /// <summary>
         /// Update the valueValue for <paramref name="value"/>. Will throw exception if value does not already exist.

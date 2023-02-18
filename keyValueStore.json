@@ -1,6 +1,10 @@
 {
   "keys": [
     {
+      "key": "BARR",
+      "value": "Bar"
+    },
+    {
       "key": "!@#$%^&*()_+{}|:\"<>?-=[]\\;',.%2F`~(^){*}      ",
       "value": "Final"
     },
@@ -21,6 +25,10 @@
       "value": "Foo"
     },
     {
+      "key": "FOO",
+      "value": "Foo"
+    },
+    {
       "key": "FOOD",
       "value": "Food"
     },
@@ -30,6 +38,10 @@
     }
   ],
   "values": [
+    {
+      "key": "Bar",
+      "value": "[\n    \"beans2\n\"]"
+    },
     {
       "key": "Final",
       "value": "{}"

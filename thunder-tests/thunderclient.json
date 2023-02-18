@@ -453,11 +453,11 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Read",
-    "url": "{{base_url}}/lookup/read",
+    "url": "{{base_url}}/lookup/read/store",
     "method": "POST",
     "sortNum": 60000,
     "created": "2023-02-17T02:14:52.691Z",
-    "modified": "2023-02-17T02:15:20.793Z",
+    "modified": "2023-02-18T03:19:40.840Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -467,11 +467,11 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Write",
-    "url": "{{base_url}}/lookup/write",
+    "url": "{{base_url}}/lookup/write/store",
     "method": "POST",
     "sortNum": 70000,
     "created": "2023-02-17T02:14:59.331Z",
-    "modified": "2023-02-17T02:16:46.898Z",
+    "modified": "2023-02-17T22:44:24.804Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -481,13 +481,18 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Get keys",
-    "url": "{{base_url}}/lookup/values/Foo/keys",
-    "method": "GET",
+    "url": "{{base_url}}/lookup/action/store1/get-keys",
+    "method": "POST",
     "sortNum": 80000,
     "created": "2023-02-17T02:19:32.227Z",
-    "modified": "2023-02-17T03:54:03.231Z",
+    "modified": "2023-02-18T03:19:27.672Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"value\": \"Bar\"\n}",
+      "form": []
+    },
     "tests": []
   },
   {
@@ -495,13 +500,18 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Add key",
-    "url": "{{base_url}}/lookup/values/Final/keys/%2F%2F",
+    "url": "{{base_url}}/lookup/action/store/add-key",
     "method": "POST",
-    "sortNum": 90000,
+    "sortNum": 89218.8,
     "created": "2023-02-17T02:19:56.481Z",
-    "modified": "2023-02-17T04:47:29.283Z",
+    "modified": "2023-02-18T03:20:09.721Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"key\": \"FOO\",\n  \"value\": \"Foo\"\n}",
+      "form": []
+    },
     "tests": []
   },
   {
@@ -509,27 +519,37 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Delete key",
-    "url": "{{base_url}}/lookup/keys/Bar2",
-    "method": "DELETE",
-    "sortNum": 100000,
+    "url": "{{base_url}}/lookup/action/store/delete-key",
+    "method": "POST",
+    "sortNum": 89375,
     "created": "2023-02-17T02:33:01.035Z",
-    "modified": "2023-02-17T03:52:57.191Z",
+    "modified": "2023-02-18T01:33:33.655Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"key\": \"BAR\"\n}",
+      "form": []
+    },
     "tests": []
   },
   {
     "_id": "facfb10b-3dd9-48ca-ada5-eeb179bd4880",
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
-    "name": "Get value",
-    "url": "{{base_url}}/lookup/values/Bar",
-    "method": "GET",
-    "sortNum": 110000,
+    "name": "Get Key -> Value",
+    "url": "{{base_url}}/lookup/action/store/get-key-value",
+    "method": "POST",
+    "sortNum": 85000,
     "created": "2023-02-17T02:33:41.516Z",
-    "modified": "2023-02-17T02:37:56.941Z",
+    "modified": "2023-02-18T01:12:18.945Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"key\": \"BARR\"\n}",
+      "form": []
+    },
     "tests": []
   },
   {
@@ -537,16 +557,16 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Update value",
-    "url": "{{base_url}}/lookup/values/Foo",
-    "method": "PUT",
+    "url": "{{base_url}}/lookup/action/store/put-value",
+    "method": "POST",
     "sortNum": 120000,
     "created": "2023-02-17T02:34:32.691Z",
-    "modified": "2023-02-17T02:40:11.099Z",
+    "modified": "2023-02-18T01:36:05.824Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "\"[\\n    \\\"beans\\n\\\"]\"",
+      "raw": "{\n  \"value\": \"Bar\",\n  \"valueValue\": \"[\\n    \\\"beans2\\n\\\"]\"\n}\n",
       "form": []
     },
     "tests": []
@@ -556,13 +576,18 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Delete value",
-    "url": "{{base_url}}/lookup/values/Final",
-    "method": "DELETE",
-    "sortNum": 130000,
+    "url": "{{base_url}}/lookup/action/store/delete-value",
+    "method": "POST",
+    "sortNum": 89062.5,
     "created": "2023-02-17T02:37:15.423Z",
-    "modified": "2023-02-17T03:56:54.997Z",
+    "modified": "2023-02-18T01:35:06.450Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"value\": \"BARR\"\n}",
+      "form": []
+    },
     "tests": []
   },
   {
@@ -570,16 +595,54 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Autocomplete",
-    "url": "{{base_url}}/lookup/values/autocomplete",
+    "url": "{{base_url}}/lookup/action/store/autocomplete-value",
     "method": "POST",
     "sortNum": 140000,
     "created": "2023-02-17T02:39:35.292Z",
-    "modified": "2023-02-17T02:43:02.152Z",
+    "modified": "2023-02-18T01:37:29.167Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "\"B\"",
+      "raw": "{\n  \"partialValue\": \"\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f9d6cc7e-d5bd-4684-bca2-f8308f1575c5",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get Value -> ValueValue",
+    "url": "{{base_url}}/lookup/action/store/get-value-value",
+    "method": "POST",
+    "sortNum": 87500,
+    "created": "2023-02-18T01:32:21.264Z",
+    "modified": "2023-02-18T01:32:43.726Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"value\": \"Bar\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "d08f5297-515b-4936-b9c9-b4cf6b39c264",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get Key -> ValueValue",
+    "url": "{{base_url}}/lookup/action/storeTwo/get-key-value-value",
+    "method": "POST",
+    "sortNum": 88750,
+    "created": "2023-02-18T01:32:47.743Z",
+    "modified": "2023-02-18T03:20:28.102Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"key\": \"FOO\"\n}",
       "form": []
     },
     "tests": []

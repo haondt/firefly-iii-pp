@@ -33,7 +33,7 @@ namespace Firefly_pp_Runner.Persistence
         public void AssertPathExists(string collection, string path)
         {
             if (!PathExists(collection, path))
-                throw new Exception($"File does not exist: {path}");
+                throw new Exception($"File does not exist: {Path.Combine(collection, path)}");
         }
 
         public async Task<T> ReadAsync<T>(string collection, string path)

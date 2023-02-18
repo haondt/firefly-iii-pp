@@ -11,8 +11,9 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <mat-divider *ngIf="selectedStore"></mat-divider>
-            <div *ngIf="selectedStore" class="content-row">
+        </mat-card>
+        <mat-card *ngIf="selectedStore" class="content-card">
+            <div class="content-row">
                 <span>Map</span>
                 <mat-form-field appearance="fill" class="remove-padding">
                     <mat-label>Key</mat-label>
@@ -28,7 +29,7 @@
                 </mat-form-field>
                 <button color="accent" mat-raised-button (click)="addMap()">Add Map</button>
             </div>
-            <mat-divider *ngIf="selectedStore"></mat-divider>
+            <mat-divider></mat-divider>
             <div *ngIf="selectedStore" class="content-row">
                 <span>Get keys mapped to</span>
                 <mat-form-field class="remove-padding" appearance="fill">
@@ -40,7 +41,8 @@
                 </mat-form-field>
                 <button color="primary" mat-raised-button (click)="getKeys()">Get Keys</button>
             </div>
-            <div *ngIf="selectedStore && valueKeyMap && valueKeyMap.length > 0" class="content-row">
+            <mat-divider *ngIf="valueKeyMap && valueKeyMap.length > 0"></mat-divider>
+            <div *ngIf="valueKeyMap && valueKeyMap.length > 0" class="content-row">
                 <div class="key-table-container">
                     <table class="key-table">
                         <colgroup>
@@ -54,8 +56,9 @@
                     </table>
                 </div>
             </div>
-            <mat-divider *ngIf="selectedStore"></mat-divider>
-            <div *ngIf="selectedStore" class="content-row">
+        </mat-card>
+        <mat-card *ngIf="selectedStore" class="content-card">
+            <div class="content-row">
                 <span>Edit Value</span>
                 <mat-form-field class="remove-padding" appearance="fill">
                     <mat-label>Value</mat-label>

@@ -61,6 +61,11 @@ export class KeyValueStoreComponent {
   }
 
   _refreshValueKeyMap() {
+    if (!this.autoCompleteValues['1']) {
+      this.valueKeyMap = [];
+      return;
+    }
+
     this.store.getKeys(this.selectedStore!, this.autoCompleteValues['1']).subscribe(checkResult<string[]>({
       success: s => this.valueKeyMap = s,
       fail: e => this.valueKeyMap = []

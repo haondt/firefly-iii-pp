@@ -24,7 +24,8 @@ builder.Services.AddCors(o =>
 });
 builder.Services
     .AddFireflyIIIPPRunnerServices(builder.Configuration)
-    .AddMockFireflyIIIPPServices(builder.Configuration);
+    .AddMockFireflyIIIPPServices(builder.Configuration)
+    .AddMemoryPersistenceServices();
 
 var app = builder.Build();
 

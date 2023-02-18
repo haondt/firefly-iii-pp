@@ -646,5 +646,19 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "7cff7f31-04d2-43f5-a2aa-452bef2605ef",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get Stores",
+    "url": "{{base_url}}/lookup/stores",
+    "method": "GET",
+    "sortNum": 75000,
+    "created": "2023-02-18T04:29:24.981Z",
+    "modified": "2023-02-18T04:29:38.400Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

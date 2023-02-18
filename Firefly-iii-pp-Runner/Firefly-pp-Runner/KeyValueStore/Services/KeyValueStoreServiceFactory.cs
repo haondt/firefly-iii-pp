@@ -23,6 +23,12 @@ namespace Firefly_pp_Runner.KeyValueStore.Services
             _settings = options.Value;
             _persistenceService = persistenceService;
         }
+
+        public List<string> GetAvailableStores()
+        {
+            return _settings.Stores.Keys.ToList();
+        }
+
         public IKeyValueStoreService GetKeyValueStoreService(string store)
         {
             if (TryGetKeyValueStoreService(store, out var storeService))

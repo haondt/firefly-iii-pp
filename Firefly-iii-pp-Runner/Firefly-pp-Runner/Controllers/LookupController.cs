@@ -45,6 +45,13 @@ namespace Firefly_pp_Runner.Controllers
             return new OkResult();
         }
 
+        [HttpGet]
+        [Route("stores")]
+        public  IActionResult GetStoreNames()
+        {
+            return new OkObjectResult(_kvsFactory.GetAvailableStores());
+        }
+
         /// <summary>
         /// Workaround needed because json string escaping seems much more robust than url encoding.
         /// See: https://github.com/dotnet/aspnetcore/issues/23633 and https://github.com/dotnet/aspnetcore/issues/11544.

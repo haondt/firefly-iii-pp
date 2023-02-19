@@ -2,7 +2,8 @@
 using Firefly_pp_Runner.Services;
 using FireflyIIIpp.FireflyIII.Abstractions;
 using FireflyIIIppRunner.Abstractions;
-using FireflyIIIppRunner.Abstractions.Models.Dtos;
+using FireflyIIIppRunner.Abstractions.AutoReconcile;
+using FireflyIIIppRunner.Abstractions.AutoReconcile.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

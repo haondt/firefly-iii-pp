@@ -37,6 +37,15 @@ The final result is a single transfer between accounts.
 
 ![](./assets/rec3.png)
 
+### Key Value Lookup
+
+As I built my flows in Node-Red, I found myself invariably winding up with a giant subflow that was essentially a giant key-value lookup. Node-Red starts to chug a bit with this many nodes, so I needed to extract this functionality to something more well suited.
+
+![](./assets/kv1.png)
+
+I think the best idea would be to sub in a database and have Node-Red make calls to it. This is doable by just adding one to the docker compose stack. However, I wanted something that could be backed up as a file to git, with a structure that is git-friendly. This feature is more of a key-value-valuevalue store, where many keys map to a single value, and that value maps to a single "valuevalue". The "valuevalue" contains attribute information. Despite my efforts to make it flexible, this feature is still pretty niche and not necessary to the rest of the suite. Just something that matches my workflow.
+
+![](./assets/kv2.png)
 
 ## Deployment
 

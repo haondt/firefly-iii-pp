@@ -1,0 +1,62 @@
+{
+  "keys": [
+    {
+      "key": "BARR",
+      "value": "Bar"
+    },
+    {
+      "key": "!@#$%^&*()_+{}|:\"<>?-=[]\\;',.%2F`~(^){*}      ",
+      "value": "Final"
+    },
+    {
+      "key": "FINALE2",
+      "value": "Final"
+    },
+    {
+      "key": "%2F%2F",
+      "value": "Final"
+    },
+    {
+      "key": "FOOOOOOOO",
+      "value": "Foo"
+    },
+    {
+      "key": "FOOOO",
+      "value": "Foo"
+    },
+    {
+      "key": "FOO",
+      "value": "Foo"
+    },
+    {
+      "key": "FOOD",
+      "value": "Food"
+    },
+    {
+      "key": "FOOT",
+      "value": "Foot"
+    }
+  ],
+  "values": [
+    {
+      "key": "Bar",
+      "value": "[\n    \"beans2\n\"]"
+    },
+    {
+      "key": "Final",
+      "value": "{}"
+    },
+    {
+      "key": "Foo",
+      "value": "[\n    \"beans\n\"]"
+    },
+    {
+      "key": "Food",
+      "value": "{}"
+    },
+    {
+      "key": "Foot",
+      "value": "{}"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FireflyIIIppRunner.Abstractions.Models.Dtos
+namespace FireflyIIIppRunner.Abstractions.AutoReconcile.Models.Dtos
 {
     public class AutoReconcileStatus
     {

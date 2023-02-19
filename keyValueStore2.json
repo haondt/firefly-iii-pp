@@ -1,0 +1,14 @@
+{
+  "keys": [
+    {
+      "key": "FOO",
+      "value": "Foo"
+    }
+  ],
+  "values": [
+    {
+      "key": "Foo",
+      "value": "\"{\"some\":[\"other\", \"thing\"]}"
+    }
+  ]
+}

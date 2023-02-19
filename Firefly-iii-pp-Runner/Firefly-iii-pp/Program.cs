@@ -10,10 +10,14 @@ builder.Services.AddControllers()
     {
         options.SerializerSettings.ConfigureFireflyppRunnerSettings();
     });
+
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services
     .AddFireflyIIIServices(builder.Configuration)
     .AddNodeRedServices(builder.Configuration)
-    .AddFireflyIIIPPRunnerServices(builder.Configuration);
+    .AddFireflyIIIPPRunnerServices(builder.Configuration)
+    .AddFilePersistenceServices();
 
 var app = builder.Build();
 app.UseStaticFiles();

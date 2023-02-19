@@ -11,6 +11,8 @@ const routes: Routes = [
     import('./node-red/node-red.module').then(m => m.NodeRedModule)},
   { path: 'auto-reconcile', loadChildren: () =>
     import('./auto-reconcile/auto-reconcile.module').then(m => m.AutoReconcileModule)},
+  { path: 'key-value-store', loadChildren: () =>
+    import('./key-value-store/key-value-store.module').then(m => m.KeyValueStoreModule)},
 ];
 
 @NgModule({

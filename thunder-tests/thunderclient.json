@@ -88,13 +88,9 @@
     "method": "GET",
     "sortNum": 190,
     "created": "2023-02-01T22:31:18.632Z",
-    "modified": "2023-02-02T23:14:09.568Z",
+    "modified": "2023-02-17T02:44:01.935Z",
     "headers": [],
     "params": [],
-    "body": {
-      "type": "binary",
-      "form": []
-    },
     "tests": []
   },
   {
@@ -448,6 +444,219 @@
     "sortNum": 50000,
     "created": "2023-02-15T01:59:35.819Z",
     "modified": "2023-02-15T01:59:53.046Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ddd3d256-81bf-49fe-ae11-5a955a8e7960",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Read",
+    "url": "{{base_url}}/lookup/read/store",
+    "method": "POST",
+    "sortNum": 60000,
+    "created": "2023-02-17T02:14:52.691Z",
+    "modified": "2023-02-18T03:19:40.840Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "22d919c5-fd4f-499f-bf17-96ddfdeec4d8",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Write",
+    "url": "{{base_url}}/lookup/write/store",
+    "method": "POST",
+    "sortNum": 70000,
+    "created": "2023-02-17T02:14:59.331Z",
+    "modified": "2023-02-17T22:44:24.804Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ecb2b3df-ce29-4209-8d8d-9c37b19e22b5",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get keys",
+    "url": "{{base_url}}/lookup/action/store/get-keys",
+    "method": "POST",
+    "sortNum": 80000,
+    "created": "2023-02-17T02:19:32.227Z",
+    "modified": "2023-02-18T21:05:17.148Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"value\": \"Bar\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "ae3358f1-45ff-4586-8f17-7534834aaffc",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Add key",
+    "url": "{{base_url}}/lookup/action/storeA/add-key",
+    "method": "POST",
+    "sortNum": 89218.8,
+    "created": "2023-02-17T02:19:56.481Z",
+    "modified": "2023-02-18T19:45:39.075Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"key\": \"FOO\",\n  \"value\": \"Foo\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "7396846a-14a7-4fe4-9027-1156b195a3fb",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Delete key",
+    "url": "{{base_url}}/lookup/action/store/delete-key",
+    "method": "POST",
+    "sortNum": 89375,
+    "created": "2023-02-17T02:33:01.035Z",
+    "modified": "2023-02-18T01:33:33.655Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"key\": \"BAR\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "facfb10b-3dd9-48ca-ada5-eeb179bd4880",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get Key -> Value",
+    "url": "{{base_url}}/lookup/action/store/get-key-value",
+    "method": "POST",
+    "sortNum": 85000,
+    "created": "2023-02-17T02:33:41.516Z",
+    "modified": "2023-02-18T01:12:18.945Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"key\": \"BARR\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "9c364361-a407-4db8-af5e-ecf9fddcbf64",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Update valueValue",
+    "url": "{{base_url}}/lookup/action/store/put-value-value",
+    "method": "POST",
+    "sortNum": 120000,
+    "created": "2023-02-17T02:34:32.691Z",
+    "modified": "2023-02-19T00:49:57.192Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"value\": \"Bar\",\n  \"valueValue\": \"[\\n    \\\"beans2\\\\n\\\"\\n]\"\n}\n",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "c7e2e966-ffea-4f99-9b09-1dfe6fe2583a",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Delete value",
+    "url": "{{base_url}}/lookup/action/store/delete-value",
+    "method": "POST",
+    "sortNum": 89062.5,
+    "created": "2023-02-17T02:37:15.423Z",
+    "modified": "2023-02-18T01:35:06.450Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"value\": \"BARR\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "522b3185-5d54-45ce-96ed-d76ac3a7c59f",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Autocomplete",
+    "url": "{{base_url}}/lookup/action/storeA/autocomplete-value",
+    "method": "POST",
+    "sortNum": 140000,
+    "created": "2023-02-17T02:39:35.292Z",
+    "modified": "2023-02-18T19:32:41.328Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"partialValue\": \"\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f9d6cc7e-d5bd-4684-bca2-f8308f1575c5",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get Value -> ValueValue",
+    "url": "{{base_url}}/lookup/action/storeA/get-value-value",
+    "method": "POST",
+    "sortNum": 87500,
+    "created": "2023-02-18T01:32:21.264Z",
+    "modified": "2023-02-19T00:21:28.754Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"value\": \"bar\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "d08f5297-515b-4936-b9c9-b4cf6b39c264",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get Key -> ValueValue",
+    "url": "{{base_url}}/lookup/action/store/get-key-value-value",
+    "method": "POST",
+    "sortNum": 88750,
+    "created": "2023-02-18T01:32:47.743Z",
+    "modified": "2023-02-18T18:32:18.917Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"key\": \"FOO\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "7cff7f31-04d2-43f5-a2aa-452bef2605ef",
+    "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
+    "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
+    "name": "Get Stores",
+    "url": "{{base_url}}/lookup/stores",
+    "method": "GET",
+    "sortNum": 75000,
+    "created": "2023-02-18T04:29:24.981Z",
+    "modified": "2023-02-18T04:29:38.400Z",
     "headers": [],
     "params": [],
     "tests": []

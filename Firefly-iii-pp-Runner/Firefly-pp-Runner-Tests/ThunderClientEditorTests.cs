@@ -1,6 +1,7 @@
 ﻿using Firefly_iii_pp_Runner.Models.ThunderClient.Enums;
 using Firefly_iii_pp_Runner.Services;
 using Firefly_iii_pp_Runner.Settings;
+using FireflyIIIpp.Core.Tests.Utilities.Services;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,17 @@ namespace FireflyIIIpp.Thunder.Tests
 
         public ThunderClientEditorTests()
         {
+            var ps = new FakePersistenceService
+            {
+                Store = new Dictionary<string, Dictionary<string, object>>
+                {
+                    {".", new Dictionary<string, object>() }
+                }
+            };
             _sut = new ThunderClientEditorService(Options.Create(new ThunderClientEditorSettings
             {
                 Path = "."
-            }));
+            }), ps);
         }
 
         private Firefly_iii_pp_Runner.Models.Postman.Item PrepareItem(List<string> exec)

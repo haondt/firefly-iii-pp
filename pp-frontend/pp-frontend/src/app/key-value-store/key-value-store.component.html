@@ -1,0 +1,88 @@
+<mat-progress-bar class="busy-progress-bar" color="primary" *ngIf="busy" mode="indeterminate"></mat-progress-bar>
+<div class="progress-bar-gap" *ngIf="!busy"></div>
+<div class="content-container">
+    <div class="content">
+        <mat-card class="content-card">
+            <div class="content-row">
+                <span>Use Store</span>
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Select Store</mat-label>
+                    <mat-select [(value)]="selectedStore" (selectionChange)="selectedStoreChanged()">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let option of storeOptions" [value]="option">{{ option }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-card>
+        <mat-card *ngIf="selectedStore" class="content-card">
+            <div class="content-row">
+                <span>Map</span>
+                <mat-form-field appearance="fill" class="remove-padding">
+                    <mat-label>Key</mat-label>
+                    <input matInput type="text" [(ngModel)]="key0">
+                </mat-form-field>
+                <span>to</span>
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Value</mat-label>
+                    <input type="text" matInput [ngModel]="autoCompleteValues['0']" [matAutocomplete]="auto0" (ngModelChange)="autoCompleteValueChanged('0', $event)">
+                    <mat-autocomplete #auto0="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredAutoCompleteOptions['0']" [value]="option">{{ option }}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <button color="accent" mat-raised-button (click)="addMap()">Add Map</button>
+            </div>
+            <mat-divider></mat-divider>
+            <div *ngIf="selectedStore" class="content-row">
+                <span>Get keys mapped to</span>
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Value</mat-label>
+                    <input type="text" matInput [ngModel]="autoCompleteValues['1']" [matAutocomplete]="auto1" (ngModelChange)="autoCompleteValueChanged('1', $event)">
+                    <mat-autocomplete #auto1="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredAutoCompleteOptions['1']" [value]="option">{{ option }}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <button color="primary" mat-raised-button (click)="getKeys()">Get Keys</button>
+            </div>
+            <mat-divider *ngIf="valueKeyMap && valueKeyMap.length > 0"></mat-divider>
+            <div *ngIf="valueKeyMap && valueKeyMap.length > 0" class="content-row">
+                <div class="key-table-container">
+                    <table class="key-table">
+                        <colgroup>
+                            <col span="1" width="100%">
+                            <col span="1">
+                        </colgroup>
+                        <tr *ngFor="let key of valueKeyMap">
+                            <td>{{ key }}</td>
+                            <td><button mat-icon-button color="warn" (click)="deleteKey(key)"><mat-icon>delete</mat-icon></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card *ngIf="selectedStore" class="content-card">
+            <div class="content-row">
+                <span>Edit Value</span>
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Value</mat-label>
+                    <input type="text" matInput [ngModel]="autoCompleteValues['2']" [matAutocomplete]="auto2" (ngModelChange)="autoCompleteValueChanged('2', $event)">
+                    <mat-autocomplete #auto2="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredAutoCompleteOptions['2']" [value]="option">{{ option }}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div *ngIf="selectedStore" class="content-row">
+                <button color="primary" mat-raised-button (click)="getValueValue()">Get Value</button>
+                <button color="accent" mat-raised-button (click)="updateValueValue()">Update Value</button>
+                <button color="warn" mat-raised-button (click)="deleteValue()">Delete Value</button>
+                <button mat-stroked-button (click)="prettifyValue()">Prettify Value</button>
+                <span *ngIf="valueValueWarning" class="warning-text">{{ valueValueWarning }}</span>
+            </div>
+            <div *ngIf="selectedStore" class="content-row request-row">
+                <div class="request-block">
+                    <span></span>
+                    <textarea [(ngModel)]="valueValueString" (ngModelChange)="valueValueValueChanged()"></textarea>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

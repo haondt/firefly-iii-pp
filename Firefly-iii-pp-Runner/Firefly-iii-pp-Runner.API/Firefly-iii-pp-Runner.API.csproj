@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Firefly_iii_pp_Runner.API</RootNamespace>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileRunArguments>-v $(SolutionDir)/../thunder-tests:/thunder</DockerfileRunArguments>
+    <DockerfileRunArguments>-v $(SolutionDir)/../thunder-tests:/thunder -v $(SolutionDir)/../keyValueStore.json:/keyValueStore/store.json</DockerfileRunArguments>
   </PropertyGroup>
 
   <ItemGroup>

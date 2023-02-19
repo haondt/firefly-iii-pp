@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FireflyIIIpp.Core.Models.Dtos;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Firefly_iii_pp_Runner.ExceptionFilters
@@ -20,15 +21,15 @@ namespace Firefly_iii_pp_Runner.ExceptionFilters
         {
             if (context.Exception.GetType() == _exceptionType)
             {
-                var result = new Dictionary<string, object>
+                var result = new ExceptionDto
                 {
-                    { "StatusCode",  _code},
-                    { "Exception", context.Exception.GetType().Name },
+                    StatusCode = _code,
+                    Exception = context.Exception.GetType().Name,
                 };
                 if (!string.IsNullOrEmpty(_message))
-                    result.Add("Message", _message);
+                    result.Message = _message;
                 if (!string.IsNullOrEmpty(context.Exception.Message))
-                    result.Add("Details", context.Exception.Message);
+                    result.Details = context.Exception.Message;
 
                 context.Result = new ObjectResult(result) { StatusCode = _code };
             }

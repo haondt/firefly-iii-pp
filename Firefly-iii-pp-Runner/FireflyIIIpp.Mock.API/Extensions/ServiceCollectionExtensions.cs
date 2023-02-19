@@ -3,6 +3,7 @@ using FireflyIIIpp.Mock.API.Fakes;
 using FireflyIIIpp.Mock.API.Settings;
 using FireflyIIIpp.NodeRed.Abstractions;
 using FireflyIIIppRunner.Abstractions;
+using FireflyIIIppRunner.Abstractions.AutoReconcile;
 
 namespace FireflyIIIpp.Mock.API.Extensions
 {

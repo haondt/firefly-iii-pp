@@ -29,7 +29,8 @@ builder.Services.AddCors(o =>
 builder.Services
     .AddNodeRedServices(builder.Configuration)
     .AddFireflyIIIServices(builder.Configuration)
-    .AddFireflyIIIPPRunnerServices(builder.Configuration);
+    .AddFireflyIIIPPRunnerServices(builder.Configuration)
+    .AddFilePersistenceServices();
 
 var app = builder.Build();
 

@@ -21,6 +21,13 @@ services:
       - 9091:80
     volumes:
       - ./thunder-tests:/thunder
+      - ./keyValueStore.json:/keyValueStore/store1.json
+      - ./keyValueStore2.json:/keyValueStore/store2.json
+    environment:
+      - DOTNET_KeyValueStoreSettings__Stores__storeOne__Path=store1.json
+      - DOTNET_KeyValueStoreSettings__Stores__storeOne__DefaultValueValue={"some":"thing"}
+      - DOTNET_KeyValueStoreSettings__Stores__storeTwo__Path=store2.json
+      - DOTNET_KeyValueStoreSettings__Stores__storeTwo__DefaultValueValue="{"some":["other", "thing"]}
 
 volumes:
   node-red-data:

@@ -18,6 +18,8 @@ export class KeyValueStoreComponent {
   selectedStore: string|undefined;
   storeOptions: string[] = [];
   valueKeyMap: string[] = [];
+  valueValueString: string = "";
+  valueValueWarning: string = "";
 
   constructor(
       private store: KeyValueStoreService,
@@ -91,6 +93,8 @@ export class KeyValueStoreComponent {
     }));
   }
 
+  // edit keys
+
   addMap() {
     if (this.busy || !this.key0 || !this.autoCompleteValues['0']) {
       return;
@@ -133,9 +137,109 @@ export class KeyValueStoreComponent {
 
     this.busy = true;
     this.store.deleteKey(this.selectedStore!, key).subscribe(checkResult<null>({
-      success: s => this._refreshValueKeyMap(),
+      success: s => {
+        this._refreshValueKeyMap();
+        this._refreshAutocompleteOptions();
+
+      },
       fail: e => this.showSnackError(e),
       finally: () => this.busy = false
     }));
   }
+
+  // edit values
+
+  _clearValueValue() {
+    this.valueValueWarning = "";
+    this.valueValueString = "";
+  }
+
+  _isValidJson(s: string) {
+    try {
+      JSON.parse(s);
+      return true;
+    }
+    catch {
+      return false;
+    }
+  }
+
+  getValueValue() {
+    if (this.busy) {
+      return;
+    }
+
+    this.busy = true;
+    this._clearValueValue();
+
+    this.store.getValueValue(this.selectedStore!, this.autoCompleteValues['2']).subscribe(checkResult<string>({
+      success: s => {
+        this.valueValueString = s;
+        if (!this._isValidJson(s)) {
+          this.showSnackSuccess("Warning: loaded value successfully, but it is not valid json.");
+        }
+        this.valueValueValueChanged();
+      },
+      fail: e => this.showSnackError(e),
+      finally: () => this.busy = false
+    }));
+  }
+
+  valueValueValueChanged() {
+    if (this.valueValueString && !this._isValidJson(this.valueValueString)){
+      this.valueValueWarning = "Warning: value is not valid json";
+    } else {
+      this.valueValueWarning = "";
+    }
+  }
+
+  updateValueValue() {
+    if (this.busy) {
+      return;
+    }
+
+    this.busy = true;
+    const isValidJson = this._isValidJson(this.valueValueString);
+    this.store.updateValueValue(this.selectedStore!, this.autoCompleteValues['2'], this.valueValueString).subscribe(checkResult<null>({
+      success: s => {
+        if (!isValidJson) {
+          this.showSnackSuccess("Warning: updated value successfully, but it is not valid json.");
+        } else {
+          this.showSnackSuccess("Update value.");
+        }
+      },
+      fail: e => this.showSnackError(e),
+      finally: () => this.busy = false
+    }));
+  }
+
+  deleteValue() {
+    if (this.busy) {
+      return;
+    }
+    this.busy = true;
+    const value = this.autoCompleteValues['2'];
+    this.store.deleteValue(this.selectedStore!, value).subscribe(checkResult<null>({
+      success: _ => {
+        this.showSnackSuccess(`Deleted value ${value}.`);
+        this._refreshValueKeyMap();
+        this._refreshAutocompleteOptions();
+      },
+      fail: e => this.showSnackError(e),
+      finally: () => this.busy = false
+    }));
+  }
+
+  prettifyValue() {
+    try {
+      const s = JSON.parse(this.valueValueString);
+      this.valueValueString = JSON.stringify(s, null, 4);
+    } catch {
+      this.showSnackError("Value is not a valid json object.");
+    }
+  }
+
+
+
+
 }

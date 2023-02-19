@@ -71,16 +71,16 @@
                 </mat-form-field>
             </div>
             <div *ngIf="selectedStore" class="content-row">
-                <button color="primary" mat-raised-button>Get Value</button>
-                <button color="accent" mat-raised-button>Update Value</button>
-                <button color="warn" mat-raised-button>Delete Value</button>
-                <button mat-stroked-button>Prettify Value</button>
+                <button color="primary" mat-raised-button (click)="getValueValue()">Get Value</button>
+                <button color="accent" mat-raised-button (click)="updateValueValue()">Update Value</button>
+                <button color="warn" mat-raised-button (click)="deleteValue()">Delete Value</button>
+                <button mat-stroked-button (click)="prettifyValue()">Prettify Value</button>
+                <span *ngIf="valueValueWarning" class="warning-text">{{ valueValueWarning }}</span>
             </div>
-
             <div *ngIf="selectedStore" class="content-row request-row">
                 <div class="request-block">
                     <span></span>
-                    <textarea></textarea>
+                    <textarea [(ngModel)]="valueValueString" (ngModelChange)="valueValueValueChanged()"></textarea>
                 </div>
             </div>
         </mat-card>

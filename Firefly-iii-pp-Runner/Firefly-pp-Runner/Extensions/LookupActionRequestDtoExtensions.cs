@@ -32,7 +32,7 @@ namespace Firefly_pp_Runner.Extensions
                     if (string.IsNullOrEmpty(dto.Key))
                         throw new ArgumentException(nameof(dto.Key));
                     break;
-                case LookupActionEnum.PutValue:
+                case LookupActionEnum.PutValueValue:
                     if (string.IsNullOrEmpty(dto.Value))
                         throw new ArgumentException(nameof(dto.Value));
                     if (string.IsNullOrEmpty(dto.ValueValue))

@@ -21,8 +21,8 @@ namespace Firefly_pp_Runner.Models.Lookup.Enums
         GetValueValue,
         [EnumMember(Value = "get-key-value")]
         GetKeyValue,
-        [EnumMember(Value = "put-value")]
-        PutValue,
+        [EnumMember(Value = "put-value-value")]
+        PutValueValue,
         [EnumMember(Value = "delete-value")]
         DeleteValue,
         [EnumMember(Value = "autocomplete-value")]

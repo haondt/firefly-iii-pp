@@ -1,3 +1,7 @@
+.progress-bar-gap {
+    height: 4px;
+}
+
 .content-container {
     display: flex;
     justify-content: center;
@@ -109,4 +113,8 @@ table.key-table > tr {
 }
 table.key-table > tr:last-child {
     border-bottom: none;
+}
+
+.warning-text {
+    color: #f44336;
 }

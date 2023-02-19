@@ -556,17 +556,17 @@
     "_id": "9c364361-a407-4db8-af5e-ecf9fddcbf64",
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
-    "name": "Update value",
-    "url": "{{base_url}}/lookup/action/store/put-value",
+    "name": "Update valueValue",
+    "url": "{{base_url}}/lookup/action/store/put-value-value",
     "method": "POST",
     "sortNum": 120000,
     "created": "2023-02-17T02:34:32.691Z",
-    "modified": "2023-02-18T01:36:05.824Z",
+    "modified": "2023-02-19T00:49:57.192Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"value\": \"Bar\",\n  \"valueValue\": \"[\\n    \\\"beans2\\n\\\"]\"\n}\n",
+      "raw": "{\n  \"value\": \"Bar\",\n  \"valueValue\": \"[\\n    \\\"beans2\\\\n\\\"\\n]\"\n}\n",
       "form": []
     },
     "tests": []
@@ -614,16 +614,16 @@
     "colId": "64dc1d5b-787a-4f30-8c05-a30607f84af1",
     "containerId": "54e183f0-5b59-4cb2-a44b-0beeaaa39a71",
     "name": "Get Value -> ValueValue",
-    "url": "{{base_url}}/lookup/action/store/get-value-value",
+    "url": "{{base_url}}/lookup/action/storeA/get-value-value",
     "method": "POST",
     "sortNum": 87500,
     "created": "2023-02-18T01:32:21.264Z",
-    "modified": "2023-02-18T01:32:43.726Z",
+    "modified": "2023-02-19T00:21:28.754Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"value\": \"Bar\"\n}",
+      "raw": "{\n  \"value\": \"bar\"\n}",
       "form": []
     },
     "tests": []

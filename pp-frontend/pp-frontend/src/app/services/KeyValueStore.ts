@@ -42,4 +42,23 @@ export class KeyValueStoreService {
             key: key
         });
     }
+
+    getValueValue(store: string, value: string): Observable<ServiceResponseModel<string>> {
+        return this.client.post(`/lookup/action/${store}/get-value-value`, {
+            value: value
+        });
+    }
+
+    updateValueValue(store: string, value: string, valueValue: string): Observable<ServiceResponseModel<null>> {
+        return this.client.post(`/lookup/action/${store}/put-value-value`, {
+            value: value,
+            valueValue: valueValue
+        });
+    }
+
+    deleteValue(store: string, value: string): Observable<ServiceResponseModel<null>> {
+        return this.client.post(`/lookup/action/${store}/delete-value`, {
+            value: value
+        });
+    }
 }

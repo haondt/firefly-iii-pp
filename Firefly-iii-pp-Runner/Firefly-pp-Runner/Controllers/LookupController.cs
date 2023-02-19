@@ -109,7 +109,7 @@ namespace Firefly_pp_Runner.Controllers
                 case LookupActionEnum.DeleteKey:
                     await kvService.DeleteKey(dto.Key);
                     return new NoContentResult();
-                case LookupActionEnum.PutValue:
+                case LookupActionEnum.PutValueValue:
                     await kvService.UpdateValue(dto.Value, dto.ValueValue);
                     return new OkResult();
                 case LookupActionEnum.AutoCompleteValue:

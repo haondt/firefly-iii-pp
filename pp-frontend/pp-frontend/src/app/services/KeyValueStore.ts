@@ -36,4 +36,10 @@ export class KeyValueStoreService {
             value: value
         });
     }
+
+    deleteKey(store: string, key: string): Observable<ServiceResponseModel<null>> {
+        return this.client.post(`/lookup/action/${store}/delete-key`, {
+            key: key
+        });
+    }
 }

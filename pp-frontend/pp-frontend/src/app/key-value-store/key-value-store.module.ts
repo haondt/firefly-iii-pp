@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { QueryBuilderModule } from '../utils/Modules/QueryBuilder/query-builder.module';
 
@@ -34,6 +35,7 @@ import { QueryBuilderModule } from '../utils/Modules/QueryBuilder/query-builder.
         MatAutocompleteModule,
         MatSelectModule,
         MatIconModule,
+        MatProgressBarModule,
         TextFieldModule
     ],
     declarations: [

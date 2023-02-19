@@ -111,13 +111,31 @@ export class KeyValueStoreComponent {
 
   getKeys() {
     if (this.busy || !this.autoCompleteValues['1']) {
+      this.valueKeyMap = [];
       return;
     }
 
-    this._refreshValueKeyMap();
+    this.busy = true;
+    this.store.getKeys(this.selectedStore!, this.autoCompleteValues['1']).subscribe(checkResult<string[]>({
+      success: s => this.valueKeyMap = s,
+      fail: e => {
+        this.valueKeyMap = [];
+        this.showSnackError(e);
+      },
+      finally: () =>this.busy = false
+    }));
   }
 
   deleteKey(key: string) {
+    if (this.busy) {
+      return;
+    }
 
+    this.busy = true;
+    this.store.deleteKey(this.selectedStore!, key).subscribe(checkResult<null>({
+      success: s => this._refreshValueKeyMap(),
+      fail: e => this.showSnackError(e),
+      finally: () => this.busy = false
+    }));
   }
 }

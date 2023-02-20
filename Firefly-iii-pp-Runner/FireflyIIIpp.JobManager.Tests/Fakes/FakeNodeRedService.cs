@@ -1,4 +1,5 @@
 ﻿using FireflyIIIpp.NodeRed.Abstractions;
+using FireflyIIIpp.NodeRed.Abstractions.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,11 @@ namespace FireflyIIIpp.Tests.Fakes
         public Task ExportFlows()
         {
             return Task.CompletedTask;
+        }
+
+        public Task<NodeRedExtractKeyResponseDto> ExtractKey(string field, string input, CancellationToken? cancellationToken = null)
+        {
+            return Task.FromResult(new NodeRedExtractKeyResponseDto { Key = input });
         }
     }
 }

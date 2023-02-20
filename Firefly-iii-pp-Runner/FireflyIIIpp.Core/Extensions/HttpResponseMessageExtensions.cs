@@ -16,7 +16,7 @@ namespace FireflyIIIpp.Core.Extensions
                 var content = "null";
                 if (result?.Content != null)
                     content = await result.Content.ReadAsStringAsync() ?? "null";
-                throw new DownstreamException($"Firefly-iii returned status: {result.StatusCode} with content: {content}");
+                throw new DownstreamException($"{downstreamServiceName} returned status: {result.StatusCode} with content: {content}");
             }
 
             return result;

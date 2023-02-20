@@ -238,8 +238,4 @@ export class KeyValueStoreComponent {
       this.showSnackError("Value is not a valid json object.");
     }
   }
-
-
-
-
 }

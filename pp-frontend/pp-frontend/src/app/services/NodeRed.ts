@@ -9,6 +9,10 @@ interface PassthroughPayload {
     stringifiedJsonPayload: string
 }
 
+interface ExtractKeyResponseDto {
+    key: string
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -25,7 +29,16 @@ export class NodeRedService {
         return this.client.post<PassthroughPayload, PassthroughPayload>('/node-red/passthrough', {stringifiedJsonPayload: input})
             .pipe(map(s => { return {
                 success: s.success,
-                body: s.body!.stringifiedJsonPayload,
+                body: s.success ? s.body!.stringifiedJsonPayload : undefined,
+                error: s.error
+            }}));
+    }
+
+    extractKey(field: string, input: string): Observable<ServiceResponseModel<string>> {
+        return this.client.post<PassthroughPayload, ExtractKeyResponseDto>(`/node-red/extract-key/${field}`, { stringifiedJsonPayload: input})
+            .pipe(map( s=> { return {
+                success: s.success,
+                body: s.success ? s.body!.key : undefined,
                 error: s.error
             }}));
     }

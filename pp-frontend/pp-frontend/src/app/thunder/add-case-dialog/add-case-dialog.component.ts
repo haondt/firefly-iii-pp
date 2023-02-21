@@ -268,10 +268,31 @@ export class AddCaseDialog {
         }
 
         this.nr.extractKey(this.createKvpField, JSON.stringify(this.transactionData)).subscribe(checkResult<string>({
-            success: s => this.createKvpKey = s,
+            success: s => {
+                this.createKvpKey = s;
+                this.createdKvpError = undefined;
+            },
             fail: e => {
                 this.createKvpKey = this.createKvpField ? this.transactionData?.[this.createKvpField] : "",
                 this.createdKvpError = e
+            }
+        }));
+    }
+
+    createKvp() {
+        if (!this.createKvpKey || !this.createKvpAutocompleteValue || !this.createKvpStore) {
+            return;
+        }
+
+        this.kvs.addKey(this.createKvpStore, this.createKvpKey, this.createKvpAutocompleteValue).subscribe(checkResult({
+            success: _ => {
+                this.createdKvp = true;
+                this.createdKvpError = undefined;
+                this.createKvpAutocompleteValueChanged(this.createKvpAutocompleteValue ?? "");
+            },
+            fail: e => {
+                this.createdKvp = false;
+                this.createdKvpError = e;
             }
         }));
     }

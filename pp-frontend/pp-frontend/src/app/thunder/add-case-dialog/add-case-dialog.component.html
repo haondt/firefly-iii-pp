@@ -115,9 +115,10 @@
                     </mat-select>
                 </mat-form-field>
                 <button mat-raised-button (click)="createKvpExtractKey()" color="primary">Extract key</button>
+                <button mat-raised-button (click)="createKvp()" color="accent">Map key</button>
             </div>
             <div class="content-row">
-                <span class="success" *ngIf="createdKvp">Created mapping</span>
+                <span class="success" *ngIf="createdKvp">Created mapping successfully</span>
                 <span class="error" *ngIf="createdKvpError">{{ createdKvpError }}</span>
             </div>
         </div>

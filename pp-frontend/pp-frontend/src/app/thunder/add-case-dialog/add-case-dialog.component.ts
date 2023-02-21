@@ -101,6 +101,7 @@ export class AddCaseDialog {
             this.expectedFieldValue = undefined;
             this.caseCreated = false;
             this.createdCase = undefined;
+            this._clearCreateKvpData(false, false);
 
             // freeze ui
             this.working = true;

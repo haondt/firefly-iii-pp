@@ -1,5 +1,6 @@
 ﻿using FireflyIIIpp.Core.Extensions;
 using FireflyIIIpp.NodeRed.Abstractions;
+using FireflyIIIpp.NodeRed.Abstractions.Models.Dtos;
 using FireflyIIIpp.NodeRed.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -21,21 +22,32 @@ namespace FireflyIIIpp.NodeRed.Services
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(_settings.BaseUrl);
         }
-
-        public async Task<string> ApplyRules(string input, CancellationToken? cancellationToken = null)
+        public async Task<HttpContent> SendToNodeRed(string path, string input, CancellationToken? cancellationToken = null)
         {
             var content = new StringContent(input, Encoding.UTF8, "application/json");
             var response = cancellationToken.HasValue
-                ? await _httpClient.PostAsync("/apply", content, cancellationToken.Value)
-                : await _httpClient.PostAsync("/apply", content);
+                ? await _httpClient.PostAsync(path, content, cancellationToken.Value)
+                : await _httpClient.PostAsync(path, content);
             await response.EnsureDownstreamSuccessStatusCode("Node-Red");
-            return await response.Content.ReadAsStringAsync();
+            return response.Content;
+        }
+
+        public async Task<string> ApplyRules(string input, CancellationToken? cancellationToken = null)
+        {
+            var content = await SendToNodeRed("/apply", input, cancellationToken);
+            return await content.ReadAsStringAsync();
         }
 
         public async Task ExportFlows()
         {
             var response = await _httpClient.PostAsync("/export-flows", null);
             await response.EnsureDownstreamSuccessStatusCode("Node-Red");
+        }
+
+        public async Task<NodeRedExtractKeyResponseDto> ExtractKey(string field, string input, CancellationToken? cancellationToken = null)
+        {
+            var content = await SendToNodeRed($"/extract-key/{field}", input, cancellationToken);
+            return await content.ReadFromJsonAsync<NodeRedExtractKeyResponseDto>();
         }
     }
 }

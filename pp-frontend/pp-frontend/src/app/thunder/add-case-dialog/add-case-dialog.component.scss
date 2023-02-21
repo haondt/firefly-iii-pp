@@ -24,6 +24,13 @@
     align-items: center;
 }
 
+.content-row-section {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+}
+
 span, p {
     color: white;
 }
@@ -46,4 +53,10 @@ span, p {
 
 .white-button {
     color: white
+}
+
+.content-section.embed {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 20px;
 }

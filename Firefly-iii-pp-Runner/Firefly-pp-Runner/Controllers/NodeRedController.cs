@@ -43,5 +43,16 @@ namespace Firefly_pp_Runner.Controllers
                 StringifiedJsonPayload = result
             });
         }
+
+        [HttpPost]
+        [Route("extract-key/{field}")]
+        public async Task<IActionResult> ExtractKey(string field, [FromBody] NodeRedPassthroughRequestDto dto)
+        {
+            try { JsonConvert.DeserializeObject<Dictionary<string, object>>(dto.StringifiedJsonPayload); }
+            catch { throw new ArgumentException("Received invalid JSON object."); }
+
+            var result = await _nodeRed.ExtractKey(field, dto.StringifiedJsonPayload);
+            return new OkObjectResult(result);
+        }
     }
 }

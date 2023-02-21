@@ -9,6 +9,9 @@ import { FireflyIIIService } from "src/app/services/FireflyIII";
 import { MatSelectChange } from "@angular/material/select";
 import { ThunderService } from "src/app/services/Thunder";
 import { dict } from "../../utils/ArrayUtils";
+import { KeyValueStoreService } from "src/app/services/KeyValueStore";
+import { checkResult } from "src/app/utils/ObservableUtils";
+import { NodeRedService } from "src/app/services/NodeRed";
 
 export interface DialogData {
     title: string;
@@ -58,15 +61,28 @@ export class AddCaseDialog {
     caseCreated: boolean = false;
     createdCase: string | undefined;
 
+    createdKvp: boolean  = false;
+    createdKvpError: string | undefined;
+    createKvpStoreOptions: string[] = [];
+    createKvpStore: string | undefined;
+    createKvpKey: string | undefined;
+    createKvpAutocompleteValue: string | undefined;
+    createKvpAutocompleteOptions: string[] = [];
+    createKvpField: string | undefined;
+
     constructor(
         public dialogRef: MatDialogRef<AddCaseDialog>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private fireflyIII: FireflyIIIService,
-        private thunder: ThunderService
+        private thunder: ThunderService,
+        private kvs: KeyValueStoreService,
+        private nr: NodeRedService
     ) {
         dialogRef.disableClose = true;
         this.allFolderNameOptions = data.folderNameOptions;
         this.filteredFolderNameOptions = this.allFolderNameOptions;
+        this._clearCreateKvpData(true, false);
+
     }
 
     getTransactionData() {
@@ -209,5 +225,75 @@ export class AddCaseDialog {
         this.folderName = name;
         const filterValue = name.toLowerCase();
         this.filteredFolderNameOptions = this.allFolderNameOptions.filter(f => f.toLowerCase().includes(filterValue));
+    }
+
+    // kvp
+
+    _clearCreateKvpData(unselectStore: boolean, forcePullAutocompleteOptions: boolean) {
+        this.createdKvp = false;
+        this.createdKvpError = undefined;
+        if (unselectStore) {
+            this.createKvpStore = undefined;
+            this.createKvpStoreOptions = [];
+            this.kvs.getStores().subscribe(checkResult<string[]>({
+            success: s => this.createKvpStoreOptions = s,
+            }));
+        }
+        this.createKvpKey = undefined;
+        if (this.createKvpAutocompleteValue || forcePullAutocompleteOptions) {
+            this.createKvpAutocompleteValue = undefined;
+            this.kvs.autocomplete(this.createKvpStore!, "").subscribe(checkResult<string[]>({
+                success: s => this.createKvpAutocompleteOptions = s,
+                fail: e => this.createKvpAutocompleteOptions = []
+            }));
+        }
+        this.createKvpField = undefined;
+    }
+
+    createKvpStoreChanged() {
+        this._clearCreateKvpData(false, true);
+    }
+
+    createKvpAutocompleteValueChanged(value: string) {
+        this.createKvpAutocompleteValue = value;
+        this.kvs.autocomplete(this.createKvpStore!, value).subscribe(checkResult<string[]>({
+            success: s => this.createKvpAutocompleteOptions = s,
+            fail: e => this.createKvpAutocompleteOptions = []
+        }));
+    }
+
+    createKvpExtractKey() {
+        if(!this.createKvpField || !this.transactionData) {
+            return;
+        }
+
+        this.nr.extractKey(this.createKvpField, JSON.stringify(this.transactionData)).subscribe(checkResult<string>({
+            success: s => {
+                this.createKvpKey = s;
+                this.createdKvpError = undefined;
+            },
+            fail: e => {
+                this.createKvpKey = this.createKvpField ? this.transactionData?.[this.createKvpField] : "",
+                this.createdKvpError = e
+            }
+        }));
+    }
+
+    createKvp() {
+        if (!this.createKvpKey || !this.createKvpAutocompleteValue || !this.createKvpStore) {
+            return;
+        }
+
+        this.kvs.addKey(this.createKvpStore, this.createKvpKey, this.createKvpAutocompleteValue).subscribe(checkResult({
+            success: _ => {
+                this.createdKvp = true;
+                this.createdKvpError = undefined;
+                this.createKvpAutocompleteValueChanged(this.createKvpAutocompleteValue ?? "");
+            },
+            fail: e => {
+                this.createdKvp = false;
+                this.createdKvpError = e;
+            }
+        }));
     }
 }

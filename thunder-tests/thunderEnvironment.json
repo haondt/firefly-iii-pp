@@ -40,5 +40,19 @@
         "value": "http://localhost:1880"
       }
     ]
+  },
+  {
+    "_id": "bddbc091-1c21-47bb-96e1-fbf1f171014a",
+    "name": "firefly-iii-pp",
+    "default": false,
+    "sortNum": 35000,
+    "created": "2023-02-19T16:46:15.004Z",
+    "modified": "2023-02-19T16:46:15.004Z",
+    "data": [
+      {
+        "name": "base_url",
+        "value": "localhost:9091/api/v1"
+      }
+    ]
   }
 ]

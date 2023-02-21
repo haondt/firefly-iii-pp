@@ -1,4 +1,5 @@
 ﻿using FireflyIIIpp.NodeRed.Abstractions;
+using FireflyIIIpp.NodeRed.Abstractions.Models.Dtos;
 
 namespace FireflyIIIpp.Mock.API.Fakes
 {
@@ -12,6 +13,11 @@ namespace FireflyIIIpp.Mock.API.Fakes
         public Task ExportFlows()
         {
             return Task.CompletedTask;
+        }
+
+        public Task<NodeRedExtractKeyResponseDto> ExtractKey(string field, string input, CancellationToken? cancellationToken = null)
+        {
+            return Task.FromResult(new NodeRedExtractKeyResponseDto { Key = input });
         }
     }
 }

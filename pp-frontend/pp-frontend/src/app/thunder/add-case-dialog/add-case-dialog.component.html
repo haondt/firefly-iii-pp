@@ -66,7 +66,7 @@
             </div>
             <div class="content-row">
                 <button mat-stroked-button (click)="loadExpectedValueFromTransaction()">Populate with transaction Value</button>
-                <button [disabled]="working" mat-raised-button color="primary" (click)="addExpectedValue()">Add</button>
+                <button [disabled]="working" mat-stroked-button (click)="addExpectedValue()">Add</button>
             </div>
             <mat-chip-listbox [disabled]="working" multiple="true">
                 <mat-chip *ngFor="let field of expectedFields">
@@ -78,7 +78,52 @@
             </mat-chip-listbox>
         </div>
 
+        <!-- Add kvp -->
         <mat-divider></mat-divider>
+        <div class="content-section embed" *ngIf="transactionData">
+            <div class="content-row">
+                <p>Add Key-Value mapping:</p>
+            </div>
+            <div class="content-row">
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Store</mat-label>
+                    <mat-select [(value)]="createKvpStore" (selectionChange)="createKvpStoreChanged()">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let option of createKvpStoreOptions" [value]="option">{{ option }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="content-row-section" *ngIf="createKvpStore">
+                    <mat-form-field class="remove-padding">
+                        <mat-label>Key</mat-label>
+                        <input matInput class="remove-padding" type="text" [(ngModel)]="createKvpKey">
+                    </mat-form-field>
+                    <mat-form-field class="remove-padding" appearance="fill">
+                        <mat-label>Value</mat-label>
+                        <input type="text" matInput [ngModel]="createKvpAutocompleteValue" [matAutocomplete]="auto0" (ngModelChange)="createKvpAutocompleteValueChanged($event)">
+                        <mat-autocomplete #auto0="matAutocomplete">
+                            <mat-option *ngFor="let option of createKvpAutocompleteOptions" [value]="option">{{ option }}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="content-row" *ngIf="createKvpStore">
+                <mat-form-field class="remove-padding" appearance="fill">
+                    <mat-label>Select Field</mat-label>
+                    <mat-select [(value)]="createKvpField">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let option of fields" [value]="option.viewValue">{{ option.viewValue }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-raised-button (click)="createKvpExtractKey()" color="primary">Extract key</button>
+                <button mat-raised-button (click)="createKvp()" color="accent">Map key</button>
+            </div>
+            <div class="content-row">
+                <span class="success" *ngIf="createdKvp">Created mapping successfully</span>
+                <span class="error" *ngIf="createdKvpError">{{ createdKvpError }}</span>
+            </div>
+        </div>
+
+        <!-- Create case -->
         <div class="content-section">
             <div class="content-row">
                 <button mat-raised-button [color]="createCaseError ? 'warn' : 'accent'" (click)="createCase()" [disabled]="creatingCase || working">Create Case</button>

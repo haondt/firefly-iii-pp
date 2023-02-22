@@ -118,7 +118,7 @@
                 <button mat-raised-button (click)="createKvp()" color="accent">Map key</button>
             </div>
             <div class="content-row">
-                <span class="success" *ngIf="createdKvp">Created mapping successfully</span>
+                <span class="success" *ngIf="createdKvp">Created mapping {{ createdKvp }}</span>
                 <span class="error" *ngIf="createdKvpError">{{ createdKvpError }}</span>
             </div>
         </div>

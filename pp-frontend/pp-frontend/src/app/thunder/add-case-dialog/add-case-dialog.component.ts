@@ -61,7 +61,7 @@ export class AddCaseDialog {
     caseCreated: boolean = false;
     createdCase: string | undefined;
 
-    createdKvp: boolean  = false;
+    createdKvp: string | undefined;
     createdKvpError: string | undefined;
     createKvpStoreOptions: string[] = [];
     createKvpStore: string | undefined;
@@ -231,7 +231,7 @@ export class AddCaseDialog {
     // kvp
 
     _clearCreateKvpData(unselectStore: boolean, forcePullAutocompleteOptions: boolean) {
-        this.createdKvp = false;
+        this.createdKvp = undefined;
         this.createdKvpError = undefined;
         if (unselectStore) {
             this.createKvpStore = undefined;
@@ -285,14 +285,15 @@ export class AddCaseDialog {
             return;
         }
 
+        const k = this.createKvpKey;
         this.kvs.addKey(this.createKvpStore, this.createKvpKey, this.createKvpAutocompleteValue).subscribe(checkResult({
             success: _ => {
-                this.createdKvp = true;
+                this.createdKvp = k ?? "";
                 this.createdKvpError = undefined;
                 this.createKvpAutocompleteValueChanged(this.createKvpAutocompleteValue ?? "");
             },
             fail: e => {
-                this.createdKvp = false;
+                this.createdKvp = undefined;
                 this.createdKvpError = e;
             }
         }));

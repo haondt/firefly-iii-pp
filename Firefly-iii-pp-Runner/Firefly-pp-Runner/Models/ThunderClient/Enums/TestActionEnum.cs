@@ -10,6 +10,8 @@ namespace Firefly_iii_pp_Runner.Models.ThunderClient.Enums
         [EnumMember(Value = "equal")]
         Equal,
         [EnumMember (Value = "contains")]
-        Contains
+        Contains,
+        [EnumMember (Value = "istype")]
+        IsType
     }
 }

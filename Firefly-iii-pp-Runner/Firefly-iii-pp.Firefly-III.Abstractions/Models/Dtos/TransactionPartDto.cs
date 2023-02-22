@@ -8,6 +8,7 @@
         public string Description { get; set; }
         public string Source_id { get; set; }
         public string Source_name { get; set; }
+        public string Destination_id { get; set; }
         public string Destination_name { get; set; }
         public List<string> Tags { get; set; }
         public string Original_source { get; set; } 
@@ -23,6 +24,7 @@
             hash.Add(Amount);
             hash.Add(Description);
             hash.Add(Source_id);
+            hash.Add(Destination_id);
             hash.Add(Destination_name);
             hash.Add((Tags ?? new List<string>()).Aggregate(new HashCode(), (hc, s) =>
             {

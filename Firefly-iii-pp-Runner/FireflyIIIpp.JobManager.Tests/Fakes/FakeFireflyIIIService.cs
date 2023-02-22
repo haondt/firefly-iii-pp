@@ -20,6 +20,12 @@ namespace FireflyIIIpp.Tests.Fakes
         public int PageSize { get; set; } = 50;
 
         public Func<TransactionDto, bool> Query { get; set; } = t => true;
+        public Queue<Func<TransactionDto, bool>> QueryQueue { get; set; } = new Queue<Func<TransactionDto, bool>>();
+
+        public void AddQuery(Func<TransactionDto, bool> query)
+        {
+            QueryQueue.Enqueue(query);
+        }
 
         public Task<TransactionDto> CreateTransaction(CreateTransactionDto transaction)
         {
@@ -43,9 +49,10 @@ namespace FireflyIIIpp.Tests.Fakes
 
         public Task<ManyTransactionsContainerDto> GetTransactions(List<RunnerQueryOperation> queryOperators, int page)
         {
+            var query = QueryQueue.Count > 0 ? QueryQueue.Dequeue() : Query;
             var transactions = Transactions
                 .Select(kvp => kvp.Value)
-                .Where(Query).ToList();
+                .Where(query).ToList();
             var pages = transactions.Count == 0 ? 1 : transactions.Pages(PageSize);
             if (page < 1 || page > pages)
                 throw new ArgumentException(nameof(pages));

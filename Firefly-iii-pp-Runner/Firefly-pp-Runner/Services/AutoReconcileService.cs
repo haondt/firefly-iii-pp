@@ -188,7 +188,7 @@ namespace Firefly_pp_Runner.Services
 
         #region tasks
 
-        public async Task DryRunTask(
+        private async Task DryRunTask(
             AutoReconcileRequestDto dto,
             Func<TransactionPartDto, int> hashingStrategy, 
             Func<TransactionPartDto, TransactionPartDto, AutoReconcileTransfer> joiningStrategy,
@@ -217,7 +217,7 @@ namespace Firefly_pp_Runner.Services
             }
         }
 
-        public async Task RunTask(
+        private async Task RunTask(
             AutoReconcileRequestDto dto,
             Func<TransactionPartDto, int> hashingStrategy, 
             Func<TransactionPartDto, TransactionPartDto, AutoReconcileTransfer> joiningStrategy,

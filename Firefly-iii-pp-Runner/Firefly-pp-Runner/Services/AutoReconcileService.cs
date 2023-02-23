@@ -162,20 +162,114 @@ namespace Firefly_pp_Runner.Services
         {
             var groupedSourceTransactions = sourceTransactions
                 .GroupBy(t => hashingStrategy(t.Transaction))
-                .Where(grp => grp.Count() == 1)
-                .ToDictionary(grp => grp.Key, grp => grp.Single());
+                .ToDictionary(grp => grp.Key, grp => grp.ToList());
             var groupedDestinationTransactions = destinationTransactions
                 .GroupBy(t => hashingStrategy(t.Transaction))
-                .Where(grp => grp.Count() == 1)
-                .ToDictionary(grp => grp.Key, grp => grp.Single());
+                .ToDictionary(grp => grp.Key, grp => grp.ToList());
             var transferPairs = groupedSourceTransactions
                 .Where(kvp => groupedDestinationTransactions.ContainsKey(kvp.Key))
-                .Select<KeyValuePair<int, (string Id, TransactionPartDto Transaction)>, ((string Id, TransactionPartDto Transaction) Source, (string Id, TransactionPartDto Transaction) Destination)>(kvp => (kvp.Value, groupedDestinationTransactions[kvp.Key]))
-                .Where(p => p.Source.Transaction.Source_name != p.Destination.Transaction.Destination_name);
+                .Select(kvp => (kvp.Value, groupedDestinationTransactions[kvp.Key]))
+                .Select(t =>
+                {
+                    var (sts, dts) = t;
+                    var result = new List<((string Id, TransactionPartDto Transaction) Source, (string Id, TransactionPartDto Transaction) Destination)>();
+                    if (!pairingStrategy.RequireMatchingDates)
+                    {
+                        if (sts.Count == 1 && dts.Count == 1)
+                            result.Add((sts[0], dts[0]));
+                        return result;
+                    }
 
-            if (pairingStrategy.RequireMatchingDates && pairingStrategy.DateMatchToleranceInDays > 0)
-                transferPairs = transferPairs
-                    .Where(p => Math.Abs((DateTime.Parse(p.Source.Transaction.Date) - DateTime.Parse(p.Destination.Transaction.Date)).TotalDays) <= pairingStrategy.DateMatchToleranceInDays);
+                    if (pairingStrategy.DateMatchToleranceInDays == 0)
+                    {
+                        var stsd = sts
+                        .GroupBy(p => p.Transaction.Date)
+                        .Where(p => p.Count() == 1)
+                        .ToDictionary(grp => grp.Key, grp => grp.Single());
+                        var _dtsd = dts.GroupBy(p => p.Transaction.Date)
+                        .Where(p => p.Count() == 1)
+                        .ToDictionary(grp => grp.Key, grp => grp.Single());
+                        result.AddRange(stsd.Where(p => _dtsd.ContainsKey(p.Key)).Select(p => (p.Value, _dtsd[p.Key])));
+                        return result;
+                    }
+
+
+                    var sdd = new Dictionary<string, string?>();
+                    var sWindow = new Queue<(DateTime Date, string Id, TransactionPartDto Transaction)>();
+                    var dWindow = new Queue<(DateTime Date, string Id, TransactionPartDto Transaction)>();
+                    var nextWindowStart = new Queue<DateTime>();
+                    var allTransactions = new Queue<(DateTime Date, bool IsSource, string Id, TransactionPartDto Transaction)>(sts.Select(s => (DateTime.Parse(s.Transaction.Date), true, s.Id, s.Transaction)).Concat(dts.Select(d => (DateTime.Parse(d.Transaction.Date), false, d.Id, d.Transaction)))
+                        .OrderBy(t => t.Item1));
+                    var windowStart = allTransactions.Peek().Date;
+                    var windowEnd = windowStart + TimeSpan.FromDays(pairingStrategy.DateMatchToleranceInDays);
+
+                    while (allTransactions.Count > 0)
+                    {
+                        while (allTransactions.Count > 0 && allTransactions.Peek().Date <= windowEnd)
+                        {
+                            var (date, isSource, id, transaction) = allTransactions.Dequeue();
+                            if (isSource)
+                                sWindow.Enqueue((date, id, transaction));
+                            else
+                                dWindow.Enqueue((date, id, transaction));
+                            if (allTransactions.Count > 0)
+                                nextWindowStart.Enqueue(allTransactions.Peek().Date);
+                        }
+
+
+                        if (sWindow.Count == 0 || dWindow.Count == 0)
+                        {
+                        }
+                        else if (sWindow.Count == 1 && dWindow.Count == 1)
+                        {
+                            var sId = sWindow.Peek().Id;
+                            var dId = dWindow.Peek().Id;
+                            sdd[sId] = sdd.ContainsKey(sId) ? null : dId;
+                            sdd[dId] = sdd.ContainsKey(dId) ? null : sId;
+                        }
+                        else
+                        {
+                            foreach (var (_, sId, _) in sWindow)
+                                sdd[sId] = null;
+                            foreach (var (_, dId, _) in dWindow)
+                                sdd[dId] = null;
+                        }
+
+
+                        while (nextWindowStart.Count > 0 && nextWindowStart.Peek().Date == windowStart)
+                            nextWindowStart.Dequeue();
+                        if (nextWindowStart.Count == 0)
+                            break;
+
+                        windowStart = nextWindowStart.Dequeue();
+                        windowEnd = windowStart + TimeSpan.FromDays(pairingStrategy.DateMatchToleranceInDays);
+                        while (sWindow.Count > 0 && sWindow.Peek().Date < windowStart)
+                            sWindow.Dequeue();
+                        while (dWindow.Count > 0 && dWindow.Peek().Date < windowStart)
+                            dWindow.Dequeue();
+                    }
+
+                    var dtsd = dts.ToDictionary(q => q.Id, q => q);
+                    foreach (var s in sts)
+                    {
+                        if (sdd.TryGetValue(s.Id, out var dId) && dId != null)
+                        {
+                            if (sdd.TryGetValue(dId, out var sId) && sId != null && sId == s.Id)
+                            {
+                                result.Add((s, dtsd[dId]));
+                            }
+                        }
+                    }
+
+                    return result;
+                })
+                .SelectMany(t => t)
+                .Where(p => p.Source.Transaction.Source_name != p.Destination.Transaction.Destination_name)
+
+                // sanity check
+                .DistinctBy(p => p.Source.Id)
+                .DistinctBy(p => p.Destination.Id);
+
 
             var transfers = transferPairs
                 .Select(p => (joiningStrategy(p.Source.Transaction, p.Destination.Transaction), p.Source.Id, p.Destination.Id))

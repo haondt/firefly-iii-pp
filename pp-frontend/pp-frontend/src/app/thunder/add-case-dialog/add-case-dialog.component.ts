@@ -1,17 +1,11 @@
 import { Component, Inject } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { MatChipInputEvent } from "@angular/material/chips";
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { filter, map, Observable, startWith } from "rxjs";
-import { A, COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FireflyIIIService } from "src/app/services/FireflyIII";
-import { MatSelectChange } from "@angular/material/select";
 import { ThunderService } from "src/app/services/Thunder";
 import { dict } from "../../utils/ArrayUtils";
 import { KeyValueStoreService } from "src/app/services/KeyValueStore";
 import { checkResult } from "src/app/utils/ObservableUtils";
 import { NodeRedService } from "src/app/services/NodeRed";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface DialogData {
     title: string;
@@ -29,13 +23,13 @@ interface expectedField {
 }
 
 @Component({
-    selector: 'add-case-dialog',
+    selector: 'app-add-case',
     templateUrl: './add-case-dialog.component.html',
     styleUrls: [
         './add-case-dialog.component.scss'
     ]
 })
-export class AddCaseDialog {
+export class AddCaseComponent {
     fields: CaseFieldChip[] = [];
     transactionId: string | null = null;
     transactionData: { [key: string]: any } | null = null;
@@ -71,18 +65,35 @@ export class AddCaseDialog {
     createKvpField: string | undefined;
 
     constructor(
-        public dialogRef: MatDialogRef<AddCaseDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private fireflyIII: FireflyIIIService,
         private thunder: ThunderService,
         private kvs: KeyValueStoreService,
-        private nr: NodeRedService
+        private nr: NodeRedService,
+        private snackBar: MatSnackBar
     ) {
-        dialogRef.disableClose = true;
-        this.allFolderNameOptions = data.folderNameOptions;
-        this.filteredFolderNameOptions = this.allFolderNameOptions;
+        this._refreshFolderNameOptions();
         this._clearCreateKvpData(true, false);
 
+    }
+
+    showSnackError(message?: string) {
+        this.snackBar.open(`❌ ${message ?? "Error while executing the request"}`, 'Dismiss', {
+        duration: 5000
+        });
+    }
+
+    _refreshFolderNameOptions() {
+        this.thunder.getFolderNames().subscribe(checkResult<string[]>({
+            success: s => {
+                this.allFolderNameOptions = s;
+                if (this.folderName) {
+                    this.folderNameAutocompleteChanged(this.folderName);
+                } else {
+                    this.filteredFolderNameOptions = [...s];
+                }
+            },
+            fail: e => this.showSnackError(e)
+        }));
     }
 
     getTransactionData() {
@@ -135,10 +146,6 @@ export class AddCaseDialog {
                 }
             }
         }
-    }
-
-    onCloseClick() {
-        this.dialogRef.close()
     }
 
     onCaseFieldClick(chip: CaseFieldChip) {
@@ -211,6 +218,7 @@ export class AddCaseDialog {
                     if (r.success) {
                         this.caseCreated = true;
                         this.createdCase = r.body.client.name;
+                        this._refreshFolderNameOptions();
                     } else {
                         this.createCaseError = r.error ?? "Error while creating case";
                     }

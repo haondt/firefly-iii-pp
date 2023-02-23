@@ -93,7 +93,7 @@ namespace Firefly_iii_pp_Runner.Services
             var names = collection.Folders.Select(f => f.Name)
                 .Concat(clients.Select(c => c.Name))
                 .Distinct().OrderBy(s => s)
-                .Select((s, i) => (s, 100 + i * 10))
+                .Select((s, i) => (s, i))
                 .ToDictionary(t => t.s, t => t.Item2);
 
             foreach(var folder in collection.Folders)
@@ -234,7 +234,7 @@ namespace Firefly_iii_pp_Runner.Services
                     Name = request.Name,
                     Url = request.RequestInner.Url.Raw,
                     Method = request.RequestInner.Method,
-                    SortNum = 100,
+                    SortNum = 1,
                     Body = new Body
                     {
                         Type = ExtractClientBodyTypeEnum(request.RequestInner.Body),
@@ -257,7 +257,7 @@ namespace Firefly_iii_pp_Runner.Services
                     Id = folder.Id.ToString(),
                     Name = folder.Name,
                     ContainerId = parent?.Id.ToString() ?? string.Empty,
-                    SortNum = 100,
+                    SortNum = 1,
                 };
 
                 var (hasTests, tests) = ExtractTests(folder);

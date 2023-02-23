@@ -3,7 +3,7 @@
 <div class="content-container">
     <div class="content">
         <mat-accordion class="accordion" multi>
-            <mat-expansion-panel>
+            <mat-expansion-panel expanded>
                 <mat-expansion-panel-header>
                     <mat-panel-title class="panel-title">
                         <mat-spinner *ngIf="status?.state === 'getting-transactions' || status?.state === 'pairing'" diameter="25" color="accent" class="test-spinner"></mat-spinner>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </mat-expansion-panel>
-            <mat-expansion-panel>
+            <mat-expansion-panel expanded>
                 <mat-expansion-panel-header>
                     <mat-panel-title class="accordion-panel-title">
                         Dry Run
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </mat-expansion-panel>
-            <mat-expansion-panel>
+            <mat-expansion-panel expanded>
                 <mat-expansion-panel-header>
                     <mat-panel-title class="accordion-panel-title">
                         Configure

@@ -37,8 +37,19 @@ td {
 }
 
 .content-card {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.content-row {
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+h3 {
+    margin: 0;
 }

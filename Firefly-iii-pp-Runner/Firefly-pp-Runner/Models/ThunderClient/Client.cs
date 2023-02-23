@@ -12,7 +12,7 @@ namespace Firefly_iii_pp_Runner.Models.ThunderClient
         public string Name { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
         public string Method { get; set; } = string.Empty;
-        public int SortNum { get; set; }
+        public double SortNum { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public DateTime Modified { get; set; } = DateTime.Now;
         public List<object> Headers { get; set; } = new List<object>();

@@ -1,5 +1,4 @@
 <div class="content-container">
-    <h1 mat-dialog-title>{{ data.title }} </h1>
     <div mat-dialog-content class="content">
         <!-- Get Transaction -->
         <div class="content-section">
@@ -126,16 +125,11 @@
         <!-- Create case -->
         <div class="content-section">
             <div class="content-row">
-                <button mat-raised-button [color]="createCaseError ? 'warn' : 'accent'" (click)="createCase()" [disabled]="creatingCase || working">Create Case</button>
+                <button mat-raised-button color="accent" (click)="createCase()" [disabled]="creatingCase || working || !transactionData">Create Case</button>
                 <mat-spinner *ngIf="creatingCase" diameter="25" color="accent" class="test-spinner"></mat-spinner>
                 <span class="success" *ngIf="createdCase">Created case {{ createdCase }}</span>
-            </div>
-            <div class="content-row" *ngIf="createCaseError">
-                <span class="error">{{ createCaseError }}</span>
+                <span class="error" *ngIf="createCaseError">{{ createCaseError }}</span>
             </div>
         </div>
-    </div>
-    <div mat-dialog-actions>
-        <button mat-stroked-button (click)="onCloseClick()" [disabled]="working">Close</button>
     </div>
 </div>

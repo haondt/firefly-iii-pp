@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AddCaseDialog } from './add-case-dialog/add-case-dialog.component';
+import { AddCaseComponent } from './add-case-dialog/add-case-dialog.component';
 import { ThunderRoutingModule } from './thunder-routing.module';
 import { ThunderComponent } from './thunder.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,7 +36,6 @@ import { MatSelectModule } from '@angular/material/select';
         FormsModule,
         ReactiveFormsModule,
         MatCardModule,
-        MatDialogModule,
         MatSnackBarModule,
         MatButtonModule,
         MatInputModule,
@@ -46,7 +44,7 @@ import { MatSelectModule } from '@angular/material/select';
     ],
     declarations: [
         ThunderComponent,
-        AddCaseDialog
+        AddCaseComponent
     ]
 })
 export class ThunderModule { }

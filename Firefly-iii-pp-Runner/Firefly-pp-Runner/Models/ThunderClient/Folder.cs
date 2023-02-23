@@ -10,7 +10,7 @@ namespace Firefly_iii_pp_Runner.Models.ThunderClient
         public string Name { get; set; }
         public string ContainerId { get; set; } = "";
         public DateTime Created { get; set; } = DateTime.Now;
-        public int SortNum { get; set; }
+        public double SortNum { get; set; }
         public Settings Settings { get; set; } = new Settings();
     }
 }

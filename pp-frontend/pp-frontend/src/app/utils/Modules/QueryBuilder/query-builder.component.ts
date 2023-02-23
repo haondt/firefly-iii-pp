@@ -8,7 +8,11 @@ import { CurrencyPipe } from '@angular/common';
 interface QueryOperatorModel {
   viewValue: string,
   operator: string,
-  type: string
+  type: string,
+  options?: {
+    result: string,
+    viewValue: string
+  }[]
 }
 
 interface QueryOperationWrapper {
@@ -70,6 +74,10 @@ export class QueryBuilderComponent {
       } else if (this.queryOperator.type === "currency") {
         operation.queryOperation.result = (<string>this.queryResult).replace(/[^0-9.]/g, '');
         operation.viewValue += " " + (<string>this.queryResult);
+        this.queryOperations.push(operation);
+      } else if (this.queryOperator.type === "select") {
+        operation.queryOperation.result = this.queryResult.result;
+        operation.viewValue += " " + this.queryResult.viewValue;
         this.queryOperations.push(operation);
       } else {
         throw new Error(`Unable to add query operator type ${this.queryOperator.type}`);

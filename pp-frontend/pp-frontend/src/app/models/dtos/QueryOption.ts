@@ -4,6 +4,10 @@ export interface QueryOptionDto {
     operators: {
         operator: string,
         viewValue: string,
-        type: string
+        type: string,
+        options?: {
+            result: string,
+            viewValue: string
+        }[]
     }[]
 }

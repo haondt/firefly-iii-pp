@@ -8,7 +8,6 @@ import { QueryOperationModel } from '../models/QueryOperation';
 import { ServiceResponseModel } from '../models/ServiceResponse';
 import { FireflyIIIService } from '../services/FireflyIII';
 import { RunnerService } from '../services/Runner';
-import queryOptionsJson from '../../assets/queryOptions.json';
 import { checkResult } from '../utils/ObservableUtils';
 
 @Component({
@@ -23,7 +22,6 @@ export class FireflyIIIPPComponent {
   timer: NodeJS.Timer | undefined;
 
   jobType: string = "single";
-  queryOptions: QueryOptionDto[] = Object.assign([], queryOptionsJson);
 
   singleId: string | null = null;
 

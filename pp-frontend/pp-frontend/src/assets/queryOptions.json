@@ -160,5 +160,30 @@
         "type": "string"
       }
     ]
+  },
+  {
+    "operand": "transaction",
+    "viewValue": "Transaction type",
+    "operators": [
+      {
+        "operator": "type",
+        "viewValue": "is",
+        "type": "select",
+        "options": [
+          {
+            "result": "withdrawal",
+            "viewValue": "Withdrawal"
+          },
+          {
+            "result": "deposit",
+            "viewValue": "Deposit"
+          },
+          {
+            "result": "transfer",
+            "viewValue": "Transfer"
+          }
+        ]
+      }
+    ]
   }
 ]

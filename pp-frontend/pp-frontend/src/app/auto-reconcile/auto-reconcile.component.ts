@@ -1,28 +1,16 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { AutoReconcileJoiningStrategyOptionsModel, AutoReconcileRequestOptionsModel } from '../models/AutoReconcileRequestOptions';
+import { AutoReconcileRequestOptionsModel } from '../models/AutoReconcileRequestOptions';
 import { AutoReconcileDryRunResultResponseDto } from '../models/dtos/AutoReconcileDryRunResultResponse';
 import { AutoReconcileRequestDto } from '../models/dtos/AutoReconcileRequest';
-import { DryRunResponseDto } from '../models/dtos/DryRunResponse';
-import { QueryOptionDto } from '../models/dtos/QueryOption';
-import { RunnerStateDto } from '../models/dtos/RunnerState';
 import { QueryOperationModel } from '../models/QueryOperation';
-import { ServiceResponseModel } from '../models/ServiceResponse';
-import { FireflyIIIService } from '../services/FireflyIII';
-import { RunnerService } from '../services/Runner';
 
 import requestOptions from '../../assets/autoReconcileRequestOptions.json';
 import { AutoReconcileService } from '../services/AutoReconcile';
 import { checkResult } from '../utils/ObservableUtils';
 import { CurrencyPipe } from '@angular/common';
 import { AutoReconcileStatusDto } from '../models/dtos/AutoReconcileStatus';
-
-interface QueryOperatorModel {
-  viewValue: string,
-  operator: string,
-  type: string
-}
 
 interface QueryOperationWrapper {
   viewValue: string,
@@ -71,23 +59,43 @@ export class AutoReconcileComponent {
   }
 
   initData() {
-    this.destinationQueryOperations = [{
-      viewValue: "Source account is (no name)",
-      queryOperation: {
-        operand: "source_account",
-        operator: "is",
-        result: "(no name)"
-      }
-    }];
+    this.destinationQueryOperations = [
+      {
+        viewValue: "Source account is (no name)",
+        queryOperation: {
+          operand: "source_account",
+          operator: "is",
+          result: "(no name)"
+        }
+      },
+      {
+        viewValue: "Transaction type is Deposit",
+        queryOperation: {
+          operand: "transaction",
+          operator: "type",
+          result: "deposit"
+        }
+      },
+    ];
 
-    this.sourceQueryOperations = [{
-      viewValue: "Destination account is (no name)",
-      queryOperation: {
-        operand: "destination_account",
-        operator: "is",
-        result: "(no name)"
-      }
-    }];
+    this.sourceQueryOperations = [
+      {
+        viewValue: "Destination account is (no name)",
+        queryOperation: {
+          operand: "destination_account",
+          operator: "is",
+          result: "(no name)"
+        }
+      },
+      {
+        viewValue: "Transaction type is Withdrawal",
+        queryOperation: {
+          operand: "transaction",
+          operator: "type",
+          result: "withdrawal"
+        }
+      },
+    ];
 
     this.requestDto.joiningStrategy.descriptionJoinStrategy = "source";
     this.requestDto.joiningStrategy.dateJoinStrategy = "average";

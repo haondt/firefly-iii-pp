@@ -113,6 +113,7 @@ I think the best idea would be to sub in a database and have Node-Red make calls
 ## Notes
 - The api will send requests to Node-Red at the following endpoints, so they should be used as the entry points for your Node-Red flows.
   - `/apply`: Transactions will be sent here for rule evaluation
+    - Can return `200` to indicate the transaction should be updated, or `304` to indicate there are no changes.
   - `/extract-key/{field}`: Transactions will be sent here for a key to be extracted from the given field. This can be the key used in the key-value lookup.
     - e.g. `/extract-key/description`
 - Importing flows to Node-Red should be done with the Node-Red UI

@@ -11,9 +11,9 @@ namespace FireflyIIIpp.Tests.Fakes
 {
     public class FakeNodeRedService : INodeRedService
     {
-        public Func<string, string> Flow { get; set; } = s => s;
+        public Func<string, (bool, string)> Flow { get; set; } = s => (true, s);
         public int Runs { get; private set; } = 0;
-        public Task<string> ApplyRules(string input, CancellationToken? cancellationToken = null)
+        public Task<(bool, string)> TryApplyRules(string input, CancellationToken? cancellationToken = null)
         {
             Runs += 1;
             return Task.FromResult(Flow(input));

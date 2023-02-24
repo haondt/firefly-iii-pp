@@ -37,10 +37,10 @@ namespace Firefly_pp_Runner.Controllers
             try { JsonConvert.DeserializeObject<Dictionary<string, object>>(dto.StringifiedJsonPayload); }
             catch { throw new ArgumentException("Received invalid JSON object."); }
 
-            var result = await _nodeRed.ApplyRules(dto.StringifiedJsonPayload);
+            var (hasChanges, result) = await _nodeRed.TryApplyRules(dto.StringifiedJsonPayload);
             return new OkObjectResult(new NodeRedPassthroughResponseDto
             {
-                StringifiedJsonPayload = result
+                StringifiedJsonPayload = hasChanges ? result : dto.StringifiedJsonPayload
             });
         }
 

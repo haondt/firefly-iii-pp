@@ -5,9 +5,9 @@ namespace FireflyIIIpp.Mock.API.Fakes
 {
     public class FakeNodeRedService : INodeRedService
     {
-        public Task<string> ApplyRules(string input, CancellationToken? cancellationToken = null)
+        public Task<(bool, string)> TryApplyRules(string input, CancellationToken? cancellationToken = null)
         {
-            return Task.FromResult(input);
+            return Task.FromResult((true, input));
         }
 
         public Task ExportFlows()

@@ -71,7 +71,7 @@ namespace FireflyIIIpp.Tests
                 var t = JsonConvert.DeserializeObject<TransactionPartDto>(s);
                 if (t.Description == "2" || t.Description == "4" )
                     t.Description = (int.Parse(t.Description) * 100).ToString();
-                return JsonConvert.SerializeObject(t);
+                return (true, JsonConvert.SerializeObject(t));
             };
 
             var taskCompletionSource = new TaskCompletionSource();

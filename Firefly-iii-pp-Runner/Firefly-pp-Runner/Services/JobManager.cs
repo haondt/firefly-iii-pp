@@ -138,18 +138,30 @@ namespace Firefly_iii_pp_Runner.Services
 
             var transactionData = transaction.Attributes.Transactions[0];
             var transactionDataString = JsonConvert.SerializeObject(transactionData, _serializerSettings); ;
-            var newTransactionDataString = await _nodeRed.ApplyRules(transactionDataString, cancellationToken);
-            var newTransactionData = JsonConvert.DeserializeObject<TransactionPartDto>(newTransactionDataString, _serializerSettings);
-            var updateDto = new TransactionUpdateDto
+            var (hasChanges, newTransactionDataString) = await _nodeRed.TryApplyRules(transactionDataString, cancellationToken);
+            if (hasChanges)
             {
-                Apply_rules = false,
-                Fire_webhooks = true,
-                Transactions = new List<TransactionPartDto> { newTransactionData }
-            };
-            if (!newTransactionData.Equals(transactionData))
+                var newTransactionData = JsonConvert.DeserializeObject<TransactionPartDto>(newTransactionDataString, _serializerSettings);
+                var updateDto = new TransactionUpdateDto
+                {
+                    Apply_rules = false,
+                    Fire_webhooks = true,
+                    Transactions = new List<TransactionPartDto> { newTransactionData }
+                };
+                if (!newTransactionData.Equals(transactionData))
+                {
+                    await _fireflyIII.UpdateTransaction(transaction.Id, updateDto, cancellationToken);
+                    _logger.LogInformation("Updated transaction {transactionId}", transaction.Id);
+                }
+                else
+                {
+                    hasChanges = false;
+                }
+            }
+            if (!hasChanges)
             {
-                await _fireflyIII.UpdateTransaction(transaction.Id, updateDto, cancellationToken);
-                _logger.LogInformation("Updated transaction {transactionId}", transaction.Id);
+                _logger.LogInformation("Skipping transaction {transactionId}", transaction.Id);
+                return;
             }
         }
 

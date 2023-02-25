@@ -52,7 +52,6 @@ export class QueryBuilderComponent {
     this.queryResult = null;
     if (this.queryOperator?.type === "flag") {
       this.queryResult = "true";
-      console.log('bar');
     }
   }
 

@@ -162,6 +162,84 @@
     ]
   },
   {
+    "operand": "budget",
+    "viewValue": "Budget",
+    "operators": [
+      {
+        "operator": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "operator": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "operator": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "operand": "bill",
+    "viewValue": "Bill",
+    "operators": [
+      {
+        "operator": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "operator": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "operator": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "operand": "category",
+    "viewValue": "Category",
+    "operators": [
+      {
+        "operator": "starts",
+        "viewValue": "starts with",
+        "type": "string"
+      },
+      {
+        "operator": "ends",
+        "viewValue": "ends with",
+        "type": "string"
+      },
+      {
+        "operator": "is",
+        "viewValue": "is",
+        "type": "string"
+      },
+      {
+        "operator": "contains",
+        "viewValue": "contains",
+        "type": "string"
+      }
+    ]
+  },
+  {
     "operand": "transaction",
     "viewValue": "Transaction type",
     "operators": [
@@ -183,6 +261,52 @@
             "viewValue": "Transfer"
           }
         ]
+      }
+    ]
+  },
+  {
+    "operand": "has",
+    "viewValue": "Has",
+    "operators": [
+      {
+        "operator": "no_category",
+        "viewValue": "no category",
+        "type": "flag"
+      },
+      {
+        "operator": "any_category",
+        "viewValue": "any category",
+        "type": "flag"
+      },
+      {
+        "operator": "no_budget",
+        "viewValue": "no budget",
+        "type": "flag"
+      },
+      {
+        "operator": "any_budget",
+        "viewValue": "any budget",
+        "type": "flag"
+      },
+      {
+        "operator": "no_bill",
+        "viewValue": "no bill",
+        "type": "flag"
+      },
+      {
+        "operator": "any_bill",
+        "viewValue": "any bill",
+        "type": "flag"
+      },
+      {
+        "operator": "no_tag",
+        "viewValue": "no tag",
+        "type": "flag"
+      },
+      {
+        "operator": "any_tag",
+        "viewValue": "any tag",
+        "type": "flag"
       }
     ]
   }

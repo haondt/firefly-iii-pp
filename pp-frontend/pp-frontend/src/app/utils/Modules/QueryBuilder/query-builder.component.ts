@@ -50,6 +50,10 @@ export class QueryBuilderComponent {
 
   changeQueryOperator() {
     this.queryResult = null;
+    if (this.queryOperator?.type === "flag") {
+      this.queryResult = "true";
+      console.log('bar');
+    }
   }
 
   addQueryOperation() {
@@ -78,6 +82,9 @@ export class QueryBuilderComponent {
       } else if (this.queryOperator.type === "select") {
         operation.queryOperation.result = this.queryResult.result;
         operation.viewValue += " " + this.queryResult.viewValue;
+        this.queryOperations.push(operation);
+      } else if (this.queryOperator.type === "flag") {
+        operation.queryOperation.result = this.queryResult;
         this.queryOperations.push(operation);
       } else {
         throw new Error(`Unable to add query operator type ${this.queryOperator.type}`);

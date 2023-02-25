@@ -16,6 +16,7 @@
         public string Notes { get; set; }
         public string Category_name { get; set; }
         public string Bill_name { get; set; }
+        public string Budget_name { get; set; }
 
         private HashCode GetHashCodeWithoutAccounts()
         {
@@ -33,6 +34,7 @@
             hash.Add(Notes);
             hash.Add(Category_name);
             hash.Add(Bill_name);
+            hash.Add(Budget_name);
             return hash;
         }
 

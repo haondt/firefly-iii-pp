@@ -19,15 +19,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Core", "Firefl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Tests", "FireflyIIIpp.JobManager.Tests\FireflyIIIpp.Tests.csproj", "{601DDFFD-EF2F-4017-BCBC-AC1D304455FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.Core.Tests.Utilities", "FireflyIIIpp.Core.Tests.Utilities\FireflyIIIpp.Core.Tests.Utilities.csproj", "{70F48E30-8BE4-452A-8B29-EB202452A3CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Core.Tests.Utilities", "FireflyIIIpp.Core.Tests.Utilities\FireflyIIIpp.Core.Tests.Utilities.csproj", "{70F48E30-8BE4-452A-8B29-EB202452A3CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.NodeRed.Abstractions", "FireflyIIIpp.NodeRed.Abstractions\FireflyIIIpp.NodeRed.Abstractions.csproj", "{2B8A8490-5CC4-4F34-81F7-DB2EB79B0264}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.NodeRed.Abstractions", "FireflyIIIpp.NodeRed.Abstractions\FireflyIIIpp.NodeRed.Abstractions.csproj", "{2B8A8490-5CC4-4F34-81F7-DB2EB79B0264}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.NodeRed", "FireflyIIIpp.NodeRed\FireflyIIIpp.NodeRed.csproj", "{B9B69BBE-4755-495B-ADD0-C3B515EB8BD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.NodeRed", "FireflyIIIpp.NodeRed\FireflyIIIpp.NodeRed.csproj", "{B9B69BBE-4755-495B-ADD0-C3B515EB8BD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.Mock.API", "FireflyIIIpp.Mock.API\FireflyIIIpp.Mock.API.csproj", "{18640001-B663-4584-B458-AA9388D77A35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Mock.API", "FireflyIIIpp.Mock.API\FireflyIIIpp.Mock.API.csproj", "{18640001-B663-4584-B458-AA9388D77A35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIppRunner.Abstractions", "FireflyIIIppRUnner.Abstractions\FireflyIIIppRunner.Abstractions.csproj", "{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIppRunner.Abstractions", "FireflyIIIppRUnner.Abstractions\FireflyIIIppRunner.Abstractions.csproj", "{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

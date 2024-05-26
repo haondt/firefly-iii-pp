@@ -1,0 +1,3 @@
+﻿@using Haondt.Web.Views
+@model LoaderModel
+<div hx-trigger="load" hx-get="@Model.Location" hx-swap="outerHTML" hx-target="this"></div>

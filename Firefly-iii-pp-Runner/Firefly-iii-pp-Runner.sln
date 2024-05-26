@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Mock.API", "Fi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIppRunner.Abstractions", "FireflyIIIppRUnner.Abstractions\FireflyIIIppRunner.Abstractions.csproj", "{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haondt.Web", "Haondt.Web\Haondt.Web.csproj", "{A513FB5B-D299-492F-8166-52702E486D50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haondt.Web.Authentication", "Haondt.Web.Authentication\Haondt.Web.Authentication.csproj", "{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A513FB5B-D299-492F-8166-52702E486D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A513FB5B-D299-492F-8166-52702E486D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A513FB5B-D299-492F-8166-52702E486D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A513FB5B-D299-492F-8166-52702E486D50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

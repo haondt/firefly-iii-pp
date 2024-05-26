@@ -2,6 +2,6 @@
 {
     public class NodeRedSettings
     {
-        public string BaseUrl { get; set; }
+        public required string BaseUrl { get; set; }
     }
 }

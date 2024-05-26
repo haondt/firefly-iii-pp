@@ -16,7 +16,7 @@ namespace FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos
         [JsonProperty("fire_webhooks")]
         public bool FireWebhooks { get; set; } = true;
         [JsonProperty("group_title")]
-        public string GroupTitle { get; set; }
-        public List<TransactionPartDto> Transactions { get; set; } = new List<TransactionPartDto>();
+        public string? GroupTitle { get; set; }
+        public List<TransactionPartDto> Transactions { get; set; } = [];
     }
 }

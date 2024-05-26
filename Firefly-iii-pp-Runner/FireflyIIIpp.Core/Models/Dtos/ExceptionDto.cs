@@ -9,7 +9,7 @@ namespace FireflyIIIpp.Core.Models.Dtos
     public class ExceptionDto
     {
         public int StatusCode { get; set; }
-        public string Exception { get; set; }
+        public string? Exception { get; set; }
         public string? Message { get; set; }
         public string? Details { get; set; }
     }

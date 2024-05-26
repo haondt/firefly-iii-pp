@@ -2,7 +2,7 @@
 {
     public class ManyTransactionsContainerDto
     {
-        public List<TransactionDto> Data { get; set; }
-        public TransactionListMetadata Meta { get; set; }
+        public required List<TransactionDto> Data { get; set; }
+        public required TransactionListMetadata Meta { get; set; }
     }
 }

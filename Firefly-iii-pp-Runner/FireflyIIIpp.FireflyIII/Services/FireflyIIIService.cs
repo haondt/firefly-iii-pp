@@ -46,7 +46,7 @@ namespace FireflyIIIpp.FireflyIII.Services
             var result = await _httpClient.GetAsync(method);
             result.EnsureSuccessStatusCode();
 
-            return await result.Content.ReadFromJsonAsync<ManyTransactionsContainerDto>();
+            return await result.Content.ReadFromJsonAsync<ManyTransactionsContainerDto>() ?? throw new JsonSerializationException();
         }
 
         private string StringifyOperatorValue(object value)
@@ -71,7 +71,7 @@ namespace FireflyIIIpp.FireflyIII.Services
                 case ulong:
                 case short:
                 case ushort:
-                    return value.ToString();
+                    return value.ToString() ?? "";
                 case DateTime valueDateTime:
                     return valueDateTime.ToString("yyyy-MM-dd");
                 default:
@@ -99,7 +99,7 @@ namespace FireflyIIIpp.FireflyIII.Services
             var result = await _httpClient.GetAsync(method);
             await result.EnsureDownstreamSuccessStatusCode("Firefly-iii");
 
-            return await result.Content.ReadFromJsonAsync<ManyTransactionsContainerDto>();
+            return await result.Content.ReadFromJsonAsync<ManyTransactionsContainerDto>() ?? throw new JsonSerializationException();
         }
 
         public async Task<TransactionDto> GetTransaction(string id)
@@ -109,9 +109,9 @@ namespace FireflyIIIpp.FireflyIII.Services
                 throw new NotFoundException(id);
             
             else if (result.StatusCode != HttpStatusCode.OK)
-                throw new BadHttpRequestException(result.ReasonPhrase);
+                throw new BadHttpRequestException(result.ReasonPhrase ?? "");
 
-            var container = await result.Content.ReadFromJsonAsync<SingleTransactionContainerDto>();
+            var container = await result.Content.ReadFromJsonAsync<SingleTransactionContainerDto>() ?? throw new JsonSerializationException();
             return container.Data;
         }
 
@@ -138,7 +138,7 @@ namespace FireflyIIIpp.FireflyIII.Services
         {
             var response = await _httpClient.PostAsJsonAsync($"/api/v1/transactions", transaction);
             await response.EnsureDownstreamSuccessStatusCode("Firefly-iii");
-            var container = await response.Content.ReadFromJsonAsync<SingleTransactionContainerDto>();
+            var container = await response.Content.ReadFromJsonAsync<SingleTransactionContainerDto>() ?? throw new JsonSerializationException();
             return container.Data;
         }
     }

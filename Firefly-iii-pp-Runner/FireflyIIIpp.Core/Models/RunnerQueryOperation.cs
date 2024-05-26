@@ -10,10 +10,10 @@ namespace FireflyIIIpp.Core.Models
     public class RunnerQueryOperation
     {
         [Required]
-        public string Operand { get; set; }
+        public required string Operand { get; set; }
         [Required]
-        public string Operator { get; set; }
+        public required string Operator { get; set; }
         [Required]
-        public object Result { get; set; }
+        public required object Result { get; set; }
     }
 }

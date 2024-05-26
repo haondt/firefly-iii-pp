@@ -2,6 +2,6 @@
 {
     public class SingleTransactionContainerDto
     {
-        public TransactionDto Data { get; set; }
+        public required TransactionDto Data { get; set; }
     }
 }

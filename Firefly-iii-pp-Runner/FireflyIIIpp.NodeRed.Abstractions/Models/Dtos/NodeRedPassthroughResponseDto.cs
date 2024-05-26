@@ -8,6 +8,6 @@ namespace FireflyIIIpp.NodeRed.Abstractions.Models.Dtos
 {
     public class NodeRedPassthroughResponseDto
     {
-        public string StringifiedJsonPayload { get; set; }
+        public required string StringifiedJsonPayload { get; set; }
     }
 }

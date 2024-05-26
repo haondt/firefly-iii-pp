@@ -8,6 +8,6 @@ namespace FireflyIIIpp.NodeRed.Abstractions.Models.Dtos
 {
     public class NodeRedExtractKeyResponseDto
     {
-        public string Key { get; set; }
+        public required string Key { get; set; }
     }
 }

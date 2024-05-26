@@ -2,21 +2,21 @@
 {
     public class TransactionPartDto : IEquatable<TransactionPartDto>
     {
-        public string Type { get; set; }
-        public string Date { get; set; }
-        public string Amount { get; set; }
-        public string Description { get; set; }
-        public string Source_id { get; set; }
-        public string Source_name { get; set; }
-        public string Destination_id { get; set; }
-        public string Destination_name { get; set; }
-        public List<string> Tags { get; set; }
-        public string Original_source { get; set; } 
-        public string Import_hash_v2 { get; set; }
-        public string Notes { get; set; }
-        public string Category_name { get; set; }
-        public string Bill_name { get; set; }
-        public string Budget_name { get; set; }
+        public string? Type { get; set; }
+        public string? Date { get; set; }
+        public string? Amount { get; set; }
+        public string? Description { get; set; }
+        public string? Source_id { get; set; }
+        public string? Source_name { get; set; }
+        public string? Destination_id { get; set; }
+        public string? Destination_name { get; set; }
+        public List<string?> Tags { get; set; } = [];
+        public string? Original_source { get; set; } 
+        public string? Import_hash_v2 { get; set; }
+        public string? Notes { get; set; }
+        public string? Category_name { get; set; }
+        public string? Bill_name { get; set; }
+        public string? Budget_name { get; set; }
 
         private HashCode GetHashCodeWithoutAccounts()
         {

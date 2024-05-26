@@ -2,7 +2,7 @@
 {
     public class TransactionDto
     {
-        public string Id { get; set; }
-        public TransactionAttributes Attributes { get; set; }
+        public required string Id { get; set; }
+        public required TransactionAttributes Attributes { get; set; }
     }
 }

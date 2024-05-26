@@ -2,7 +2,7 @@
 {
     public class FireflyIIISettings
     {
-        public string BaseUrl { get; set; }
-        public string Token { get; set; }
+        public required string BaseUrl { get; set; }
+        public required string Token { get; set; }
     }
 }

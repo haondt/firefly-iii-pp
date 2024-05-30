@@ -17,7 +17,7 @@
     <ProjectReference Include="..\Firefly-pp-Runner\Firefly-pp-Runner.csproj" />
     <ProjectReference Include="..\FireflyIIIpp.FireflyIII\FireflyIIIpp.FireflyIII.csproj" />
     <ProjectReference Include="..\FireflyIIIpp.NodeRed\FireflyIIIpp.NodeRed.csproj" />
-    <ProjectReference Include="..\Haondt.Web.Authentication\Haondt.Web.Authentication.csproj" />
+    <ProjectReference Include="..\FireflyIIIpp.Web\FireflyIIIpp.Web.csproj" />
     <ProjectReference Include="..\Haondt.Web\Haondt.Web.csproj" />
   </ItemGroup>
 

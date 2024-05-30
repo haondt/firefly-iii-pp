@@ -55,7 +55,7 @@ namespace Haondt.Web.Authentication.Services
                 responseOptions = null;
             }
 
-            if (pageEntryFactory is INeedsAuthenticationPageEntryFactory)
+            if (pageEntryFactory is INeedsAuthenticationRegisteredPageEntryFactory)
                 if (!await sessionService.IsAuthenticatedAsync())
                     return await GetForceLoginView(controller);
 

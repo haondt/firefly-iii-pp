@@ -2,15 +2,15 @@
 
 namespace Haondt.Web.Pages
 {
-    public class DefaultPageEntryFactory(DefaultPageEntryFactoryData factoryData, IPageRegistry pageRegistry) : IPageEntryFactory
+    public class DefaultPageEntryFactory(DefaultPageEntryFactoryData factoryData) : IRegisteredPageEntryFactory
     {
         public string Page => factoryData.Page;
         public string ViewPath => factoryData.ViewPath;
 
-        public Task<PageEntry> Create(IRequestData data, Func<HxHeaderBuilder, HxHeaderBuilder>? responseOptions = null)
-            => Create(factoryData.ModelFactory(pageRegistry, data), responseOptions);
+        public Task<PageEntry> Create(IPageRegistry pageRegistry, IRequestData data, Func<HxHeaderBuilder, HxHeaderBuilder>? responseOptions = null)
+            => Create(pageRegistry, factoryData.ModelFactory(pageRegistry, data), responseOptions);
 
-        public Task<PageEntry> Create(IPageModel model, Func<HxHeaderBuilder, HxHeaderBuilder>? responseOptions = null)
+        public Task<PageEntry> Create(IPageRegistry pageRegistry, IPageModel model, Func<HxHeaderBuilder, HxHeaderBuilder>? responseOptions = null)
         {
             return Task.FromResult(new PageEntry
             {

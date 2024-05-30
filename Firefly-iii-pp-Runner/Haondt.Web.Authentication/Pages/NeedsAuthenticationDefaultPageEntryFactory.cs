@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Haondt.Web.Authentication.Pages
 {
-    public class NeedsAuthenticationDefaultPageEntryFactory(DefaultPageEntryFactoryData factoryData, IPageRegistry pageRegistry)
-        : DefaultPageEntryFactory(factoryData, pageRegistry), INeedsAuthenticationPageEntryFactory
+    public class NeedsAuthenticationDefaultPageEntryFactory(DefaultPageEntryFactoryData factoryData)
+        : DefaultPageEntryFactory(factoryData), INeedsAuthenticationRegisteredPageEntryFactory
     {
     }
 }

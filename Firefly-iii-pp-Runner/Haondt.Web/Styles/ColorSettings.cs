@@ -1,6 +1,6 @@
-﻿namespace Haondt.Web.Services
+﻿namespace Haondt.Web.Styles
 {
-    public class StyleSettings
+    public class ColorSettings
     {
         public required string DarkBackground { get; set; }
         public required string BrightBackground { get; set; }

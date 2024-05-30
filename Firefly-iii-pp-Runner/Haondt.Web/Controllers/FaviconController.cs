@@ -1,4 +1,4 @@
-﻿using Haondt.Web.Services;
+﻿using Haondt.Web.Assets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
@@ -6,13 +6,13 @@ namespace Haondt.Web.Controllers
 {
     [Route("favicon.ico")]
     [ApiController]
-    public class FaviconController(AssetProvider assetProvider) : Controller
+    public class FaviconController(IAssetProvider assetProvider) : Controller
     {
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            if (!assetProvider.TryGetAsset("favicon.ico", out var content))
+            if (await assetProvider.GetAssetAsync("favicon.ico") is not { IsSuccessful: true, Value: var asset })
                 return NotFound();
-            return File(content, "image/x-icon");
+            return File(asset, "image/x-icon");
         }
     }
 }

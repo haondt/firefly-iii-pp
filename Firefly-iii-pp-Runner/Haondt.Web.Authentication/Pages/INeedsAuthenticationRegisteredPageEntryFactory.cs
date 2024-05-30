@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Haondt.Web.Authentication.Pages
 {
-    public interface INeedsAuthenticationPageEntryFactory : IPageEntryFactory
+    public interface INeedsAuthenticationRegisteredPageEntryFactory : IRegisteredPageEntryFactory
     {
     }
 }

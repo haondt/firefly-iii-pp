@@ -1,12 +1,15 @@
-﻿using Haondt.Web.Extensions;
+﻿using Haondt.Web.Assets;
+using Haondt.Web.Extensions;
 using Haondt.Web.Filters;
 using Haondt.Web.Liftetime;
 using Haondt.Web.Pages;
 using Haondt.Web.Persistence;
 using Haondt.Web.Services;
+using Haondt.Web.Styles;
 using Haondt.Web.Views;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Caching.Memory;
+using System.Reflection;
 
 namespace Haondt.Web.Extensions
 {
@@ -14,17 +17,14 @@ namespace Haondt.Web.Extensions
     {
         public static IServiceCollection AddCoreServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IMemoryCache, MemoryCache>();
-            services.Configure<AssetSettings>(configuration.GetSection(nameof(AssetSettings)));
-            services.AddSingleton<AssetProvider>();
-            services.Configure<StyleSettings>(configuration.GetSection(nameof(StyleSettings)));
-            services.AddSingleton<StylesProvider>();
+            services.AddAssetServices();
+            services.AddStylesServices(configuration);
             services.Configure<IndexSettings>(configuration.GetSection(nameof(IndexSettings)));
 
-            services.AddScoped<IPageRegistry, PageRegistry>();
+            services.AddSingleton<IPageRegistry, PageRegistry>();
 
             var indexSettings = configuration.GetSection(nameof(IndexSettings)).Get<IndexSettings>();
-            services.RegisterPage("navigationBar", "~/Core/Views/NavigationBar.cshtml", data =>
+            services.RegisterPage("navigationBar", "~/Views/NavigationBar.cshtml", data =>
             {
                 data.Query.TryGetValue(NavigationBarModel.CurrentViewKey, out string? castedValue);
                 return new NavigationBarModel
@@ -33,12 +33,12 @@ namespace Haondt.Web.Extensions
                     Actions = []
                 };
             });
-            services.RegisterPage("loader", "~/Core/Views/Loader.cshtml", () => throw new InvalidOperationException());
-            services.RegisterPage("dynamicForm", "~/Core/Views/DynamicForm.cshtml", () => throw new InvalidOperationException());
-            services.RegisterPage("index", "~/Core/Views/Index.cshtml", () => throw new InvalidOperationException());
-            services.RegisterPage("toast", "~/Core/Views/Toast.cshtml", () => throw new InvalidOperationException(),
+            services.RegisterPage("loader", "~/Views/Loader.cshtml", () => throw new InvalidOperationException());
+            services.RegisterPage("dynamicForm", "~/Views/DynamicForm.cshtml", () => throw new InvalidOperationException());
+            services.RegisterPage("index", "~/Views/Index.cshtml", () => throw new InvalidOperationException());
+            services.RegisterPage("toast", "~/Views/Toast.cshtml", () => throw new InvalidOperationException(),
                 r => r.ReSwap("afterbegin").ReTarget("#toast-container"));
-            services.RegisterPage("modal", "~/Core/Views/Modal.cshtml", () => throw new InvalidOperationException(), r =>
+            services.RegisterPage("modal", "~/Views/Modal.cshtml", () => throw new InvalidOperationException(), r =>
                 r.ReSwap("innerHTML").ReTarget("#modal-container"));
 
 
@@ -59,6 +59,26 @@ namespace Haondt.Web.Extensions
             return services;
         }
 
+        public static IServiceCollection AddAssetServices(this IServiceCollection services)
+        {
+            services.AddTransient<IMemoryCache, MemoryCache>();
+            services.AddSingleton<IAssetProvider, AssetProvider>();
+            services.AddSingleton<IAssetSource, ManifestAssetSource>(_ => new ManifestAssetSource(typeof(ServiceCollectionExtensions).Assembly));
+            return services;
+        }
+
+        public static IServiceCollection AddStylesServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton<IStylesProvider, StylesProvider>();
+            var assembly = typeof(ServiceCollectionExtensions).Assembly;
+            services.AddSingleton<IStylesSource, ManifestAssetStylesSource>(sp => new ManifestAssetStylesSource(assembly, "base.css"));
+            services.AddSingleton<IStylesSource, ManifestAssetStylesSource>(sp => new ManifestAssetStylesSource(assembly, "styles.css"));
+            services.Configure<ColorSettings>(configuration.GetSection(nameof(ColorSettings)));
+            services.AddSingleton<IStylesSource, ColorsStylesSource>();
+            return services;
+        }
+
+
         public static IServiceCollection RegisterPage(this IServiceCollection services,
             string page,
             string viewPath,
@@ -66,8 +86,8 @@ namespace Haondt.Web.Extensions
             Func<HxHeaderBuilder, HxHeaderBuilder>? headerOptions = null)
         {
 
-            services.AddSingleton<IPageEntryFactory>(sp 
-                => ActivatorUtilities.CreateInstance<DefaultPageEntryFactory>(sp, new DefaultPageEntryFactoryData
+            services.AddSingleton<IRegisteredPageEntryFactory>(new DefaultPageEntryFactory(
+                new DefaultPageEntryFactoryData
                 {
                     Page = page,
                     ViewPath = viewPath,

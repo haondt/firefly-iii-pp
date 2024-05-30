@@ -2,14 +2,15 @@ using Firefly_iii_pp_Runner.Extensions;
 using Firefly_pp_Runner.Extensions;
 using FireflyIIIpp.FireflyIII.Extensions;
 using FireflyIIIpp.NodeRed.Extensions;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Haondt.Web.Extensions;
-using System.Reflection;
+using FireflyIIIpp.Web.Extensions;
 
 const string CORS_POLICY = "_fireflyIIIPPPolicy";
 
-var builder = WebApplication.CreateBuilder();
+var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
+    .AddApplicationPart(typeof(Haondt.Web.Extensions.ServiceCollectionExtensions).Assembly)
+    .AddApplicationPart(typeof(FireflyIIIpp.Web.Extensions.ServiceCollectionExtensions).Assembly)
     .AddNewtonsoftJson(options =>
     {
         options.SerializerSettings.ConfigureFireflyppRunnerSettings();
@@ -18,31 +19,27 @@ builder.Services.AddControllers()
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Services
+    .AddFireflyIIIPPWebServices(builder.Configuration)
     .AddCoreServices(builder.Configuration)
     .AddFireflyIIIServices(builder.Configuration)
     .AddNodeRedServices(builder.Configuration)
     .AddFireflyIIIPPRunnerServices(builder.Configuration)
     .AddFilePersistenceServices();
 
-builder.Services.AddMvc()
-    .AddApplicationPart(Assembly.GetAssembly(typeof(Haondt.Web.Extensions.ServiceCollectionExtensions)) ?? throw new NullReferenceException());
+
+builder.Services.AddMvc();
+builder.Services.AddCors(o => o.AddPolicy(CORS_POLICY, p =>
+{
+    p.AllowAnyOrigin();
+    p.AllowAnyHeader();
+}));
+
 
 var app = builder.Build();
 
 app.UseStaticFiles();
-//app.UseRouting();
 app.UseCors(CORS_POLICY);
 app.MapControllers();
 
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapControllers();
-//    endpoints.Map("api/{**slug}", context =>
-//    {
-//        context.Response.StatusCode = StatusCodes.Status404NotFound;
-//        return Task.CompletedTask;
-//    });
-//    app.MapFallbackToFile("index.html");
-//});
 
 app.Run();

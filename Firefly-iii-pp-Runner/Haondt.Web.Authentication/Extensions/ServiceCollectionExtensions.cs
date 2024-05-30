@@ -15,9 +15,9 @@ namespace Haondt.Web.Authentication.Extensions
     {
         public static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.RegisterPage("login", "~/Core/Views/DynamicForm.cshtml", new LoginDynamicFormFactory("").Create, r => r.ConfigureForPage("login"));
-            services.RegisterPage("register", "~/Core/Views/DynamicForm.cshtml", new RegisterDynamicFormFactory("").Create, r => r.ConfigureForPage("register"));
-            services.RegisterAuthenticatedPage("dynamicFormWithAuthentication", "~/Core/Views/DynamicForm.cshtml", () => throw new InvalidOperationException());
+            services.RegisterPage("login", "~/Views/DynamicForm.cshtml", new LoginDynamicFormFactory("").Create, r => r.ConfigureForPage("login"));
+            services.RegisterPage("register", "~/Views/DynamicForm.cshtml", new RegisterDynamicFormFactory("").Create, r => r.ConfigureForPage("register"));
+            services.RegisterAuthenticatedPage("dynamicFormWithAuthentication", "~/Views/DynamicForm.cshtml", () => throw new InvalidOperationException());
 
             services.Configure<AuthenticationSettings>(configuration.GetSection(nameof(AuthenticationSettings)));
             services.AddScoped<AuthenticationService>();
@@ -34,8 +34,8 @@ namespace Haondt.Web.Authentication.Extensions
             Func<IPageRegistry, IRequestData, IPageModel> modelFactory,
             Func<HxHeaderBuilder, HxHeaderBuilder>? headerOptions = null)
         {
-            services.AddSingleton<IPageEntryFactory>(sp 
-                => ActivatorUtilities.CreateInstance<NeedsAuthenticationDefaultPageEntryFactory>(sp, new DefaultPageEntryFactoryData
+            services.AddSingleton<IRegisteredPageEntryFactory>(new NeedsAuthenticationDefaultPageEntryFactory(
+                new DefaultPageEntryFactoryData
                 {
                     Page = page,
                     ViewPath = viewPath,

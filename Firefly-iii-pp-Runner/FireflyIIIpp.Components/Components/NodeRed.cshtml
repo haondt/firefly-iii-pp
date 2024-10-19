@@ -1,22 +1,15 @@
-﻿@using Haondt.Web.Core.Extensions
+﻿@using FireflyIIIpp.Components.Components
+@using FireflyIIIpp.Components.Extensions
+@using Haondt.Web.Core.Extensions
 @model FireflyIIIpp.Components.Components.NodeRedModel
 
 <nav class="panel">
     <div class="panel-block">
-        <div class="level">
-            <div class="level-left">
-                <button class="button">Export flows</button>
-                <button class="button">Import flows</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel-block">
         <div class="column">
             <div class="level">
                 <div class="level-left">
-                    <button class="button" hx-post="/_event/SendToNodeRed">Send to Node-Red</button>
-                    <button class="button">Prettify Request</button>
+                    <button class="button" hx-post="/_event/SendToNodeRed" hx-include="#request-text">Send to Node-Red</button>
+                    <button class="button" hx-post="/_event/PrettifyNodeRedRequest" hx-include="#request-text">Prettify Request</button>
                 </div>
             </div>
             <div class="level">
@@ -53,13 +46,13 @@
                 <div class="level-item">
                     <article class="message">
                         <div class="message-header">Request</div>
-                        <textarea class="message-body request-text">@Model.RequestText</textarea>
+                        @await Html.PartialAsync(new NodeRedUpdateModel{ IsSwap = false, RequestText = new("")})
                     </article>
                 </div>
                 <div class="level-item">
                     <article class="message">
                         <div class="message-header">Response</div>
-                        <div class="message-body response-text">@Model.ResponseText</div>
+                        @await Html.PartialAsync(new NodeRedUpdateModel{ IsSwap = false, ResponseText = new("")})
                     </article>
                 </div>
             </div>

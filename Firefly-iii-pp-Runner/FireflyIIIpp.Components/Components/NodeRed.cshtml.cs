@@ -4,8 +4,6 @@ namespace FireflyIIIpp.Components.Components
 {
     public class NodeRedModel : IComponentModel
     {
-        public string RequestText { get; set; } = "";
-        public string ResponseText { get; set; } = "";
     }
 
     public class NodeRedComponentDescriptorFactory : IComponentDescriptorFactory

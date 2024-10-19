@@ -1,6 +1,7 @@
 ﻿using FireflyIIIpp.Components.Components;
 using FireflyIIIpp.NodeRed.Reasons;
 using FireflyIIIpp.NodeRed.Services;
+using Haondt.Web.Components;
 using Haondt.Web.Core.Components;
 using Haondt.Web.Core.Extensions;
 using Haondt.Web.Core.Http;
@@ -20,23 +21,43 @@ namespace Firefly_iii_pp.EventHandlers.NodeRed
             var result = await nodeRed.ApplyRules(body.Value);
 
             if (!result.IsSuccessful)
-                return await componentFactory.GetPlainComponent(new NodeRedUpdateModel
+                return await componentFactory.GetPlainComponent(new AppendComponentLayoutModel
                 {
-                    ResponseText = new(),
-                    ErrorMessage = new(result.Reason)
+                    Components = new List<IComponent>
+                    {
+                        await componentFactory.GetPlainComponent(new NodeRedUpdateModel
+                        {
+                            ResponseText = new(),
+                        }),
+                        await componentFactory.GetPlainComponent(new ToastModel
+                        {
+                            Message = result.Reason,
+                            Severity = ToastSeverity.Error
+                        })
+                    }
                 });
 
             if (result.Value.IsSuccessful)
                 return await componentFactory.GetPlainComponent(new NodeRedUpdateModel
                 {
                     ResponseText = new(result.Value.Value),
-                    ErrorMessage = new("")
                 });
 
             if (result.Value.Reason == ApplyRulesReason.NotModified)
-                return await componentFactory.GetPlainComponent(new NodeRedUpdateModel
+                return await componentFactory.GetPlainComponent(new AppendComponentLayoutModel
                 {
-                    ErrorMessage = new("")
+                    Components = new List<IComponent>
+                    {
+                        await componentFactory.GetPlainComponent(new NodeRedUpdateModel
+                        {
+                            ResponseText = new(body.Value),
+                        }),
+                        await componentFactory.GetPlainComponent(new ToastModel
+                        {
+                            Message = "payload was not modified",
+                            Severity = ToastSeverity.Info
+                        })
+                    }
                 });
 
             throw new InvalidOperationException($"Unexpected {nameof(ApplyRulesReason)}: {result.Value.Reason}");

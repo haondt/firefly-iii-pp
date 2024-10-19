@@ -15,6 +15,7 @@ namespace Firefly_iii_pp.Extensions
             services.AddScoped<IEventHandler, SingleEventHandlerRegistry>();
 
             services.AddScoped<ISingleEventHandler, SendToNodeRedEventHandler>();
+            services.AddScoped<ISingleEventHandler, PrettifyRequestEventHandler>();
 
             services.AddScoped<ISingleEventHandler, NavigateEventHandler>();
 

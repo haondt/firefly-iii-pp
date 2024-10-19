@@ -15,13 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Autoreconcile\Services\" />
     <Folder Include="Models\Runner\Enums\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Firefly-iii-pp.Firefly-III.Abstractions\FireflyIIIpp.FireflyIII.Abstractions.csproj" />
     <ProjectReference Include="..\FireflyIIIpp.NodeRed\FireflyIIIpp.NodeRed.csproj" />
-    <ProjectReference Include="..\FireflyIIIppRUnner.Abstractions\FireflyIIIppRunner.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

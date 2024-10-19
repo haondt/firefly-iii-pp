@@ -11,6 +11,7 @@ namespace FireflyIIIpp.Components.Components
         public Optional<string> Id { get; set; } = new();
         public Optional<string> Placeholder { get; set; } = new();
         public Optional<string> HxInclude { get; set; } = new();
+        public Optional<string> CompletionEvent { get; set; } = new();
 
         public string HxIncludeString
         {

@@ -1,5 +1,5 @@
 ﻿@model FireflyIIIpp.Components.Components.AutocompleteSuggestionsModel
 @foreach(var item in Model.Items)
 {
-    <a class="dropdown-item">@item</a>
+    <a class="dropdown-item" _="on mousedown send selectionClicked(text:(my innerHTML)) to the previous .input">@item</a>
 }

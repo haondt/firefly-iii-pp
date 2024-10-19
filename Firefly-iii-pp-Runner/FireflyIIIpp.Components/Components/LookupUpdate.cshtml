@@ -4,3 +4,32 @@
 {
     <textarea @(Model.IsSwap ? Html.Raw("hx-swap-oob=\"outerHTML\"") : "") id="lookup-value" name="lookupValue" class="message-body request-text">@Model.LookupValue.Value</textarea>
 }
+
+@if (Model.MappedForeignKeyList.HasValue)
+{
+    <div id="foreign-key-list" 
+        @(Model.IsSwap ? Html.Raw("hx-swap-oob=\"outerHTML\"") : "")
+        class="has-background-black-ter" 
+        style="
+            width:100%;
+            @(Model.MappedForeignKeyList.Value.Count > 0 ? Html.Raw("padding:10px") : "")
+        ">
+        <table class="table" style="width:100%;background:none;">
+            <tbody>
+                @foreach(var key in Model.MappedForeignKeyList.Value)
+                {
+                    <tr _="on delete remove me">
+                        <td style="width:100%;">
+                            <div class="level">
+                                <div class="level-left">@key</div>
+                                <div class="level-right">
+                                    <button class="delete" hx-target="closest <tr/>" hx-include="#store-select" hx-post="/_event/DeleteForeignKey?foreignKey=@key"></button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

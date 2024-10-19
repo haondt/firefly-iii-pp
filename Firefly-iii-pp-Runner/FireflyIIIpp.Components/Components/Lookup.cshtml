@@ -45,17 +45,25 @@
 
     <div class="panel-block tab-body is-hidden" id="map-foreign-key-tab-body">
         <div class="columns is-flex-grow-1"><div class="column is-flex-grow-1">
-            <form>
+            <form hx-post="/_event/MapForeignKey" hx-include="#store-select">
                 <div class="level">
                     <div class="level-left">
                         <p>Map</p>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Foreign key">
-                        </div>
+                        @await Html.PartialAsync(new AutocompleteModel
+                        {
+                            SuggestionEvent = "ForeignKeyAutocomplete",
+                            Name = new("foreignKey"), 
+                            Placeholder = new("Foreign Key"),
+                            HxInclude="#store-select"
+                        })
                         <p>To</p>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Primary key">
-                        </div>
+                        @await Html.PartialAsync(new AutocompleteModel
+                        {
+                            SuggestionEvent = "PrimaryKeyAutocomplete",
+                            Name = new("primaryKey"), 
+                            Placeholder = new("Primary Key"),
+                            HxInclude="#store-select"
+                        })
                         <button class="button is-info" type="submit">Add Map</button>
                     </div>
                 </div>
@@ -63,13 +71,18 @@
 
             <hr />
 
-            <form>
+            <form hx-post="/_event/LookupForeignKeys" hx-include="#store-select" hx-trigger="complete consume, submit">
                 <div class="level">
                     <div class="level-left">
                         <p>Get keys mapped to</p>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Foreign key">
-                        </div>
+                        @await Html.PartialAsync(new AutocompleteModel
+                        {
+                            SuggestionEvent = "PrimaryKeyAutocomplete",
+                            Name = new("primaryKey"), 
+                            Placeholder = new("Primary Key"),
+                            HxInclude="#store-select",
+                            CompletionEvent = "complete"
+                        })
                         <button class="button" type="submit">Get Keys</button>
                     </div>
                 </div>
@@ -77,18 +90,7 @@
 
             <hr />
 
-            <div class="has-background-black-ter" style="width:100%;padding:10px;">
-                <table class="table" style="width:100%;background:none;">
-                    <tbody>
-                        <tr>
-                            <td style="width:100%;"><div class="level"><div class="level-left">WLMRT</div><div class="level-right"><button class="delete"></button></div></div>
-                        </tr>
-                        <tr>
-                            <td><div class="level"><div class="level-left">WALMART</div><div class="level-right"><button class="delete"></button></div></div>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            @await Html.PartialAsync(new LookupUpdateModel{ IsSwap = false, MappedForeignKeyList = new([])})
         </div></div>
     </div>
 
@@ -114,7 +116,7 @@
             </style>
 
             <div class="block">
-                <form hx-post="/_event/GetLookupValue" hx-include="#store-select">
+                <form hx-post="/_event/GetLookupValue" hx-include="#store-select" hx-trigger="complete consume, submit">
                     <div class="level">
                         <div class="level-left">
                             <p>Edit value</p>
@@ -124,7 +126,8 @@
                                 Name = new("primaryKey"), 
                                 Id = new("primary-key"),
                                 Placeholder = new("Primary Key"),
-                                HxInclude="#store-select"
+                                HxInclude="#store-select",
+                                CompletionEvent = "complete"
                             })
                             <button class="button is-info" type="submit">Get Value</button>
                         </div>

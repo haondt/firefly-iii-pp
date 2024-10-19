@@ -10,5 +10,7 @@ namespace Firefly_pp_Runner.Lookup.Services
         Task<List<StorageKey<T>>> AutocompleteForeignKey<T>(StorageKey<T> partialForeignKey, int maxResults);
         Task<List<StorageKey<T>>> AutocompletePrimaryKey<T>(StorageKey<T> partialPrimaryKey, int maxResults);
         Task<Result<int, StorageResultReason>> DeleteForeignKey<T>(StorageKey<T> foreignKey);
+        Task<List<StorageKey<T>>> GetForeignKeys<T>(StorageKey<T> primaryKey);
+        Task<List<StorageKey<T>>> GetPrimaryKeys<T>(StorageKey<T> foreignKey);
     }
 }

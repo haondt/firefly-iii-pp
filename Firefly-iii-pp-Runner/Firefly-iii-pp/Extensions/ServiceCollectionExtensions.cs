@@ -23,6 +23,10 @@ namespace Firefly_iii_pp.Extensions
             services.AddScoped<ISingleEventHandler, UpsertValueEventHandler>();
             services.AddScoped<ISingleEventHandler, DeleteValueEventHandler>();
             services.AddScoped<ISingleEventHandler, PrimaryKeyAutocompleteEventHandler>();
+            services.AddScoped<ISingleEventHandler, ForeignKeyAutocompleteEventHandler>();
+            services.AddScoped<ISingleEventHandler, MapForeignKeyEventHandler>();
+            services.AddScoped<ISingleEventHandler, GetForeignKeysEventHandler>();
+            services.AddScoped<ISingleEventHandler, DeleteForeignKeyEventHandler>();
 
             // middleware
             services.AddSingleton<IExceptionActionResultFactory, ToastExceptionActionResultFactory>();

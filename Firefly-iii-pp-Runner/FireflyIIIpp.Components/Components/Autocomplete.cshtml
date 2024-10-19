@@ -9,6 +9,10 @@
             on input debounced at 200ms
                 send focus to me
             end
+            on selectionClicked
+                set my value to event.detail.text
+                then @(Model.CompletionEvent.HasValue ? $"send {Model.CompletionEvent.Value}" : "")
+            end
             on focus
                 add .is-active to the next .dropdown 
                 send update to the next .dropdown
@@ -19,10 +23,12 @@
             end
             on keydown
                 if the event's key is 'Enter'
+                    halt the event
                     if (the next <.dropdown-item.is-active />) is not null
                         set my value to (the next <.dropdown-item.is-active/>)'s innerHTML
                         send focusout to me
                     end
+                    then @(Model.CompletionEvent.HasValue ? $"send {Model.CompletionEvent.Value}" : "")
                 end
                 if the event's key is 'ArrowDown'
                     halt the event

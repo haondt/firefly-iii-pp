@@ -20,6 +20,14 @@ namespace Firefly_pp_Runner.Lookup.Services
     {
         public async Task AddForeignKey(string primaryKey, string foreignKey)
         {
+            var existingPrimaryKeys = await storage.GetPrimaryKeys(Lookup.GetStorageKey(store, foreignKey));
+            if (existingPrimaryKeys.Count != 0)
+            {
+                var primaryKeysString = string.Join(", ", existingPrimaryKeys
+                    .Select(Lookup.GetKeySeed));
+                throw new StorageException($"Foreign key {foreignKey} is already mapped to primary key(s) {primaryKeysString}");
+            }
+
             var result = await storage.AddForeignKey(Lookup.GetStorageKey(store, primaryKey), Lookup.GetStorageKey(store, foreignKey));
             if (!result.IsSuccessful)
                 throw new StorageException($"Failed to add foreign key {foreignKey} to primary key {primaryKey} due to reason {result.Reason}");
@@ -39,17 +47,18 @@ namespace Firefly_pp_Runner.Lookup.Services
 
         public Task DeleteForeignKey(string key)
         {
-            throw new NotImplementedException();
+            return storage.DeleteForeignKey(Lookup.GetStorageKey(store, key));
         }
 
-        public async Task DeletePrimaryKey(string key)
+        public Task DeletePrimaryKey(string key)
         {
-            await storage.Delete(Lookup.GetStorageKey(store, key));
+            return storage.Delete(Lookup.GetStorageKey(store, key));
         }
 
-        public Task<List<string>> GetForeignKeys(string primaryKey)
+        public async Task<List<string>> GetForeignKeys(string primaryKey)
         {
-            throw new NotImplementedException();
+            var keys = await storage.GetForeignKeys(Lookup.GetStorageKey(store, primaryKey));
+            return keys.Select(Lookup.GetKeySeed).ToList();
         }
 
         public async Task<Result<string, LookupResultReason>> GetValueAsync(string primaryKey)

@@ -1,15 +1,8 @@
-﻿using Firefly_iii_pp_Runner.ExceptionFilters;
-using Firefly_iii_pp_Runner.Services;
+﻿using Firefly_iii_pp_Runner.Controllers;
 using FireflyIIIpp.FireflyIII.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Net;
-using System.Net.Mime;
-using System.Text;
-using System.Text.Json;
 
-namespace Firefly_iii_pp_Runner.Controllers
+namespace Firefly_pp_Runner.Controllers
 {
     [Route("api/v1/firefly_iii")]
     public class FireflyIIIController : BaseController
@@ -27,7 +20,7 @@ namespace Firefly_iii_pp_Runner.Controllers
         {
             var transaction = await _fireflyIII.GetTransaction(id);
             if (transaction.Attributes.Transactions.Count != 1)
-                return new BadRequestObjectResult("Transaction contains multiple splits") ;
+                return new BadRequestObjectResult("Transaction contains multiple splits");
             var transactionData = transaction.Attributes.Transactions[0];
             return new OkObjectResult(transactionData);
         }

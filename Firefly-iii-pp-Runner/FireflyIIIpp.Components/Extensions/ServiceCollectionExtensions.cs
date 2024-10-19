@@ -33,8 +33,6 @@ namespace FireflyIIIpp.Components.Extensions
 
         private static IServiceCollection AddCoreComponents(this IServiceCollection services)
         {
-            //services.AddComponent<ErrorComponentDescriptorFactory>();
-            //services.AddComponent<CloseModalComponentDescriptorFactory>();
             services.AddComponent<NodeRedComponentDescriptorFactory>();
             services.AddComponent<NodeRedUpdateComponentDescriptorFactory>();
             services.AddComponent<FireflyIIIppLayoutComponentDescriptorFactory>();
@@ -44,6 +42,7 @@ namespace FireflyIIIpp.Components.Extensions
             services.AddComponent<ToastComponentDescriptorFactory>();
             services.AddComponent<AutocompleteComponentDescriptorFactory>();
             services.AddComponent<AutocompleteSuggestionsComponentDescriptorFactory>();
+            services.AddComponent<EmptyComponentComponentDescriptorFactory>();
             return services;
         }
     }

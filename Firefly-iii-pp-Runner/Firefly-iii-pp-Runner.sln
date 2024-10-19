@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIppRunner.Abstract
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Web", "FireflyIIIpp.Web\FireflyIIIpp.Web.csproj", "{AFA4DEA8-7107-43F5-9087-6D64F1B8BA85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.Components", "FireflyIIIpp.Components\FireflyIIIpp.Components.csproj", "{31BA151D-E808-41F0-B770-9F6F2E1218B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Components", "FireflyIIIpp.Components\FireflyIIIpp.Components.csproj", "{31BA151D-E808-41F0-B770-9F6F2E1218B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.Domain", "FireflyIIIpp.Domain\FireflyIIIpp.Domain.csproj", "{96304B35-2221-44B1-B813-68580A2C6FBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Domain", "FireflyIIIpp.Domain\FireflyIIIpp.Domain.csproj", "{96304B35-2221-44B1-B813-68580A2C6FBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

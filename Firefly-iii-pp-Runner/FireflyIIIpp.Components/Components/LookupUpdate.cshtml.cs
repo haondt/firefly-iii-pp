@@ -7,7 +7,8 @@ namespace FireflyIIIpp.Components.Components
     public class LookupUpdateModel : IPartialComponentModel
     {
         public bool IsSwap = true;
-        public required Optional<string> LookupValue { get; set; } = new();
+        public Optional<string> LookupValue { get; set; } = new();
+        public Optional<List<string>> MappedForeignKeyList { get; set; } = new();
         public string ViewPath => LookupUpdateComponentDescriptorFactory.ViewPath;
     }
 

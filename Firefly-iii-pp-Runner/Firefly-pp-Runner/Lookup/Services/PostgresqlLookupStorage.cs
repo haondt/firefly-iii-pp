@@ -97,5 +97,50 @@ namespace Firefly_pp_Runner.Lookup.Services
                 return results;
             });
         }
+
+        public async Task<List<StorageKey<T>>> GetForeignKeys<T>(StorageKey<T> primaryKey)
+        {
+            var keyString = StorageKeyConvert.Serialize(primaryKey);
+
+            var results = new List<StorageKey<T>>();
+            return await WithConnectionAsync(async connection =>
+            {
+                string query = $"SELECT ForeignKey FROM {_foreignKeyTableName} WHERE PrimaryKey = @primaryKey";
+                await using var command = new NpgsqlCommand(query, connection);
+                command.Parameters.AddWithValue("@primaryKey", keyString);
+
+                await using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    var resultKeyString = reader.GetString(0);
+                    var resultKey = StorageKeyConvert.Deserialize<T>(resultKeyString);
+                    results.Add(resultKey);
+                }
+                return results;
+            });
+        }
+
+        public async Task<List<StorageKey<T>>> GetPrimaryKeys<T>(StorageKey<T> foreignKey)
+        {
+            var keyString = StorageKeyConvert.Serialize(foreignKey);
+
+            var results = new List<StorageKey<T>>();
+            return await WithConnectionAsync(async connection =>
+            {
+                string query = $"SELECT PrimaryKey FROM {_foreignKeyTableName} WHERE ForeignKey = @foreignKey";
+                await using var command = new NpgsqlCommand(query, connection);
+                command.Parameters.AddWithValue("@foreignKey", keyString);
+
+                await using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    var resultKeyString = reader.GetString(0);
+                    var resultKey = StorageKeyConvert.Deserialize<T>(resultKeyString);
+                    results.Add(resultKey);
+                }
+                return results;
+            });
+
+        }
     }
 }

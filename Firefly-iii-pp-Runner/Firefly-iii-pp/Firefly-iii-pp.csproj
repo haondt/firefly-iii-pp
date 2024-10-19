@@ -11,14 +11,18 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+	<PackageReference Include="Haondt.Identity" Version="0.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Firefly-pp-Runner\Firefly-pp-Runner.csproj" />
-    <ProjectReference Include="..\FireflyIIIpp.FireflyIII\FireflyIIIpp.FireflyIII.csproj" />
+    <ProjectReference Include="..\FireflyIIIpp.Components\FireflyIIIpp.Components.csproj" />
     <ProjectReference Include="..\FireflyIIIpp.NodeRed\FireflyIIIpp.NodeRed.csproj" />
-    <ProjectReference Include="..\FireflyIIIpp.Web\FireflyIIIpp.Web.csproj" />
-    <ProjectReference Include="..\Haondt.Web\Haondt.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Middlewares\Services\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

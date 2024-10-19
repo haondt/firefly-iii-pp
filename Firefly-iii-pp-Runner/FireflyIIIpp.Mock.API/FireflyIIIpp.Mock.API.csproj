@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Firefly-iii-pp.Firefly-III.Abstractions\FireflyIIIpp.FireflyIII.Abstractions.csproj" />
     <ProjectReference Include="..\Firefly-pp-Runner\Firefly-pp-Runner.csproj" />
-    <ProjectReference Include="..\FireflyIIIpp.NodeRed.Abstractions\FireflyIIIpp.NodeRed.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

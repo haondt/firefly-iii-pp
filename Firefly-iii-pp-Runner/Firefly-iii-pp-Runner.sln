@@ -21,19 +21,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Tests", "Firef
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Core.Tests.Utilities", "FireflyIIIpp.Core.Tests.Utilities\FireflyIIIpp.Core.Tests.Utilities.csproj", "{70F48E30-8BE4-452A-8B29-EB202452A3CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.NodeRed.Abstractions", "FireflyIIIpp.NodeRed.Abstractions\FireflyIIIpp.NodeRed.Abstractions.csproj", "{2B8A8490-5CC4-4F34-81F7-DB2EB79B0264}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.NodeRed", "FireflyIIIpp.NodeRed\FireflyIIIpp.NodeRed.csproj", "{B9B69BBE-4755-495B-ADD0-C3B515EB8BD6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Mock.API", "FireflyIIIpp.Mock.API\FireflyIIIpp.Mock.API.csproj", "{18640001-B663-4584-B458-AA9388D77A35}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIppRunner.Abstractions", "FireflyIIIppRUnner.Abstractions\FireflyIIIppRunner.Abstractions.csproj", "{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Haondt.Web", "Haondt.Web\Haondt.Web.csproj", "{A513FB5B-D299-492F-8166-52702E486D50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FireflyIIIpp.Web", "FireflyIIIpp.Web\FireflyIIIpp.Web.csproj", "{AFA4DEA8-7107-43F5-9087-6D64F1B8BA85}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Haondt.Web.Authentication", "Haondt.Web.Authentication\Haondt.Web.Authentication.csproj", "{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.Components", "FireflyIIIpp.Components\FireflyIIIpp.Components.csproj", "{31BA151D-E808-41F0-B770-9F6F2E1218B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.Web", "FireflyIIIpp.Web\FireflyIIIpp.Web.csproj", "{AFA4DEA8-7107-43F5-9087-6D64F1B8BA85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireflyIIIpp.Domain", "FireflyIIIpp.Domain\FireflyIIIpp.Domain.csproj", "{96304B35-2221-44B1-B813-68580A2C6FBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,10 +75,6 @@ Global
 		{70F48E30-8BE4-452A-8B29-EB202452A3CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70F48E30-8BE4-452A-8B29-EB202452A3CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70F48E30-8BE4-452A-8B29-EB202452A3CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B8A8490-5CC4-4F34-81F7-DB2EB79B0264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B8A8490-5CC4-4F34-81F7-DB2EB79B0264}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B8A8490-5CC4-4F34-81F7-DB2EB79B0264}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B8A8490-5CC4-4F34-81F7-DB2EB79B0264}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9B69BBE-4755-495B-ADD0-C3B515EB8BD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9B69BBE-4755-495B-ADD0-C3B515EB8BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9B69BBE-4755-495B-ADD0-C3B515EB8BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -93,18 +87,18 @@ Global
 		{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C32EB8E3-592C-4E90-9B3D-1EDF4B1DEA64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A513FB5B-D299-492F-8166-52702E486D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A513FB5B-D299-492F-8166-52702E486D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A513FB5B-D299-492F-8166-52702E486D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A513FB5B-D299-492F-8166-52702E486D50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9A6895A-F0CC-4D0A-8C3D-0D15BBA58863}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AFA4DEA8-7107-43F5-9087-6D64F1B8BA85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AFA4DEA8-7107-43F5-9087-6D64F1B8BA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFA4DEA8-7107-43F5-9087-6D64F1B8BA85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFA4DEA8-7107-43F5-9087-6D64F1B8BA85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31BA151D-E808-41F0-B770-9F6F2E1218B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31BA151D-E808-41F0-B770-9F6F2E1218B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31BA151D-E808-41F0-B770-9F6F2E1218B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31BA151D-E808-41F0-B770-9F6F2E1218B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96304B35-2221-44B1-B813-68580A2C6FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96304B35-2221-44B1-B813-68580A2C6FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96304B35-2221-44B1-B813-68580A2C6FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96304B35-2221-44B1-B813-68580A2C6FBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

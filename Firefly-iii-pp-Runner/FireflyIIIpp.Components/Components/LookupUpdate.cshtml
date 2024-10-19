@@ -1,0 +1,6 @@
+﻿@model FireflyIIIpp.Components.Components.LookupUpdateModel
+
+@if (Model.LookupValue.HasValue)
+{
+    <textarea @(Model.IsSwap ? Html.Raw("hx-swap-oob=\"outerHTML\"") : "") id="lookup-value" name="lookupValue" class="message-body request-text">@Model.LookupValue.Value</textarea>
+}

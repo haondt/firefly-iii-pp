@@ -1,5 +1,19 @@
 @model FireflyIIIpp.Web.Views.NodeRed.NodeRedModel
 
-<div class="page">
-    <h1>Hello from node red page!</h1>
-</div>
+<div class="page"><div class="card">
+    <div class="flex flex-row">
+        <button>Send to Node-Red</button>
+        <button>Prettify Request</button>
+    </div>
+    <div class="divider"></div>
+    <div class="flex flex-row gap-10 w-full">
+        <div class="flex-grow basis-0 flex flex-col gap-20">
+            <span>Request</span>
+            <textarea></textarea>
+        </div>
+        <div class="flex-grow basis-0 flex flex-col gap-20">
+            <span>Response</span>
+            <div class="textarea"></div>
+        </div>
+    </div>
+</div></div>

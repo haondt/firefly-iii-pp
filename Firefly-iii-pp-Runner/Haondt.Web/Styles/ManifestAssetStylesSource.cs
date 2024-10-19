@@ -8,6 +8,8 @@ namespace Haondt.Web.Styles
 {
     public class ManifestAssetStylesSource(Assembly assembly, string stylesPath) : IStylesSource
     {
+        public int Priority { get; set; } = 1000;
+
         private readonly Task<string> _stylesTask = CreateStylesTask(assembly, stylesPath);
         private static async Task<string> CreateStylesTask(Assembly assembly, string stylesPath)
         {

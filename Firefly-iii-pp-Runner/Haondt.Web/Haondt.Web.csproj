@@ -19,8 +19,5 @@
     <EmbeddedResource Include="wwwroot\**\*" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="wwwroot\style.css" />
-  </ItemGroup>
 
 </Project>

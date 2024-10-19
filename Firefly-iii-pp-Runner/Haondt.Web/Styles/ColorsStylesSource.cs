@@ -7,6 +7,7 @@ namespace Haondt.Web.Styles
     {
         private readonly ColorSettings _colorSettings = colorOptions.Value;
 
+        public int Priority => -1;
         public Task<string> GetStylesAsync()
         {
             var colorsCss = ":root {\n";

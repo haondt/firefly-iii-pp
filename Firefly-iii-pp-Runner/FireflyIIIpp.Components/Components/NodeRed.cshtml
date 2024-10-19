@@ -1,0 +1,68 @@
+﻿@using Haondt.Web.Core.Extensions
+@model FireflyIIIpp.Components.Components.NodeRedModel
+
+<nav class="panel">
+    <div class="panel-block">
+        <div class="level">
+            <div class="level-left">
+                <button class="button">Export flows</button>
+                <button class="button">Import flows</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-block">
+        <div class="column">
+            <div class="level">
+                <div class="level-left">
+                    <button class="button" hx-post="/_event/SendToNodeRed">Send to Node-Red</button>
+                    <button class="button">Prettify Request</button>
+                </div>
+            </div>
+            <div class="level">
+                <style>
+                    @@scope {
+                        .request-text, .response-text {
+                            overflow: auto;
+                            font-family: monospace;
+                            font-size: 1rem;
+                            height: 350px;
+                            line-height: 1.25rem;
+                        }
+
+                        .request-text {
+                            resize: none;
+                            width: 100%;
+                            outline: none;
+                            vertical-align: top;
+                        }
+
+                        .response-text {
+                            white-space: pre-wrap;
+                        }
+
+                        .level-item {
+                            flex: 1 1 0;
+                        }
+
+                        .message {
+                            width: 100%;
+                        }
+                    }
+                </style>
+                <div class="level-item">
+                    <article class="message">
+                        <div class="message-header">Request</div>
+                        <textarea class="message-body request-text">@Model.RequestText</textarea>
+                    </article>
+                </div>
+                <div class="level-item">
+                    <article class="message">
+                        <div class="message-header">Response</div>
+                        <div class="message-body response-text">@Model.ResponseText</div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

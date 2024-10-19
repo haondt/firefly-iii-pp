@@ -1,30 +1,47 @@
-using Firefly_iii_pp_Runner.Extensions;
-using Firefly_pp_Runner.Extensions;
-using FireflyIIIpp.FireflyIII.Extensions;
+using Firefly_iii_pp.Extensions;
+using Firefly_pp_Runner.Lookup.Extensions;
+using FireflyIIIpp.Components.Extensions;
 using FireflyIIIpp.NodeRed.Extensions;
+using Haondt.Identity.StorageKey;
+using Haondt.Web.Core.Extensions;
+using Haondt.Web.Core.Middleware;
 using Haondt.Web.Extensions;
-using FireflyIIIpp.Web.Extensions;
 
 const string CORS_POLICY = "_fireflyIIIPPPolicy";
+
+StorageKeyConvert.DefaultSerializerSettings = new StorageKeySerializerSettings
+{
+    TypeNameStrategy = TypeNameStrategy.SimpleTypeConverter,
+    KeyEncodingStrategy = KeyEncodingStrategy.String
+};
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(Haondt.Web.Extensions.ServiceCollectionExtensions).Assembly)
-    .AddApplicationPart(typeof(FireflyIIIpp.Web.Extensions.ServiceCollectionExtensions).Assembly)
-    .AddNewtonsoftJson(options =>
-    {
-        options.SerializerSettings.ConfigureFireflyppRunnerSettings();
-    });
+    .AddApplicationPart(typeof(Haondt.Web.BulmaCSS.Extensions.ServiceCollectionExtensions).Assembly)
+    .AddApplicationPart(typeof(FireflyIIIpp.Components.Extensions.ServiceCollectionExtensions).Assembly);
+//.AddNewtonsoftJson(options =>
+//{
+//    options.SerializerSettings.ConfigureFireflyppRunnerSettings();
+//});
 
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Services
-    .AddFireflyIIIPPWebServices(builder.Configuration)
-    .AddCoreServices(builder.Configuration)
-    .AddFireflyIIIServices(builder.Configuration)
+    .AddHaondtWebCoreServices()
+    .AddHaondtWebServices(builder.Configuration)
+    .AddFireflyIIIppComponentServices(builder.Configuration)
+    .AddFireflyIIIppComponents()
+    .AddFireflyIIIppServices(builder.Configuration)
+    .AddFireflyIIIppHeadEntries()
     .AddNodeRedServices(builder.Configuration)
-    .AddFireflyIIIPPRunnerServices(builder.Configuration)
-    .AddFilePersistenceServices();
+    .AddLookupServices(builder.Configuration);
+//.AddFireflyIIIPPWebServices(builder.Configuration)
+//.AddCoreServices(builder.Configuration)
+//.AddFireflyIIIServices(builder.Configuration)
+//.AddNodeRedServices(builder.Configuration)
+//.AddFireflyIIIPPRunnerServices(builder.Configuration)
+//.AddFilePersistenceServices();
 
 
 builder.Services.AddMvc();
@@ -40,6 +57,7 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.UseCors(CORS_POLICY);
 app.MapControllers();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 
 app.Run();

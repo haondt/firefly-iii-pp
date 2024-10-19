@@ -1,0 +1,148 @@
+﻿@using FireflyIIIpp.Components.Components
+@using FireflyIIIpp.Components.Extensions
+@model FireflyIIIpp.Components.Components.LookupModel
+
+<nav class="panel">
+    <div class="panel-block">
+        <div class="field">
+            <label class="label">Store</label>
+            <div class="control">
+                <div class="select">
+                    <select name="store" id="store-select">
+                        @foreach(var store in Model.Stores)
+                        {
+                            <option>@store</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <p class="panel-tabs">
+        @foreach(var (bodyId, title, isActive) in new List<(string, string, bool)>
+        {
+            ("map-primary-key-tab-body", "Map Primary Key", true),
+            ("map-foreign-key-tab-body", "Map Foreign Key", false)
+        })
+        {
+            <a 
+                class="@(isActive ? "is-active" : "")"
+                _="
+                    on click
+                        remove .is-active from <.panel-tabs > .is-active />
+                        add .is-hidden to < .panel-block.tab-body />
+                        
+                        add .is-active to me
+                        remove .is-hidden from < #@bodyId />
+                "
+            >
+                @title
+            </a>
+        }
+    </p>
+
+    <div class="panel-block tab-body is-hidden" id="map-foreign-key-tab-body">
+        <div class="columns is-flex-grow-1"><div class="column is-flex-grow-1">
+            <form>
+                <div class="level">
+                    <div class="level-left">
+                        <p>Map</p>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Foreign key">
+                        </div>
+                        <p>To</p>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Primary key">
+                        </div>
+                        <button class="button is-info" type="submit">Add Map</button>
+                    </div>
+                </div>
+            </form>
+
+            <hr />
+
+            <form>
+                <div class="level">
+                    <div class="level-left">
+                        <p>Get keys mapped to</p>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Foreign key">
+                        </div>
+                        <button class="button" type="submit">Get Keys</button>
+                    </div>
+                </div>
+            </form>
+
+            <hr />
+
+            <div class="has-background-black-ter" style="width:100%;padding:10px;">
+                <table class="table" style="width:100%;background:none;">
+                    <tbody>
+                        <tr>
+                            <td style="width:100%;"><div class="level"><div class="level-left">WLMRT</div><div class="level-right"><button class="delete"></button></div></div>
+                        </tr>
+                        <tr>
+                            <td><div class="level"><div class="level-left">WALMART</div><div class="level-right"><button class="delete"></button></div></div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div></div>
+    </div>
+
+    <div class="panel-block tab-body" id="map-primary-key-tab-body">
+        <div class="columns is-flex-grow-1"><div class="column is-flex-grow-1">
+            <style>
+                @@scope {
+                    .request-text {
+                        overflow: auto;
+                        font-family: monospace;
+                        font-size: 1rem;
+                        height: 350px;
+                        line-height: 1.25rem;
+                        resize: none;
+                        width: 100%;
+                        outline: none;
+                    }
+                    .message {
+                        width: 100%;
+                    }
+
+                }
+            </style>
+
+            <div class="block">
+                <form hx-post="/_event/GetLookupValue" hx-include="#store-select">
+                    <div class="level">
+                        <div class="level-left">
+                            <p>Edit value</p>
+                            @await Html.PartialAsync(new AutocompleteModel
+                            {
+                                SuggestionEvent = "PrimaryKeyAutocomplete",
+                                Name = new("primaryKey"), 
+                                Id = new("primary-key"),
+                                Placeholder = new("Primary Key"),
+                                HxInclude="#store-select"
+                            })
+                            <button class="button is-info" type="submit">Get Value</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="level"><div class="level-left">
+                <button class="button is-warning" hx-post="/_event/UpsertLookupValue" hx-include="#lookup-value, #store-select, #primary-key">Update</button>
+                <button class="button is-danger" hx-post="/_event/DeleteLookupValue" hx-include="#store-select, #primary-key">Delete</button>
+                <button class="button" hx-post="/_event/PrettifyLookupValue" hx-include="#lookup-value">Prettify</button>
+            </div></div>
+
+            <article class="message">
+                <div class="message-header"></div>
+                @await Html.PartialAsync(new LookupUpdateModel{ IsSwap = false, LookupValue = ""})
+            </article>
+
+        </div></div>
+    </div>
+</nav>

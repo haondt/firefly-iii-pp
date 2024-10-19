@@ -1,0 +1,33 @@
+﻿@using FireflyIIIpp.Components.Components
+@using FireflyIIIpp.Components.Pages
+@using FireflyIIIpp.Core.Pages
+@model FireflyIIIppNavigationBarModel
+
+<nav class="navbar is-primary">
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <style>
+                @@scope {
+                    .navbar-item.is-active {
+                        font-weight: bold;
+                    }
+                }
+
+            </style>
+            @foreach(var (page, title) in PageComponentMap.PageNames)
+            {
+                <a
+                    class="navbar-item is-tab @(Model.ActivePage == page ? "is-active": "")"
+                    _="
+                        on click
+                            remove .is-active from <.navbar-item.is-active />
+                            add .is-active to me
+                    "
+                    hx-post="/_event/Navigate?target=@(page.GetStringName())"
+                >
+                    @title
+                </a>
+            }
+        </div>
+    </div>
+</nav>

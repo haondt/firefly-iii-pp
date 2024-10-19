@@ -27,6 +27,7 @@ namespace Haondt.Web.Extensions
             services.RegisterPage("navigationBar", "~/Views/NavigationBar.cshtml", data =>
             {
                 data.Query.TryGetValue(NavigationBarModel.CurrentViewKey, out string? castedValue);
+                data.Form.TryGetValue<string>("foo, out", out var bar);
                 return new NavigationBarModel
                 {
                     Pages = indexSettings!.NavigationBarPages.Select(p => (p, p.Equals(castedValue, StringComparison.OrdinalIgnoreCase))).ToList(),
@@ -71,8 +72,8 @@ namespace Haondt.Web.Extensions
         {
             services.AddSingleton<IStylesProvider, StylesProvider>();
             var assembly = typeof(ServiceCollectionExtensions).Assembly;
-            services.AddSingleton<IStylesSource, ManifestAssetStylesSource>(sp => new ManifestAssetStylesSource(assembly, "base.css"));
-            services.AddSingleton<IStylesSource, ManifestAssetStylesSource>(sp => new ManifestAssetStylesSource(assembly, "styles.css"));
+            services.AddSingleton<IStylesSource, ManifestAssetStylesSource>(sp => new ManifestAssetStylesSource(assembly, "wwwroot.base.css") {  Priority = 0 });
+            services.AddSingleton<IStylesSource, ManifestAssetStylesSource>(sp => new ManifestAssetStylesSource(assembly, "wwwroot.style.css") { Priority = 100 });
             services.Configure<ColorSettings>(configuration.GetSection(nameof(ColorSettings)));
             services.AddSingleton<IStylesSource, ColorsStylesSource>();
             return services;

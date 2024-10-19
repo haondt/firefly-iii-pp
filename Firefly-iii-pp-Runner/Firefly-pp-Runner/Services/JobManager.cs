@@ -1,16 +1,16 @@
-﻿using Firefly_iii_pp_Runner.Models;
-using Firefly_pp_Runner.Extensions;
+﻿using Firefly_pp_Runner.Extensions;
 using Firefly_pp_Runner.Models.Runner;
 using Firefly_pp_Runner.Models.Runner.Dtos;
 using FireflyIIIpp.Core.Exceptions;
 using FireflyIIIpp.Core.Extensions;
 using FireflyIIIpp.FireflyIII.Abstractions;
 using FireflyIIIpp.FireflyIII.Abstractions.Models.Dtos;
-using FireflyIIIpp.NodeRed.Abstractions;
+using FireflyIIIpp.NodeRed.Reasons;
+using FireflyIIIpp.NodeRed.Services;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Firefly_iii_pp_Runner.Services
+namespace Firefly_pp_Runner.Services
 {
     public class JobManager
     {
@@ -93,7 +93,7 @@ namespace Firefly_iii_pp_Runner.Services
             var start = dto.Start.HasValue ? dto.Start.Value : throw new ArgumentNullException("start date");
             var end = dto.End.HasValue ? dto.End.Value : throw new ArgumentNullException("end date");
             return StartJob(p => _fireflyIII.GetTransactions(start, end, p));
-        } 
+        }
 
         public Task<RunnerStatus> StartJob(QueryStartJobRequestDto dto, Func<Task>? onJobFinish = null)
         {
@@ -129,7 +129,7 @@ namespace Firefly_iii_pp_Runner.Services
                 throw;
             }
             return _status;
-        } 
+        }
 
         private async Task UpdateTransaction(TransactionDto transaction, CancellationToken cancellationToken)
         {
@@ -143,38 +143,40 @@ namespace Firefly_iii_pp_Runner.Services
             if (string.IsNullOrWhiteSpace(transactionData.Destination_id) && string.IsNullOrWhiteSpace(transactionData.Destination_name))
                 throw new DownstreamException($"Received transaction {transaction.Id} from Firefly-III with no destination");
 
-            var transactionDataString = JsonConvert.SerializeObject(transactionData, _serializerSettings); ;
-            var (hasChanges, newTransactionDataString) = await _nodeRed.TryApplyRules(transactionDataString, cancellationToken);
-            if (hasChanges)
+            var transactionDataString = JsonConvert.SerializeObject(transactionData, _serializerSettings);
+            var result = await _nodeRed.ApplyRules(transactionDataString, cancellationToken);
+            if (!result.IsSuccessful)
+                throw new DownstreamException($"Failed to apply nodered rules to transaction {transaction.Id} due to reason {result.Reason}");
+            if (!result.Value.IsSuccessful)
             {
-                var newTransactionData = JsonConvert.DeserializeObject<TransactionPartDto>(newTransactionDataString, _serializerSettings);
-                var updateDto = new TransactionUpdateDto
+                if (result.Value.Reason == ApplyRulesReason.NotModified)
                 {
-                    Apply_rules = false,
-                    Fire_webhooks = true,
-                    Transactions = new List<TransactionPartDto> { newTransactionData }
-                };
-
-                if (string.IsNullOrWhiteSpace(newTransactionData.Source_id) && string.IsNullOrWhiteSpace(newTransactionData.Source_name))
-                    throw new DownstreamException($"Received updated transaction {transaction.Id} from Node-Red with no source");
-                if (string.IsNullOrWhiteSpace(newTransactionData.Destination_id) && string.IsNullOrWhiteSpace(newTransactionData.Destination_name))
-                    throw new DownstreamException($"Received updated transaction {transaction.Id} from Node-Red with no destination");
-
-                transactionData.JoinIds(newTransactionData);
-                if (!newTransactionData.IsEquivalentTo(transactionData))
-                {
-                    await _fireflyIII.UpdateTransaction(transaction.Id, updateDto, cancellationToken);
-                    _logger.LogInformation("Updated transaction {transactionId}", transaction.Id);
+                    _logger.LogInformation("Skipping transaction {transactionId}", transaction.Id);
+                    return;
                 }
-                else
-                {
-                    hasChanges = false;
-                }
+                throw new InvalidOperationException($"Unexpected reason {result.Value.Reason}");
             }
-            if (!hasChanges)
+
+            var newTransactionDataString = result.Value.Value;
+
+            var newTransactionData = JsonConvert.DeserializeObject<TransactionPartDto>(newTransactionDataString, _serializerSettings);
+            var updateDto = new TransactionUpdateDto
             {
-                _logger.LogInformation("Skipping transaction {transactionId}", transaction.Id);
-                return;
+                Apply_rules = false,
+                Fire_webhooks = true,
+                Transactions = new List<TransactionPartDto> { newTransactionData }
+            };
+
+            if (string.IsNullOrWhiteSpace(newTransactionData.Source_id) && string.IsNullOrWhiteSpace(newTransactionData.Source_name))
+                throw new DownstreamException($"Received updated transaction {transaction.Id} from Node-Red with no source");
+            if (string.IsNullOrWhiteSpace(newTransactionData.Destination_id) && string.IsNullOrWhiteSpace(newTransactionData.Destination_name))
+                throw new DownstreamException($"Received updated transaction {transaction.Id} from Node-Red with no destination");
+
+            transactionData.JoinIds(newTransactionData);
+            if (!newTransactionData.IsEquivalentTo(transactionData))
+            {
+                await _fireflyIII.UpdateTransaction(transaction.Id, updateDto, cancellationToken);
+                _logger.LogInformation("Updated transaction {transactionId}", transaction.Id);
             }
         }
 
@@ -205,19 +207,17 @@ namespace Firefly_iii_pp_Runner.Services
 
                 _status.State = RunnerState.RunningTransactions;
 
-                foreach(var page in transactionIds.Paginate(10))
-                {
+                foreach (var page in transactionIds.Paginate(10))
                     await Task.WhenAll(page.Select(async id =>
                     {
                         var transaction = await _fireflyIII.GetTransaction(id);
                         await UpdateTransaction(transaction, cancellationToken);
-                        lock(_status)
+                        lock (_status)
                         {
                             _status.QueuedTransactions--;
                             _status.CompletedTransactions++;
                         }
                     }));
-                }
 
                 _status.State = RunnerState.Completed;
 

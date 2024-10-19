@@ -1,0 +1,32 @@
+
+name: firefly-iii-pp
+
+services:
+  node-red:
+    image: nodered/node-red:latest
+    container_name: nodered
+    environment:
+      - tz=america/edmonton
+    ports:
+      - 1880:1880
+    volumes:
+      - node-red-data:/data
+      - ./flows.json:/external/flows.json
+      - ./flows_cred.json:/external/flows_cred.json
+      - ./settings.js:/data/settings.js
+  postgres:
+    container_name: firefly-iii-pp-postgres
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: firefly_iii_pp
+      POSTGRES_PASSWORD: firefly_iii_pp
+      PGDATA: /data/pgdata
+    ports:
+      - 5433:5432
+    volumes:
+      - firefly-iii-pp-postgres-data:/data
+      - ./postgresql-init.sql:/docker-entrypoint-initdb.d/postgresql-init.sql
+
+volumes:
+  node-red-data:
+  firefly-iii-pp-postgres-data:

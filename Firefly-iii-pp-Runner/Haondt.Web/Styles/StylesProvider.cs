@@ -7,7 +7,9 @@ namespace Haondt.Web.Styles
         private readonly Task<string> _stylesTask = CreateStylesTask(stylesSources);
         private static async Task<string> CreateStylesTask(IEnumerable<IStylesSource> stylesSources)
         {
-            var styles = await Task.WhenAll(stylesSources.Select(s => s.GetStylesAsync()));
+            var styles = await Task.WhenAll(stylesSources
+                .OrderBy(s => s.Priority)
+                .Select(s => s.GetStylesAsync()));
             return string.Join('\n', styles);
         }
         public Task<string> GetStylesAsync() => _stylesTask;

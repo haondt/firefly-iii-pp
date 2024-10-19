@@ -25,26 +25,34 @@ ul {
 	list-style-type: none;
 }
 
-input {
-	background: none;
-}
 
-input, textarea {
+input, textarea, .textarea {
 	border: none;
-	border-bottom: 1px solid var(--color-dark-fg);
 	color: var(--color-bright-fg);
 	padding: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
 }
 
-textarea {
-	background: var(--color-bright-bg);
+input {
+	background: none;
+	border-bottom: 1px solid var(--color-bright-bg);
 }
 
-input:focus-visible, textarea:focus-visible {
-	border: none;
-	border-bottom: 1px solid var(--color-accent);
+textarea, .textarea {
+	background: var(--color-bright-bg);
+	border-left: 1px solid var(--color-bright-bg);
+	overflow: auto;
+	resize: none;
+	border-radius: 3px;
+}
+
+input:focus-visible {
+	border-bottom: 1px solid var(--color--accent);
+
+}
+textarea:focus-visible, .textarea.focus-visible {
+	border-left: 1px solid var(--color-accent);
 }
 
 .flex { display: flex; }
@@ -52,6 +60,7 @@ input:focus-visible, textarea:focus-visible {
 .flex-row { flex-direction: row; }
 .flex-grow { flex-grow: 1; }
 .flex-wrap { flex-flow: wrap; }
+.basis-0 { flex-basis: 0; }
 
 .align-start { align-items: start; }
 .align-center { align-items: center; }
